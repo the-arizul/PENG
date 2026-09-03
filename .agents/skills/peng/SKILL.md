@@ -9,9 +9,10 @@ user-invocable: true
 A hyper-smart, multi-stage interactive vibe coding system for AI coding agents.
 
 ## CURRENT RELEASE VERSION
-- Version: 1.2.5
+- Version: 1.2.6
 - Release Date: 2026-09-03
 - Changelog:
+  * Level 4 Post-Resolution Sub-Menu: When all issues are resolved, prompts with Rescan & Verify, Stage & Commit, Run Test Suite, Save to Memory, and Return to Menu.
   * Level 3 Adaptive Resolution Context Menu: When scans/diagnostics detect issues, dynamically prompts with 'Resolve All', 'Resolve One by One', 'Explain Root Causes', 'Plan Only', etc.
   * Conversation Titling Fix: Explicit engineering identity prevents erroneous 'Penguin Image Generation' title.
   * Zero-Command Instant UI: Completely eliminated background shell commands on invocation.
@@ -76,8 +77,15 @@ When the user invokes /peng or asks about peng without specifying an exact branc
    - Resolve One by One (Interactive step-by-step; review diff and approve each fix individually)
    - Explain Root Causes & Impact (Deep-dive explanation of why each issue happened before taking action)
    - Implementation Plan Only (Draft structured plan; wait for confirmation before touching code)
-   - Selective Fix (Pick specific issues to resolve and ignore others)
-   - What is this for? (Explain resolution strategies, trade-offs, and recommended next steps)
+5. **Level 4 (Post-Resolution & Verification Wrap-Up Sub-Menu):** When all identified issues/bugs/failures have been resolved:
+   **DO NOT end the turn abruptly or assume the work is done.**
+   Present a clear summary of all resolved items, and IMMEDIATELY trigger the **Post-Resolution Wrap-Up Context Menu (`ask_question`)**:
+   - Rescan & Verify (Run a fresh regression check to guarantee 0 remaining issues)
+   - Stage & Commit Changes (Review diff, generate clean git commit, and seal release)
+   - Run Full Test Suite (Execute automated test suites to ensure zero side-effect regressions)
+   - Save Breakthrough to Living Memory (Extract resolution pattern into `.agents/AGENTS.md`)
+   - Return to PENG Primary Menu (Start another engineering workflow)
+   - What is this for? (Explain post-resolution validation and best practices)
 
 ---
 
@@ -153,6 +161,16 @@ When the user invokes /peng or asks about peng without specifying an exact branc
       4. Implementation Plan Only (Formulate detailed plan; wait for confirmation before touching code)
       5. Selective Fix (Choose which specific issues to fix and which to skip)
       6. What is this for? (Explain resolution strategies, trade-offs, and recommended next steps)
+- Level 4 Post-Resolution Context Menu (Triggered when all issues are resolved):
+  * Once the fixes are applied and confirmed, invoke `ask_question`:
+    - Question: "All issues have been resolved! How would you like to proceed?"
+    - Options:
+      1. Rescan & Verify (Run diagnostic probes again to confirm zero remaining issues)
+      2. Stage & Commit Changes (Review diff and commit fix to Git)
+      3. Run Full Test Suite (Execute automated test suites to ensure zero regressions)
+      4. Save Breakthrough to Living Memory (Record root cause & fix pattern into .agents/AGENTS.md)
+      5. Return to Primary Menu (Select another workflow)
+      6. What is this for? (Explain post-resolution verification and next steps)
 
 ---
 
@@ -191,6 +209,15 @@ When the user invokes /peng or asks about peng without specifying an exact branc
       4. Safe Commits Only (Ignore non-critical warnings and commit clean passing code)
       5. Selective Fix (Choose which checks to fix and which to bypass)
       6. What is this for? (Explain verification resolution strategies)
+- Level 4 Post-Resolution Context Menu (Triggered when all checks are resolved):
+  * Once all failures or warnings are patched and verified, invoke `ask_question`:
+    - Question: "All verification checks have passed! How would you like to proceed?"
+    - Options:
+      1. Rescan & Final Pre-Commit Pass (Run full verify suite again to ensure 100% clean check)
+      2. Stage & Commit to Git (Review diff and seal release with clean commit)
+      3. Save Breakthrough to Living Memory (Record learnings into .agents/AGENTS.md)
+      4. Return to Primary Menu (Select another workflow)
+      5. What is this for? (Explain commit finalization best practices)
 
 ---
 
