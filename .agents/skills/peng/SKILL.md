@@ -9,9 +9,10 @@ user-invocable: true
 A hyper-smart, multi-stage interactive vibe coding system for AI coding agents.
 
 ## CURRENT RELEASE VERSION
-- Version: 1.2.6
+- Version: 1.2.7
 - Release Date: 2026-09-03
 - Changelog:
+  * First-Time User Detection: Silently checks ~/.peng/state.json via view_file (zero terminal noise). New users get a welcome + language setup; returning users go straight to the primary menu.
   * Level 4 Post-Resolution Sub-Menu: When all issues are resolved, prompts with Rescan & Verify, Stage & Commit, Run Test Suite, Save to Memory, and Return to Menu.
   * Level 3 Adaptive Resolution Context Menu: When scans/diagnostics detect issues, dynamically prompts with 'Resolve All', 'Resolve One by One', 'Explain Root Causes', 'Plan Only', etc.
   * Conversation Titling Fix: Explicit engineering identity prevents erroneous 'Penguin Image Generation' title.
@@ -26,17 +27,43 @@ A hyper-smart, multi-stage interactive vibe coding system for AI coding agents.
 
 ## STRICT ZERO-COMMAND LAUNCH DIRECTIVE (CRITICAL UI & VIBE RULE)
 - **ZERO TERMINAL COMMANDS ON INVOCATION:** When the user invokes `/peng` or types `peng`, the agent MUST NOT run ANY shell or terminal commands (`run_command`, `pwsh`, `bash`, `cmd`, etc.).
-- **INSTANT UI RESPONSE:** The agent's VERY FIRST and IMMEDIATE action must be invoking `ask_question` directly with the Level 1 Primary Menu.
-- **ZERO VISUAL DISTRACTION:** The user should NEVER see "Ran commands", PowerShell traces, or background script accordions before seeing the menu. The interface must be instant, clean, and frictionless.
 - **CONVERSATION IDENTITY & TITLING:**
   * PENG stands for the **PENG Master Vibe Coding Toolkit** (pair programming & software engineering).
   * It is NEVER an image generation prompt and has NO connection to penguins or `generate_image`.
   * When invoked at the start of a conversation, the preliminary conversation title is **"PENG Vibe Coding"**.
   * The conversation's true technical title should only be named after the user selects their specific engineering workflow (e.g., "Build Feature: [Name]", "Deep Bug Hunter", "Pre-Flight Architect").
-- **IN-MEMORY CONVERSATIONAL STATE:**
-  * Do NOT run PowerShell commands to read or update telemetry/state files on menu launch.
-  * Language preference defaults to English or the natural language the user speaks in chat. It can be switched anytime through Option [12] (Language Switcher).
-  * If this is the very first time PENG is EVER invoked in a new environment and no language is established, ask the language question directly in `ask_question` with 0 terminal commands, then proceed.
+
+### FIRST-TIME USER DETECTION (SILENT, ZERO TERMINAL NOISE)
+Every time `/peng` is invoked, the agent's VERY FIRST action must be:
+1. **Silently attempt to read `~/.peng/state.json`** using the `view_file` tool (NOT `run_command`).
+   - `view_file` is completely silent in the UI — the user sees no "Ran commands" accordion or terminal trace.
+   - On Windows, the path is `C:\Users\<USERNAME>\.peng\state.json`. Resolve `~` to the actual home directory.
+2. **If the file does NOT exist (view_file returns an error or file-not-found):** This is a **first-time user**.
+   - Present the **First-Time Welcome & Language Setup** using `ask_question`:
+     * Question: "Welcome to PENG! 🚀 Select your preferred language for all workflows and explanations:"
+     * Options:
+       1. English
+       2. Bengali (বাংলা)
+       3. Spanish (Español)
+       4. Hindi (हिंदी)
+       5. Chinese (中文)
+       6. Japanese (日本語)
+       7. French (Français)
+   - After the user selects a language, **create `~/.peng/state.json`** silently using `write_to_file` (set `UserFacing: false`) with:
+     ```json
+     {
+       "preferred_language": "<selected>",
+       "configured": true,
+       "usage_count": 1,
+       "first_used": "<ISO timestamp>",
+       "last_seen_version": "1.2.7"
+     }
+     ```
+   - Then proceed immediately to the Level 1 Primary Menu.
+3. **If the file EXISTS (view_file succeeds):** This is a **returning user**.
+   - Read the `preferred_language` from the JSON and respect it for all subsequent outputs.
+   - Proceed directly to the Level 1 Primary Menu via `ask_question` — instant, zero-delay.
+4. **ZERO VISUAL DISTRACTION:** The user should NEVER see "Ran commands", PowerShell traces, or background script accordions. The `view_file` check and `write_to_file` creation are both invisible to the user. The first thing the user visually experiences is either the welcome menu or the primary menu.
 
 ---
 
