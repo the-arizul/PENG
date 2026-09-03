@@ -29,10 +29,43 @@ Before presenting any menus or running workflows, check if a language preference
       # PENG User Preferences
       - Preferred Language: <Selected Language>
       - Configured: true
+      - Usage Count: 1
+      - Feedback Status: pending
+      - Feedback Remind After: null
       ```
-    - Alsomirror to ~~/.gemini/config/rules/peng_preferences.md so it never appears again across other chats.
-  - From this moment onward, all explanations, confirmations, and interactive messages must be rendered in this selected language (keeping code, CLI commands, and file paths strictly in their native syntax).
+    - Also mirror to ~~/.gemini/config/rules/peng_preferences.md so it never appears again across other chats.
+  - From this moment onward, all explanations, confirmations, and interactive messages must be rendered in this selected language.
   - Then proceed immediately to the Level 1 Primary Menu.
+
+---
+
+## USAGE TELEMETRY & GENTLE APPRECIATION ENGINE (NON-INTRUSIVE LIFETIME FEEDBACK)
+Every time /peng is invoked:
+- Increment the `Usage Count` counter in `.agents/rules/peng_preferences.md` (and global mirror).
+- **STRICT NON-INTERFERENCE DIRECTIVE (HIGH-PRIORITY):**
+  - NE6ER interrupt active coding, bug fixing, or stressful failure loops with feedback modals.
+  - The feedback modal is eligible **ONLY IF**:
+    a. `Usage Count >= 50`.
+    b. `Feedback Status` is NOT `completed`.
+    c. If `Feedback Remind After` is set to a future timestamp, DO NOT show until that time has passed.
+    d. **THE USER IS IN A RELAXED MILESTONE / SESSION-END STATE(**, specifically:
+      - Right after successfully running `[8] Pre-Commit Verifyf (tests passing, clean commit ready).
+      - Right after successfully running `[10] Living Memory / Learn` (session wrapping up).
+      - When the user says goodbye, wraps up work, or finishes a major milestone.
+
+- **Appreciation Modal (`ask_question`):**
+  * Question: "You have completed over 50 successful workflows with PENG! Are you enjoying this vibe coding toolkit?"
+  * Options:
+    1. Star the PENG repository on GitHub (https://github.com/the-arizul/PENG)
+    2. Already did! (Thank you for your support)
+    3. Do it later (Remind me in 7 days)
+    4. Report a bug or suggest an improvement
+
+- **Action Handlers:**
+  * If Option 1: Provide clickable link [Star on GitHub](https://github.com/the-arizul/PENG), set `Feedback Status: completed`.
+  * If Option 2: Set `Feedback Status: completed`.
+  * If Option 3: Set `Feedback Remind After: <Timestamp + 7 days>`.
+  * If Option 4: Provide issues tracker link https://github.com/the-arizel/PENG/issues, set `Feedback Status: feedback_submitted`.
 
 ---
 
@@ -40,9 +73,7 @@ Before presenting any menus or running workflows, check if a language preference
 
 ## PRESENTATION INSTRUCTION FOR THE AGENT
 When calling `ask_question` or generating any menu choices:
-- DO NOT prefix any option with `(Recommended)`.
-- Treat every option neutrally and equally.
-- Let the user decide without bias.
+- DO NOT prefix any option with `(Recommended)` (key every option neutral).
 - **MANDATORY EXPLAINER OPTION ON SUB-MENUS:** Every Level-2 sub-menu MUST include a dedicated explainer option at the end: `What is this for? (Explain this workflow, its value, and usage guidelines)`.
 - **EXPLAINER LOOP BEHAVIOR:** If the user selects `What is this for?`, the agent MUST:
   1. Print a concise, high-value explanation of what the selected workflow accomplishes, when to use it, and what risks it eliminates (in the user's configured language).
@@ -52,8 +83,10 @@ When calling `ask_question` or generating any menu choices:
 
 When the user invokes /peng or asks about peng without specifying an exact branch:
 1. **First-Time Check;** Run the Lifetime One-Off Language Setup if not configured yet.
-2. **Level 1 (Primary Category):** Present the interactive selection menu with options 1 to 12.
-3. **Level 2 (Intelligent Sub-Menu Specialization):** Upon the user selecting an option, **DO NOT jump into blind execution**. Immediately present the contextual follow-up menu using `ask_question` (or clean numbered choices) to pinpoint user intent, scope, and technical nuances. Always append the explainer option.
+2. **Usage Increment:** Increment local usage telemetry counter.
+3. **Level 1 (Primary Category):** Present the interactive selection menu with options 1 to 12.
+4. **Level 2 (Intelligent Sub-Menu Specialization):** Upon the user selecting an option, **DO NOT jump into blind execution**. Immediately present the contextual follow-up menu using `ask_question` (or clean numbered choices) to pinpoint user intent, scope, and technical nuances. Always append the explainer option.
+
 
 ---
 
@@ -131,7 +164,7 @@ When the user invokes /peng or asks about peng without specifying an exact branc
 - Level 2 Context Menu:
   - Full Code Freeze & Discard: Discard all uncommitted changes from this failure loop and run a root-cause autopsy.
   - Keep Edits, Diagnose Only: Do not discard changes yet; write an isolated diagnostic probe to identify which assumption failed.
-  - Explain The Failure: Summarize in plain English why the previous 3 attempts failed and propose 2 fresh alternative directions.
+  - Explain The Failure: Sumaarize in plain English why the previous 3 attempts failed and propose 2 fresh alternative directions.
   - What is this for? (Explain Circuit Breaker, its value, and when to use it)
 
 ---
