@@ -9,7 +9,7 @@ user-invocable: true
 A hyper-smart, multi-stage interactive vibe coding system for AI coding agents.
 
 ## CURRENT RELEASE VERSION
-- Version: 1.2.1
+- Version: 1.2.2
 - Release Date: 2026-09-03
 - Changelog:
   * Added 4 situational daily workflows (Fresh Chat Context, Build Feature, Delete Feature, Deep Bug Hunter).
@@ -17,21 +17,22 @@ A hyper-smart, multi-stage interactive vibe coding system for AI coding agents.
   * Added mandatory What is this for? interactive explainer loop.
   * Added one-off lifetime language preference onboarding with 7 languages.
   * Added non-intrusive 50+ usage appreciation milestone engine.
+  * Added silent background preference handling and autonomous git versioning hook.
 
 ---
 
 ## AUTOMATIC UPDATE CHECK & CHANGELOG NOTIFIER (IN-CHAT EXPERIENCE)
 Every time /peng is invoked:
 1. Local Version Check: Read ~/.peng/state.json and check Last Seen Version.
-2. If Freshly Updated (Current Version 1.2.1 != Stored Version):
+2. If Freshly Updated (Current Version 1.2.2 != Stored Version):
    - Present the What is New & Update Modal using ask_question:
-     * Question: PENG has been updated to v1.2.1! Would you like to review the latest changelog or explore new workflows?
+     * Question: PENG has been updated to v1.2.2! Would you like to review the latest changelog or explore new workflows?
      * Options:
        1. Review What is New (Show changelog & exciting new capabilities)
        2. Proceed with latest version (Dismiss & open primary menu)
        3. Stay on current version / View instructions
-   - If Option 1: Print clean formatted changelog, update Last Seen Version to 1.2.1, and open Level 1 Primary Menu.
-   - If Option 2: Update Last Seen Version to 1.2.1 and proceed directly to Level 1 Primary Menu.
+   - If Option 1: Print clean formatted changelog, update Last Seen Version to 1.2.2, and open Level 1 Primary Menu.
+   - If Option 2: Update Last Seen Version to 1.2.2 and proceed directly to Level 1 Primary Menu.
    - If Option 3: Instruct how to pin prompt configs, and proceed.
 3. Option [12] Help Guide provides an instant action: Check for Updates from GitHub.
 
@@ -44,6 +45,12 @@ Every time /peng is invoked:
 - All telemetry and preferences are stored completely silently outside the project in ~/.peng/state.json.
 
 ## FIRST-TIME ONE-OFF LANGUAGE SETUP (CRITICAL LIFETIME RULE)
+### SILENT EXECUTION OF PREFERENCES (NO TERMINAL NOISE)
+When reading or saving ~/.peng/state.json:
+- Do it silently in memory or via clean internal file writes.
+- DO NOT print verbose PowerShell output or terminal logs into the conversation.
+- Keep the user interface completely seamless and clean.
+
 Before presenting any menus or running workflows, check if a language preference has already been recorded:
 - **Persistence Location:** Check `~/.peng/state.json` (or ~~/.peng/state.json`).
 - If Language Preference Exists: Respect that language immediately. **NEVER show the setup menu again during the entire lifetime of the project/workspace.**
