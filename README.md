@@ -22,10 +22,16 @@ px skills):
 
 `ash
 # Install to current project
-npx skills add Arizul-Islam/PENG
+npx skills add the-arizul/PENG
 
 # Or install globally across all projects and agents
-npx skills add Arizul-Islam/PENG -g
+npx skills add the-arizul/PENG -g
+`ash
+# Install to current project
+npx skills add the-arizul/PENG
+
+# Or install globally across all projects and agents
+npx skills add the-arizul/PENG -g
 `
 
 ---
