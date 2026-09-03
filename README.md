@@ -27,7 +27,7 @@ Type /peng in your agent chat. You will be greeted by a master menu, followed by
 11. **[11] Add or Edit a Prompt** - Extends or customizes this prompt catalog on the fly.
     - *Sub-options:* Add New Sub-Option | Create New Category | Edit Existing Workflow
 12. **[12] Help & Comprehensive User Guide** - Detailed usage guidelines, context lifecycle tips, and best practices.
-    - *Sub-options:* Interactive Topic Browser | Print Full Manual | Antigravity IDE Mastery Guide
+    - *Sub-options:* Change Language Preference | Interactive Topic Browser | Print Full Manual | Antigravity IDE Mastery Guide
 
 ---
 
