@@ -22,7 +22,7 @@ A hyper-smart, multi-stage interactive vibe coding system for AI coding agents.
 
 ## AUTOMATIC UPDATE CHECK & CHANGELOG NOTIFIER (IN-CHAT EXPERIENCE)
 Every time /peng is invoked:
-1. Local Version Check: Read .agents/rules/peng_preferences.md and check Last Seen Version.
+1. Local Version Check: Read ~/.peng/state.json and check Last Seen Version.
 2. If Freshly Updated (Current Version 1.2.0 != Stored Version):
    - Present the What is New & Update Modal using ask_question:
      * Question: PENG has been updated to v1.2.0! Would you like to review the latest changelog or explore new workflows?
@@ -38,9 +38,14 @@ Every time /peng is invoked:
 ---
 
 
+## SILENT BACKGROUND STATE RULE (ZERO WORKSPACE INTRUSION)
+- NEVER create, edit, or touch any file in .agents/rules/ for preferences or telemetry.
+- NEVER open an editor tab or dirty the git working tree for preferences.
+- All telemetry and preferences are stored completely silently outside the project in ~/.peng/state.json.
+
 ## FIRST-TIME ONE-OFF LANGUAGE SETUP (CRITICAL LIFETIME RULE)
 Before presenting any menus or running workflows, check if a language preference has already been recorded:
-- **Persistence Location:** Check `.agents/rules/peng_preferences.md` (or ~~/.gemini/config/rules/peng_preferences.md`).
+- **Persistence Location:** Check `~/.peng/state.json` (or ~~/.peng/state.json`).
 - If Language Preference Exists: Respect that language immediately. **NEVER show the setup menu again during the entire lifetime of the project/workspace.**
 - If Language Preference DOES NOT Exist (First Time Ever Triggered):
   - Prompt the user ONCE using `ask_question`:
@@ -54,7 +59,7 @@ Before presenting any menus or running workflows, check if a language preference
       6. Japanese (◥韫)
       7. French (Français)
   - When the user selects or writes a language, immediately save it:
-    - Create/write `.agents/rules/peng_preferences.md` with content:
+    - Create/write `~/.peng/state.json` with content:
       ```markdown
       # PENG User Preferences
       - Preferred Language: <Selected Language>
@@ -63,7 +68,7 @@ Before presenting any menus or running workflows, check if a language preference
       - Feedback Status: pending
       - Feedback Remind After: null
       ```
-    - Also mirror to ~~/.gemini/config/rules/peng_preferences.md so it never appears again across other chats.
+    - Also mirror to ~~/.peng/state.json so it never appears again across other chats.
   - From this moment onward, all explanations, confirmations, and interactive messages must be rendered in this selected language.
   - Then proceed immediately to the Level 1 Primary Menu.
 
@@ -71,7 +76,7 @@ Before presenting any menus or running workflows, check if a language preference
 
 ## USAGE TELEMETRY & GENTLE APPRECIATION ENGINE (NON-INTRUSIVE LIFETIME FEEDBACK)
 Every time /peng is invoked:
-- Increment the `Usage Count` counter in `.agents/rules/peng_preferences.md` (and global mirror).
+- Increment the `Usage Count` counter in `~/.peng/state.json` (and global mirror).
 - **STRICT NON-INTERFERENCE DIRECTIVE (HIGH-PRIORITY):**
   - NE6ER interrupt active coding, bug fixing, or stressful failure loops with feedback modals.
   - The feedback modal is eligible **ONLY IF**:
