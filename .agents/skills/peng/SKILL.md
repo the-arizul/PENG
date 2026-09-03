@@ -9,105 +9,40 @@ user-invocable: true
 A hyper-smart, multi-stage interactive vibe coding system for AI coding agents.
 
 ## CURRENT RELEASE VERSION
-- Version: 1.2.2
+- Version: 1.2.3
 - Release Date: 2026-09-03
 - Changelog:
-  * Added 4 situational daily workflows (Fresh Chat Context, Build Feature, Delete Feature, Deep Bug Hunter).
-  * Added multi-stage contextual sub-menus across all 12 options.
-  * Added mandatory What is this for? interactive explainer loop.
-  * Added one-off lifetime language preference onboarding with 7 languages.
-  * Added non-intrusive 50+ usage appreciation milestone engine.
-  * Added silent background preference handling and autonomous git versioning hook.
+  * Zero-Command Instant UI: Completely eliminated background shell commands on invocation.
+  * Instant Interactive Menu: Direct ask_question launch without visual noise or command execution.
+  * Multi-stage contextual sub-menus across all 12 options.
+  * Mandatory What is this for? interactive explainer loop.
+  * In-chat language switcher & update checker under [12] Help.
+  * Autonomous git commit & versioning hook.
 
 ---
 
-## AUTOMATIC UPDATE CHECK & CHANGELOG NOTIFIER (IN-CHAT EXPERIENCE)
-Every time /peng is invoked:
-1. Local Version Check: Read ~/.peng/state.json and check Last Seen Version.
-2. If Freshly Updated (Current Version 1.2.2 != Stored Version):
-   - Present the What is New & Update Modal using ask_question:
-     * Question: PENG has been updated to v1.2.2! Would you like to review the latest changelog or explore new workflows?
-     * Options:
-       1. Review What is New (Show changelog & exciting new capabilities)
-       2. Proceed with latest version (Dismiss & open primary menu)
-       3. Stay on current version / View instructions
-   - If Option 1: Print clean formatted changelog, update Last Seen Version to 1.2.2, and open Level 1 Primary Menu.
-   - If Option 2: Update Last Seen Version to 1.2.2 and proceed directly to Level 1 Primary Menu.
-   - If Option 3: Instruct how to pin prompt configs, and proceed.
-3. Option [12] Help Guide provides an instant action: Check for Updates from GitHub.
+## STRICT ZERO-COMMAND LAUNCH DIRECTIVE (CRITICAL UI & VIBE RULE)
+- **ZERO TERMINAL COMMANDS ON INVOCATION:** When the user invokes `/peng` or types `peng`, the agent MUST NOT run ANY shell or terminal commands (`run_command`, `pwsh`, `bash`, `cmd`, etc.).
+- **INSTANT UI RESPONSE:** The agent's VERY FIRST and IMMEDIATE action must be invoking `ask_question` directly with the Level 1 Primary Menu.
+- **ZERO VISUAL DISTRACTION:** The user should NEVER see "Ran commands", PowerShell traces, or background script accordions before seeing the menu. The interface must be instant, clean, and frictionless.
+- **IN-MEMORY CONVERSATIONAL STATE:**
+  * Do NOT run PowerShell commands to read or update telemetry/state files on menu launch.
+  * Language preference defaults to English or the natural language the user speaks in chat. It can be switched anytime through Option [12] (Language Switcher).
+  * If this is the very first time PENG is EVER invoked in a new environment and no language is established, ask the language question directly in `ask_question` with 0 terminal commands, then proceed.
 
 ---
 
-
-## SILENT BACKGROUND STATE RULE (ZERO WORKSPACE INTRUSION)
-- NEVER create, edit, or touch any file in .agents/rules/ for preferences or telemetry.
-- NEVER open an editor tab or dirty the git working tree for preferences.
-- All telemetry and preferences are stored completely silently outside the project in ~/.peng/state.json.
-
-## FIRST-TIME ONE-OFF LANGUAGE SETUP (CRITICAL LIFETIME RULE)
-### SILENT EXECUTION OF PREFERENCES (NO TERMINAL NOISE)
-When reading or saving ~/.peng/state.json:
-- Do it silently in memory or via clean internal file writes.
-- DO NOT print verbose PowerShell output or terminal logs into the conversation.
-- Keep the user interface completely seamless and clean.
-
-Before presenting any menus or running workflows, check if a language preference has already been recorded:
-- **Persistence Location:** Check `~/.peng/state.json` (or ~~/.peng/state.json`).
-- If Language Preference Exists: Respect that language immediately. **NEVER show the setup menu again during the entire lifetime of the project/workspace.**
-- If Language Preference DOES NOT Exist (First Time Ever Triggered):
-  - Prompt the user ONCE using `ask_question`:
-    * Question: "Welcome to PENG! Select your preferred conversation and prompt language for all workflows:"
-    * Options:
-      1. English
-      2. Bengali (বাংলা)
-      3. Spanish (Español)
-      4. Hindi (हि-ndi)
-      5. Chinese (中文)
-      6. Japanese (◥韫)
-      7. French (Français)
-  - When the user selects or writes a language, immediately save it:
-    - Create/write `~/.peng/state.json` with content:
-      ```markdown
-      # PENG User Preferences
-      - Preferred Language: <Selected Language>
-      - Configured: true
-      - Usage Count: 1
-      - Feedback Status: pending
-      - Feedback Remind After: null
-      ```
-    - Also mirror to ~~/.peng/state.json so it never appears again across other chats.
-  - From this moment onward, all explanations, confirmations, and interactive messages must be rendered in this selected language.
-  - Then proceed immediately to the Level 1 Primary Menu.
-
----
-
-## USAGE TELEMETRY & GENTLE APPRECIATION ENGINE (NON-INTRUSIVE LIFETIME FEEDBACK)
-Every time /peng is invoked:
-- Increment the `Usage Count` counter in `~/.peng/state.json` (and global mirror).
+## NON-INTRUSIVE APPRECIATION MILESTONE (RELAXED SESSION-END ONLY)
 - **STRICT NON-INTERFERENCE DIRECTIVE (HIGH-PRIORITY):**
-  - NE6ER interrupt active coding, bug fixing, or stressful failure loops with feedback modals.
-  - The feedback modal is eligible **ONLY IF**:
-    a. `Usage Count >= 50`.
-    b. `Feedback Status` is NOT `completed`.
-    c. If `Feedback Remind After` is set to a future timestamp, DO NOT show until that time has passed.
-    d. **THE USER IS IN A RELAXED MILESTONE / SESSION-END STATE(**, specifically:
-      - Right after successfully running `[8] Pre-Commit Verifyf (tests passing, clean commit ready).
-      - Right after successfully running `[10] Living Memory / Learn` (session wrapping up).
-      - When the user says goodbye, wraps up work, or finishes a major milestone.
-
-- **Appreciation Modal (`ask_question`):**
-  * Question: "You have completed over 50 successful workflows with PENG! Are you enjoying this vibe coding toolkit?"
-  * Options:
-    1. Star the PENG repository on GitHub (https://github.com/the-arizul/PENG)
-    2. Already did! (Thank you for your support)
-    3. Do it later (Remind me in 7 days)
-    4. Report a bug or suggest an improvement
-
-- **Action Handlers:**
-  * If Option 1: Provide clickable link [Star on GitHub](https://github.com/the-arizul/PENG), set `Feedback Status: completed`.
-  * If Option 2: Set `Feedback Status: completed`.
-  * If Option 3: Set `Feedback Remind After: <Timestamp + 7 days>`.
-  * If Option 4: Provide issues tracker link https://github.com/the-arizel/PENG/issues, set `Feedback Status: feedback_submitted`.
+  * NEVER interrupt active coding, bug fixing, menu navigation, or stressful loops with feedback prompts.
+  * NEVER run terminal commands to track or poll counters.
+  * Only after substantial successful usage (50+ workflows completed) AND exclusively at natural wrap-up moments (e.g. after successful Pre-Commit Verify or Session Learn when wrapping up), you may gently ask:
+    * Question: "You have completed over 50 successful workflows with PENG! Are you enjoying this vibe coding toolkit?"
+    * Options:
+      1. Star the PENG repository on GitHub (https://github.com/the-arizul/PENG)
+      2. Already did! (Thank you for your support)
+      3. Do it later (Remind me in 7 days)
+      4. Report a bug or suggest an improvement
 
 ---
 
@@ -115,7 +50,7 @@ Every time /peng is invoked:
 
 ## PRESENTATION INSTRUCTION FOR THE AGENT
 When calling `ask_question` or generating any menu choices:
-- DO NOT prefix any option with `(Recommended)` (key every option neutral).
+- DO NOT prefix any option with `(Recommended)` (keep every option neutral).
 - **MANDATORY EXPLAINER OPTION ON SUB-MENUS:** Every Level-2 sub-menu MUST include a dedicated explainer option at the end: `What is this for? (Explain this workflow, its value, and usage guidelines)`.
 - **EXPLAINER LOOP BEHAVIOR:** If the user selects `What is this for?`, the agent MUST:
   1. Print a concise, high-value explanation of what the selected workflow accomplishes, when to use it, and what risks it eliminates (in the user's configured language).
@@ -124,14 +59,11 @@ When calling `ask_question` or generating any menu choices:
 ---
 
 When the user invokes /peng or asks about peng without specifying an exact branch:
-1. **First-Time Check;** Run the Lifetime One-Off Language Setup if not configured yet.
-2. **Usage Increment:** Increment local usage telemetry counter.
-3. **Level 1 (Primary Category):** Present the interactive selection menu with options 1 to 12.
-4. **Level 2 (Intelligent Sub-Menu Specialization):** Upon the user selecting an option, **DO NOT jump into blind execution**. Immediately present the contextual follow-up menu using `ask_question` (or clean numbered choices) to pinpoint user intent, scope, and technical nuances. Always append the explainer option.
-
+1. **Zero Commands:** Do NOT run any terminal or shell commands (`run_command`, `pwsh`, etc.).
+2. **Level 1 (Primary Category):** Present the interactive selection menu IMMEDIATELY using `ask_question`.
+3. **Level 2 (Intelligent Sub-Menu Specialization):** Upon the user selecting an option, **DO NOT jump into blind execution**. Immediately present the contextual follow-up menu using `ask_question` (or clean numbered choices) to pinpoint user intent, scope, and technical nuances. Always append the explainer option.
 
 ---
-
 
 ### Primary Menu (Level 1)
 1. [1] Autonomous Context Init (Deep scan codebase & generate living .agents/ setup)
@@ -149,9 +81,7 @@ When the user invokes /peng or asks about peng without specifying an exact branc
 
 ---
 
-
 ## Multi-Stage Workflow & Sub-Menu Catalog
-
 
 ### 1. [INIT] Autonomous Context Generator
 - Level 2 Context Menu:
@@ -164,13 +94,12 @@ When the user invokes /peng or asks about peng without specifying an exact branc
 
 ### 2. [CONTEXT-PRIMER] Fresh Chat Context Primer
 - Level 2 Context Menu:
-  - Standard Sync: Fast-sync current git branch, uncommitted diffs, recent 3 commits, and `6.agents/AGENTS.md`.
+  - Standard Sync: Fast-sync current git branch, uncommitted diffs, recent 3 commits, and `.agents/AGENTS.md`.
   - Branch-Switch Onboarding: Compare differences between current branch and `main`/`develop` to brief me on branch-specific tasks.
   - Stale Context Flush: Re-verify package versions and environment configurations to ensure zero outdated assumptions.
   - What is this for? (Explain Fresh Chat Context Primer, its value, and when to use it)
 
 ---
-
 
 ### 3. [FEATURE-BUILDER] Build New Feature
 - Level 2 Context Menu:
@@ -181,7 +110,6 @@ When the user invokes /peng or asks about peng without specifying an exact branc
   - What is this for? (Explain Build New Feature, its value, and when to use it)
 
 ---
-
 
 ### 4. [FEATURE-PURGE] Delete / Deprecate Feature
 - Level 2 Context Menu:
@@ -206,7 +134,7 @@ When the user invokes /peng or asks about peng without specifying an exact branc
 - Level 2 Context Menu:
   - Full Code Freeze & Discard: Discard all uncommitted changes from this failure loop and run a root-cause autopsy.
   - Keep Edits, Diagnose Only: Do not discard changes yet; write an isolated diagnostic probe to identify which assumption failed.
-  - Explain The Failure: Sumaarize in plain English why the previous 3 attempts failed and propose 2 fresh alternative directions.
+  - Explain The Failure: Summarize in plain English why the previous 3 attempts failed and propose 2 fresh alternative directions.
   - What is this for? (Explain Circuit Breaker, its value, and when to use it)
 
 ---
@@ -219,7 +147,6 @@ When the user invokes /peng or asks about peng without specifying an exact branc
   - What is this for? (Explain Pre-Flight Architecture Review, its value, and when to use it)
 
 ---
-
 
 ### 8. [VERIFY] Self-Correction & Pre-Commit Audit
 - Level 2 Context Menu:
@@ -254,13 +181,14 @@ When the user invokes /peng or asks about peng without specifying an exact branc
   - Add New Sub-Option: Add a new level-2 branch or prompt variant to an existing workflow.
   - Create Completely New Category: Add Option 13 to this master catalog.
   - Edit Existing Workflow Instructions: Tweak the step-by-step logic of an existing prompt.
-  - What is this for? (Explain Custom PromptManagement, its value, and when to use it)
+  - What is this for? (Explain Custom Prompt Management, its value, and when to use it)
 
 ---
 
 ### 12. [HELP] Help & Comprehensive User Guide
 - Level 2 Context Menu:
-  - Change Language Preference: Switch conversation & prompt language to another language at any time.
+  - Check for Updates & What's New: Review v1.2.3 features, improvements, and update notes.
+  - Change Language Preference: Switch conversation & prompt language (English, Bengali, Spanish, Hindi, etc.) at any time.
   - Interactive Topic Browser: Choose between Vibe Coding Philosophy, Context Hygiene, Workflow Matrix, or Troubleshooting.
   - Print Full Master Manual: Output the complete comprehensive developer guide directly to chat.
   - Antigravity IDE Best Practices: Specific guide on leveraging Antigravity slash commands, artifacts, and multi-agent coordination.
