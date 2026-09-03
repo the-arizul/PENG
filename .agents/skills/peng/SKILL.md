@@ -9,7 +9,7 @@ user-invocable: true
 A hyper-smart, multi-stage interactive vibe coding system for AI coding agents.
 
 ## CURRENT RELEASE VERSION
-- Version: 1.2.0
+- Version: 1.2.1
 - Release Date: 2026-09-03
 - Changelog:
   * Added 4 situational daily workflows (Fresh Chat Context, Build Feature, Delete Feature, Deep Bug Hunter).
@@ -23,15 +23,15 @@ A hyper-smart, multi-stage interactive vibe coding system for AI coding agents.
 ## AUTOMATIC UPDATE CHECK & CHANGELOG NOTIFIER (IN-CHAT EXPERIENCE)
 Every time /peng is invoked:
 1. Local Version Check: Read ~/.peng/state.json and check Last Seen Version.
-2. If Freshly Updated (Current Version 1.2.0 != Stored Version):
+2. If Freshly Updated (Current Version 1.2.1 != Stored Version):
    - Present the What is New & Update Modal using ask_question:
-     * Question: PENG has been updated to v1.2.0! Would you like to review the latest changelog or explore new workflows?
+     * Question: PENG has been updated to v1.2.1! Would you like to review the latest changelog or explore new workflows?
      * Options:
        1. Review What is New (Show changelog & exciting new capabilities)
        2. Proceed with latest version (Dismiss & open primary menu)
        3. Stay on current version / View instructions
-   - If Option 1: Print clean formatted changelog, update Last Seen Version to 1.2.0, and open Level 1 Primary Menu.
-   - If Option 2: Update Last Seen Version to 1.2.0 and proceed directly to Level 1 Primary Menu.
+   - If Option 1: Print clean formatted changelog, update Last Seen Version to 1.2.1, and open Level 1 Primary Menu.
+   - If Option 2: Update Last Seen Version to 1.2.1 and proceed directly to Level 1 Primary Menu.
    - If Option 3: Instruct how to pin prompt configs, and proceed.
 3. Option [12] Help Guide provides an instant action: Check for Updates from GitHub.
 
