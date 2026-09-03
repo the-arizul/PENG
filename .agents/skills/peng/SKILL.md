@@ -1,226 +1,131 @@
 ---
 name: peng
-description: PENG Master Vibe Coding Prompt Toolkit. Access, manage, edit, or execute battle-tested prompts (Init, Circuit Breaker, Architect, Verify, Harmonize, Learn, Fresh Chat Context, Build Feature, Delete Feature, Deep Bug Hunter, Help) and easily add new custom prompts.
+description: PENG Master Vibe Coding Prompt Toolkit. Access, manage, edit, or execute battle-tested prompts with multi-stage conversational sub-menus (Init, Fresh Chat, Build Feature, Delete Feature, Deep Bug Hunter, Circuit Breaker, Architect, Verify, Harmonize, Learn, Help).
 user-invocable: true
 ---
 
 # PENG Master Vibe Coding Toolkit
 
-A unified system for all high-leverage vibe coding workflows and pre-made prompts.
+A hyper-smart, multi-stage interactive vibe coding system for AI coding agents.
 
-## ZERO-MEMORY INTERACTIVE MENU (MANDATORY AGENT RULE)
-When the user invokes /peng or asks about peng without specifying a clear prompt:
-The agent MUST IMMEDIATELY present the interactive selection menu with numbered options:
-1. [1] Autonomous Context Init (Scan codebase & build .agents/ setup)
-2. [2] Fresh Chat Context Primer (Quick-sync memory, active branch, and recent state)
-3. [3] Build New Feature (Strict requirements breakdown, edge cases, and surgical execution)
-4. [4] Delete / Deprecate Feature (Zero-dead-code purge: models, routes, migrations, UI, and tests)
-5. [5] Deep Bug Hunter & Fixer (Scientific root-cause diagnosis and regression-free repair)
-6. [6] Circuit Breaker (Halt all edits, revert hallucinations, isolate bug)
-7. [7] Pre-Flight Architect (Formulate impacted files plan before coding)
-8. [8] Pre-Commit Verify (Run tests, fix lint errors, clean git commit)
-9. [9] Gold Standard Harmonizer (Mirror reference files conventions)
-10. [10] Living Memory / Learn (Save session breakthrough to memory)
-11. [11] Add or Edit a Prompt (Update this catalog)
-12. [12] Help & Comprehensive User Guide (Detailed usage guidelines & best practices)
-
-The user only needs to click the option or type the number (1-12). The user does NOT need to remember any keywords.
+## ZERO-MEMORY INTERACTIVE MENU ENGINE (MANDATORY AGENT RULE)
+When the user invokes /peng or asks about peng without specifying an exact branch:
+1. **Level 1 (Primary Category):** Present the interactive selection menu with options 1 to 12.
+2. **Level 2 (Intelligent Sub-Menu Specialization):** Upon the user selecting an option, **DO NOT jump into blind execution**. Immediately present the contextual follow-up menu using sk_question (or clean numbered choices) to pinpoint user intent, scope, and technical nuances.
 
 ---
 
-## Master Prompt Catalog & Usage Guide
+### Primary Menu (Level 1)
+1. [1] Autonomous Context Init (Deep scan codebase & generate living .agents/ setup)
+2. [2] Fresh Chat Context Primer (Quick-sync memory, active branch, and recent diffs)
+3. [3] Build New Feature (Layered architecture, strict schema, and surgical coding)
+4. [4] Delete / Deprecate Feature (Zero-dead-code purge: models, routes, migrations, UI)
+5. [5] Deep Bug Hunter & Fixer (Scientific root-cause diagnosis and regression-free repair)
+6. [6] Circuit Breaker (Emergency halt, revert hallucinations, and isolate bug)
+7. [7] Pre-Flight Architect (Strict impact matrix and risk analysis before coding)
+8. [8] Pre-Commit Verify (Automated test suites, linter fixes, and clean git commit)
+9. [9] Gold Standard Harmonizer (Mirror existing cleanest reference conventions)
+10. [10] Living Memory / Learn (Save session breakthrough to permanent project memory)
+11. [11] Add or Edit a Prompt (Extend or customize this prompt catalog)
+12. [12] Help & Comprehensive User Guide (Interactive master manual and steering tips)
+
+---
+
+## Multi-Stage Workflow & Sub-Menu Catalog
 
 ### 1. [INIT] Autonomous Context Generator
-- **Trigger:** /peng 1 or select 1 from /peng
-- **When to Use:** 
-  - First conversation after cloning or opening any new codebase.
-  - When existing agent context feels outdated, fragmented, or unstructured.
-  - When you want the agent to self-discover folder structures and gold standard files.
-- **Goal & Value:**
-  - Performs deep reconnaissance across package managers, frameworks, and architecture.
-  - Discovers 2-3 cleanest 'Gold Standard' reference files to establish coding baselines.
-  - Builds a compact, high-density .agents/AGENTS.md (< 150 lines) with an autonomous self-evolution directive.
-- **Workflow:**
-  1. Deep Codebase Reconnaissance: Detect runtimes, frameworks, directory structure, architectural patterns, project-specific quirks, test/lint commands, and identify 2-3 Gold Standard reference files.
-  2. Initialize .agents/ Architecture: Ensure .agents/AGENTS.md, .agents/rules/, and .agents/skills/ exist.
-  3. Generate .agents/AGENTS.md (< 150 lines) containing project summary, key commands, reference files, and self-evolution directive.
-  4. Suggest user to commit .agents/ and start a fresh chat session for peak token efficiency.
+- **Level 2 Context Menu:**
+  - (Recommended) **Full Autopilot:** Deep scan manifests, architectures, quirks, and generate .agents/AGENTS.md + Gold Standards.
+  - **Audit & Review First:** Present discovered tech stack and proposed Gold Standard files for my manual confirmation before writing any memory files.
+  - **Rebuild / Reset Memory:** Overwrite existing .agents/ configurations and wipe stale rules.
 
 ---
 
 ### 2. [CONTEXT-PRIMER] Fresh Chat Context Primer
-- **Trigger:** /peng 2 or select 2 from /peng
-- **When to Use:**
-  - Very first message when opening a new chat window.
-  - After switching git branches or pulling remote updates.
-  - When you want the agent aligned with the exact current state of the repo without wasting tokens.
-- **Goal & Value:**
-  - Prevents hallucination of outdated files or methods.
-  - Fast-syncs current git status, recent commits, and core .agents/AGENTS.md guidelines.
-- **Workflow:**
-  1. Inspect Git & Environment State: Check current branch, uncommitted diffs, and recent commits.
-  2. Ingest Living Memory: Read .agents/AGENTS.md and any active .agents/rules/.
-  3. Context Confirmation: Provide a 3-bullet executive summary of the current repo posture and confirm readiness for the next task.
+- **Level 2 Context Menu:**
+  - (Recommended) **Standard Sync:** Fast-sync current git branch, uncommitted diffs, recent 3 commits, and .agents/AGENTS.md.
+  - **Branch-Switch Onboarding:** Compare differences between current branch and main/develop to brief me on branch-specific tasks.
+  - **Stale Context Flush:** Re-verify package versions and environment configurations to ensure zero outdated assumptions.
 
 ---
 
-### 3. [FEATURE-BUILDER] Build New Feature (Surgical Implementation)
-- **Trigger:** /peng 3 or select 3 from /peng
-- **When to Use:**
-  - Adding a brand-new end-to-end feature or business capability.
-  - Implementing an API endpoint with UI components and database schema.
-- **Goal & Value:**
-  - Avoids haphazard code dumps.
-  - Enforces requirements clarity, schema safety, and layered architecture.
-- **Workflow:**
-  1. Requirements Deconstruction: Ask user for feature specs if unclear; outline core user stories.
-  2. Architectural Mapping: Define Database Layer -> Business Logic/Service Layer -> Controller/API -> Frontend/UI.
-  3. Pre-Flight Approval: List exact new files and modified files. Wait for user green light.
-  4. Surgical Execution: Write clean, type-safe, and validated code mirroring Gold Standard conventions.
-  5. Verification: Trigger test suites and confirm feature works end-to-end.
+### 3. [FEATURE-BUILDER] Build New Feature
+- **Level 2 Context Menu:**
+  - (Recommended) **End-to-End Vertical Slice:** Full stack (Database migration -> Model -> Business Logic Service -> Controller/API -> Frontend/UI).
+  - **Backend API & Data Layer Only:** Schema migration, validation requests, business logic, and API endpoints without UI.
+  - **Frontend / UI Component Only:** Client-side components, state management, and API client integration using design system tokens.
+  - **Interactive Requirement Interview (/grill-me mode):** Ask me 3-5 clarifying questions on edge cases, validation rules, and business constraints before writing any code.
 
 ---
 
-### 4. [FEATURE-PURGE] Delete / Deprecate Feature (Zero Dead-Code Purge)
-- **Trigger:** /peng 4 or select 4 from /peng
-- **When to Use:**
-  - Sunsetting an old feature, obsolete API, or deprecated UI screen.
-  - Removing a third-party integration or payment gateway completely.
-- **Goal & Value:**
-  - Prevents 'code rot' and ghost references that silently break future builds.
-  - Thoroughly identifies all dependencies, imports, database columns, route definitions, and test fixtures.
-- **Workflow:**
-  1. Blast-Radius Audit: Deeply grep for all references across routes, controllers, models, views, styles, seeders, and tests.
-  2. Deletion Impact Matrix: Present the exact list of lines and files to be removed, plus database migration needed to drop obsolete columns/tables.
-  3. Safe Execution: Delete obsolete code and run migrations.
-  4. Dead-Code Verification: Run static analysis and linters to guarantee zero broken imports or orphaned references.
+### 4. [FEATURE-PURGE] Delete / Deprecate Feature
+- **Level 2 Context Menu:**
+  - (Recommended) **Complete Zero-Dead-Code Purge:** Grep & remove routes, controllers, models, seeders, frontend components, and generate database column drop migrations.
+  - **Soft Deprecation / Feature-Flagging:** Wrap feature behind an environment flag or deprecation warning without deleting files yet.
+  - **Dry-Run Blast-Radius Audit:** Only list all affected references, imports, and foreign keys without deleting anything.
 
 ---
 
 ### 5. [BUG-HUNTER] Deep Bug Hunter & Fixer
-- **Trigger:** /peng 5 or select 5 from /peng
-- **When to Use:**
-  - When encountering an elusive bug, race condition, 500 error, or unexpected UI glitch.
-  - Before making blind guesses or random trial-and-error edits.
-- **Goal & Value:**
-  - Applies first-principles debugging. Isolates root cause before touching core files.
-  - Guarantees that the fix does not create regressions elsewhere.
-- **Workflow:**
-  1. Symptom & Environment Ingestion: Analyze error logs, stack traces, and reproduction steps.
-  2. Root-Cause Analysis: Identify the exact logical gap or mismatch causing the behavior.
-  3. Isolated Reproduction: Formulate a reproducing test case or diagnostic probe to confirm the bug.
-  4. Surgical Patch: Apply the minimal, cleanest fix necessary.
-  5. Regression Check: Run the full test suite to verify the bug is eliminated without side effects.
+- **Level 2 Context Menu:**
+  - (Recommended) **Specific Error or Stack Trace:** I will provide the error message/trace; perform root-cause autopsy and patch.
+  - **Heisenbug / Race Condition:** Reproduce intermittent logic bug, timing issue, or caching mismatch using isolated diagnostic probes.
+  - **Security & Vulnerability Audit:** Scan for SQL injections, auth bypasses, exposed API secrets, or CSRF/XSS vectors in current module.
+  - **Performance & Query Profiling:** Hunt N+1 queries, memory leaks, slow renders, or unnecessary re-renders in active component.
 
 ---
 
-### 6. [CIRCUIT-BREAKER] Emergency Halt & Root-Cause Diagnosis
-- **Trigger:** /peng 6 or select 6 from /peng
-- **When to Use:**
-  - When the agent is trapped in an edit loop and failing to fix the same error repeatedly.
-  - When a bug fix breaks 2-3 other unrelated files or features.
-- **Goal & Value:**
-  - Prevents codebase destruction and saves hours of debugging time.
-  - Discards uncommitted bad edits and forces an isolated diagnostic approach.
-- **Workflow:**
-  1. Immediate Code Freeze: Stop all production edits. Discard uncommitted changes from this loop.
-  2. False Assumption Autopsy: State the incorrect assumption that caused the failure.
-  3. Two Hypotheses: Formulate 2 distinct hypotheses explaining the issue.
-  4. Isolated Verification: Write a temporary diagnostic script or targeted logging to verify the true hypothesis before touching production code.
-  5. Wait for user review and signal.
+### 6. [CIRCUIT-BREAKER] Emergency Halt & Diagnosis
+- **Level 2 Context Menu:**
+  - (Recommended) **Full Code Freeze & Discard:** Discard all uncommitted changes from this failure loop and run a root-cause autopsy.
+  - **Keep Edits, Diagnose Only:** Do not discard changes yet; write an isolated diagnostic probe to identify which assumption failed.
+  - **Explain The Failure:** Summarize in plain English why the previous 3 attempts failed and propose 2 fresh alternative directions.
 
 ---
 
 ### 7. [ARCHITECT] Strict Pre-Flight Architecture Review
-- **Trigger:** /peng 7 or select 7 from /peng
-- **When to Use:**
-  - Before building any major feature or multi-file module.
-  - Before large refactorings, database schema alterations, or major dependency upgrades.
-- **Goal & Value:**
-  - Eliminates unintended side-effects and prevents touching out-of-scope files.
-  - Gives you complete visibility and veto power before code is written.
-- **Workflow:**
-  1. Scope Definition: Analyze feature requirements and determine minimal touchpoints.
-  2. Impact Matrix: List exact files to create, modify, or delete.
-  3. Dependency Mapping: Identify affected APIs, database models, queues, and state flows.
-  4. Risk Assessment: Identify 2 potential breaking changes or edge cases.
-  5. Execution Sequence: Outline sequential steps.
-  6. Gatekeeper Approval: STOP and wait for approval before generating code.
+- **Level 2 Context Menu:**
+  - (Recommended) **Standard Pre-Flight Matrix:** List exact files to touch, affected database models, queues, and 2 potential breaking changes.
+  - **Comparative Architecture:** Present 2 alternative architectural approaches (e.g. Event-driven vs Synchronous Service, or Context vs Zustand) with trade-offs.
+  - **Database & Schema Impact Only:** Deeply analyze migration safety, table locking risks, index performance, and rollback feasibility.
 
 ---
 
 ### 8. [VERIFY] Self-Correction & Pre-Commit Audit
-- **Trigger:** /peng 8 or select 8 from /peng
-- **When to Use:**
-  - Immediately after code generation is complete, right before committing to Git.
-  - Before opening a Pull Request or deploying code.
-- **Goal & Value:**
-  - Ensures production readiness without manual code scanning.
-  - Cleans up leftover debug logs, temporary print statements, and lint warnings.
-- **Workflow:**
-  1. Automated Verification: Run project test suites, static analyzers, and build tools (e.g., phpunit, flutter test, npm test, npm run build).
-  2. Autonomous Correction: Diagnose and fix errors autonomously without changing business logic.
-  3. Hygiene Cleanup: Remove all debug prints, dd(), dump(), console.log(), and temporary scripts.
-  4. Audit Report: Present final test status and clean git diff summary.
+- **Level 2 Context Menu:**
+  - (Recommended) **Full Suite & Hygiene:** Run unit/integration tests, static linters, typechecks, clean debug logs, and prepare commit.
+  - **Test-Only Run:** Run automated test suites; autonomously patch failures without touching linters.
+  - **Linter & Style Cleanup:** Fix formatting, typescript/phpstan errors, and eliminate dead imports only.
+  - **Pre-PR Security & Sanity Check:** Verify no .env credentials, tokens, or debug dump calls are staged.
 
 ---
 
 ### 9. [HARMONIZE] Gold Standard Style Harmonizer
-- **Trigger:** /peng 9 or select 9 from /peng
-- **When to Use:**
-  - Writing a new controller, service, repository, model, or UI component.
-  - When you notice the agent writing generic code that does not match your codebase vibe.
-- **Goal & Value:**
-  - Prevents 'Style Drift' and maintains 100% architectural uniformity.
-  - Guarantees that new files look like they were written by the original author.
-- **Workflow:**
-  1. Reference Identification: Locate the designated Gold Standard file in .agents/AGENTS.md.
-  2. Pattern Extraction: Analyze naming conventions, error handling, validation structures, return types, dependency injection, and styling tokens.
-  3. Faithful Replication: Write new code strictly mirroring that exact structure and elegance.
+- **Level 2 Context Menu:**
+  - (Recommended) **Auto-Detect Best Reference:** Scan repo for the cleanest matching file (Controller, Service, or UI Component) and mirror it.
+  - **User-Specified Reference File:** I will paste the exact file path to mirror for this implementation.
+  - **Refactor Existing File to Match:** Take an existing messy file and rewrite it to match our designated Gold Standard.
 
 ---
 
 ### 10. [LEARN] Session Living Memory Extractor
-- **Trigger:** /peng 10 or select 10 from /peng
-- **When to Use:**
-  - At the end of a session where a tough, elusive bug was solved.
-  - After completing a complex setup or discovering an undocumented repo quirk.
-- **Goal & Value:**
-  - Turns temporary session insights into permanent repository memory.
-  - Guarantees the agent will never repeat the same mistake in future chats.
-- **Workflow:**
-  1. Insight Extraction: Summarize key decisions, tricks, or edge-cases in 2-3 concise bullet points.
-  2. Living Docs Update: Add a high-density 1-2 line rule to .agents/AGENTS.md to prevent future regressions.
-  3. Workflow Persistence: Save or update a reusable skill in .agents/skills/.
-  4. Persistence Confirmation: Confirm what was saved to project memory.
+- **Level 2 Context Menu:**
+  - (Recommended) **Update .agents/AGENTS.md:** Distill today's breakthrough into a high-density 1-2 line rule in AGENTS.md.
+  - **Generate Specialized Skill:** Create a dedicated .agents/skills/<workflow>/SKILL.md playbook for this complex procedure.
+  - **Create Repo Rule File:** Save a targeted .agents/rules/<domain>.md file that automatically attaches to relevant directory paths.
 
 ---
 
 ### 11. [CUSTOM] Add or Edit a Prompt
-- **Trigger:** /peng 11 or select 11 from /peng
-- **When to Use:**
-  - Whenever you have a new repetitive prompt workflow you want to standardize.
-  - When modifying any existing prompt rule or instructions.
-- **Goal & Value:**
-  - Keeps the prompt toolkit alive, extensible, and tailored specifically to your workflow.
-- **Workflow:**
-  1. Ask user for prompt name, when to use, goal, and workflow details.
-  2. Append or update the prompt section in this file directly.
+- **Level 2 Context Menu:**
+  - (Recommended) **Add New Sub-Option:** Add a new level-2 branch or prompt variant to an existing workflow.
+  - **Create Completely New Category:** Add Option 13 to this master catalog.
+  - **Edit Existing Workflow Instructions:** Tweak the step-by-step logic of an existing prompt.
 
 ---
 
 ### 12. [HELP] Help & Comprehensive User Guide
-- **Trigger:** /peng 12 or select 12 from /peng
-- **When to Use:**
-  - When you want an in-depth understanding of how to maximize Vibe Coding productivity.
-  - When deciding which workflow to choose for your current task.
-- **Goal & Value:**
-  - Serves as the ultimate master manual for pairing with AI coding agents.
-  - Teaches practical best practices on context lifecycle, git hygiene, and steering techniques.
-- **Workflow:**
-  1. Present the comprehensive Vibe Coding Master Guide covering:
-     - Core Vibe Coding Philosophy: Steering vs. typing, and maintaining engineering rigor.
-     - Context Hygiene: The lifecycle rule (Plan -> Code -> Verify -> Git Commit -> Clean Chat).
-     - Workflow Matrix: Detailed breakdown of when and why to trigger Options 1 through 11.
-     - Autonomous Memory System: How .agents/AGENTS.md, skills, and rules cooperate without overwhelming token limits.
-     - Troubleshooting Guide: What to do when an agent loops, hallucinates, or breaks code.
+- **Level 2 Context Menu:**
+  - (Recommended) **Interactive Topic Browser:** Choose between Vibe Coding Philosophy, Context Hygiene, Workflow Matrix, or Troubleshooting.
+  - **Print Full Master Manual:** Output the complete comprehensive developer guide directly to chat.
+  - **Antigravity IDE Best Practices:** Specific guide on leveraging Antigravity slash commands, artifacts, and multi-agent coordination.
