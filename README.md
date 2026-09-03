@@ -11,6 +11,7 @@ Type /peng in your agent chat to immediately open an interactive menu with battl
 5. **[5] Gold Standard Harmonizer** - Enforces 100% architectural uniformity by mimicking existing reference files.
 6. **[6] Living Memory / Learn** - Permanently extracts session tricks and bug fixes into project memory.
 7. **[7] Add or Edit a Prompt** - Extends or customizes this prompt catalog on the fly.
+8. **[8] Help & User Guide** - Detailed usage guidelines, context lifecycle tips, and best practices.
 
 ---
 
@@ -21,10 +22,10 @@ px skills):
 
 `ash
 # Install to current project
-npx skills add YOUR_GITHUB_USERNAME/PENG
+npx skills add Arizul-Islam/PENG
 
 # Or install globally across all projects and agents
-npx skills add YOUR_GITHUB_USERNAME/PENG -g
+npx skills add Arizul-Islam/PENG -g
 `
 
 ---
@@ -37,7 +38,7 @@ In any supported agent chat (Antigravity, Cursor, Windsurf, Claude Code):
 /peng
 `
 
-The agent will prompt you with an interactive numbered menu. Simply select or type the number (1-7) corresponding to the workflow you want to run. You never have to memorize prompt keywords.
+The agent will prompt you with an interactive numbered menu. Simply select or type the number (1-8) corresponding to the workflow you want to run. You never have to memorize prompt keywords.
 
 ---
 

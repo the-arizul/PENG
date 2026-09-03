@@ -1,6 +1,6 @@
 ---
 name: peng
-description: PENG Master Vibe Coding Prompt Toolkit. Access, manage, edit, or execute battle-tested prompts (Init, Circuit Breaker, Architect, Verify, Harmonize, Learn) and easily add new custom prompts.
+description: PENG Master Vibe Coding Prompt Toolkit. Access, manage, edit, or execute battle-tested prompts (Init, Circuit Breaker, Architect, Verify, Harmonize, Learn, Help) and easily add new custom prompts.
 user-invocable: true
 ---
 
@@ -18,8 +18,9 @@ The agent MUST IMMEDIATELY present the interactive selection menu with numbered 
 5. [5] Gold Standard Harmonizer (Mirror reference files conventions)
 6. [6] Living Memory / Learn (Save session breakthrough to memory)
 7. [7] Add or Edit a Prompt (Update this catalog)
+8. [8] Help & Comprehensive User Guide (Detailed usage guidelines & best practices)
 
-The user only needs to click the option or type the number (1-7). The user does NOT need to remember any keywords.
+The user only needs to click the option or type the number (1-8). The user does NOT need to remember any keywords.
 
 ---
 
@@ -143,7 +144,19 @@ The user only needs to click the option or type the number (1-7). The user does 
 
 ---
 
-## Instructions for Adding / Editing Prompts
-- To add a new prompt: Append a new section ### N. [NAME] Title following the exact format above.
-- To edit: Update the text in this file directly.
-- Autonomous Agent Directive: The agent is fully authorized to edit this file upon user request.
+### 8. [HELP] Help & Comprehensive User Guide
+- **Trigger:** /peng 8 or select 8 from /peng
+- **When to Use:**
+  - When you want an in-depth understanding of how to maximize Vibe Coding productivity.
+  - When deciding which workflow to choose for your current task.
+  - When troubleshooting agent drift, token bloat, or context degradation.
+- **Goal & Value:**
+  - Serves as the ultimate master manual for pairing with AI coding agents.
+  - Teaches practical best practices on context lifecycle, git hygiene, and steering techniques.
+- **Workflow:**
+  1. Present the comprehensive Vibe Coding Master Guide covering:
+     - Core Vibe Coding Philosophy: Steering vs. typing, and maintaining engineering rigor.
+     - Context Hygiene: The lifecycle rule (Plan -> Code -> Verify -> Git Commit -> Clean Chat).
+     - Workflow Matrix: Detailed breakdown of when and why to trigger Options 1 through 7.
+     - Autonomous Memory System: How .agents/AGENTS.md, skills, and rules cooperate without overwhelming token limits.
+     - Troubleshooting Guide: What to do when an agent loops, hallucinates, or breaks code.
