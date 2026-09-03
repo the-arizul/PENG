@@ -9,9 +9,10 @@ user-invocable: true
 A hyper-smart, multi-stage interactive vibe coding system for AI coding agents.
 
 ## CURRENT RELEASE VERSION
-- Version: 1.2.4
+- Version: 1.2.5
 - Release Date: 2026-09-03
 - Changelog:
+  * Level 3 Adaptive Resolution Context Menu: When scans/diagnostics detect issues, dynamically prompts with 'Resolve All', 'Resolve One by One', 'Explain Root Causes', 'Plan Only', etc.
   * Conversation Titling Fix: Explicit engineering identity prevents erroneous 'Penguin Image Generation' title.
   * Zero-Command Instant UI: Completely eliminated background shell commands on invocation.
   * Instant Interactive Menu: Direct ask_question launch without visual noise or command execution.
@@ -68,6 +69,15 @@ When the user invokes /peng or asks about peng without specifying an exact branc
 1. **Zero Commands:** Do NOT run any terminal or shell commands (`run_command`, `pwsh`, etc.).
 2. **Level 1 (Primary Category):** Present the interactive selection menu IMMEDIATELY using `ask_question`.
 3. **Level 2 (Intelligent Sub-Menu Specialization):** Upon the user selecting an option, **DO NOT jump into blind execution**. Immediately present the contextual follow-up menu using `ask_question` (or clean numbered choices) to pinpoint user intent, scope, and technical nuances. Always append the explainer option.
+4. **Level 3 (Adaptive Resolution Sub-Menu):** Whenever an issue scan or diagnosis discovers one or more issues/bugs/failures (e.g. in Bug Hunter, Security Audit, Performance Profiler, or Pre-Commit Verify):
+   **DO NOT blindly edit code or patch everything unprompted.**
+   Present a clear, high-density summary list of the issues, then IMMEDIATELY trigger the **Resolution Context Menu (`ask_question`)**:
+   - Resolve All (Autonomously fix all identified issues in priority order with regression checks)
+   - Resolve One by One (Interactive step-by-step; review diff and approve each fix individually)
+   - Explain Root Causes & Impact (Deep-dive explanation of why each issue happened before taking action)
+   - Implementation Plan Only (Draft structured plan; wait for confirmation before touching code)
+   - Selective Fix (Pick specific issues to resolve and ignore others)
+   - What is this for? (Explain resolution strategies, trade-offs, and recommended next steps)
 
 ---
 
@@ -133,6 +143,16 @@ When the user invokes /peng or asks about peng without specifying an exact branc
   - Security & Vulnerability Audit: Scan for SQL injections, auth bypasses, exposed API secrets, or CSRF/XSS vectors in current module.
   - Performance & Query Profiling: Hunt N+1 queries, memory leaks, slow renders, or unnecessary re-renders in active component.
   - What is this for? (Explain Deep Bug Hunter & Fixer, its value, and when to use it)
+- Level 3 Resolution Context Menu (Triggered immediately when issues are identified):
+  * When scanning completes and issues are found, list the issues in a concise summary table, then invoke `ask_question`:
+    - Question: "Found [N] issue(s). How would you like to proceed with the resolution?"
+    - Options:
+      1. Resolve All (Autonomously fix all identified issues in sequence with regression checks)
+      2. Resolve One by One (Interactive step-by-step walkthrough; review & approve each fix)
+      3. Explain Root Causes & Impact (Deep-dive technical breakdown of why each issue happened before modifying code)
+      4. Implementation Plan Only (Formulate detailed plan; wait for confirmation before touching code)
+      5. Selective Fix (Choose which specific issues to fix and which to skip)
+      6. What is this for? (Explain resolution strategies, trade-offs, and recommended next steps)
 
 ---
 
@@ -161,6 +181,16 @@ When the user invokes /peng or asks about peng without specifying an exact branc
   - Linter & Style Cleanup: Fix formatting, typescript/phpstan errors, and eliminate dead imports only.
   - Pre-PR Security & Sanity Check: Verify no `.env` credentials, tokens, or debug dump calls are staged.
   - What is this for? (Explain Pre-Commit Verify, its value, and when to use it)
+- Level 3 Resolution Context Menu (Triggered when test/linter failures are detected):
+  * If failures or violations are detected during verification, summarize them, then invoke `ask_question`:
+    - Question: "[N] check(s) failed during pre-commit verification. Select resolution mode:"
+    - Options:
+      1. Resolve All (Autonomously fix all linter, typecheck, and test failures)
+      2. Resolve One by One (Step through each failure interactively; review & approve each fix)
+      3. Explain Failures & Violations (Explain the errors and propose safe fixes)
+      4. Safe Commits Only (Ignore non-critical warnings and commit clean passing code)
+      5. Selective Fix (Choose which checks to fix and which to bypass)
+      6. What is this for? (Explain verification resolution strategies)
 
 ---
 
