@@ -12,7 +12,8 @@ The agent MUST IMMEDIATELY trigger an interactive context menu using sk_questio
   1. Yes, bump patch version & commit (e.g., 1.2.0 -> 1.2.1)
   2. Yes, bump minor version & commit (e.g., 1.2.0 -> 1.3.0)
   3. Commit current changes without bumping version
-  4. No, keep uncommitted for now
+  4. All good? Ensure it first (Run sanity audit, verify changes, and confirm readiness)
+  5. No, keep uncommitted for now
 
 ### Execution Handlers when User selects Yes:
 1. **Auto-Bump Version:** Update the Version: X.Y.Z in SKILL.md (and release date & changelog summary).

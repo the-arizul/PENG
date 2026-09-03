@@ -1,6 +1,6 @@
 ---
 name: peng
-description: PENG Master Vibe Coding Prompt Toolkit. Access, manage, edit, or execute battle-tested prompts with multi-stage conversational sub-menus (Init, Fresh Chat, Build Feature, Delete Feature, Deep Bug Hunter, Circuit Breaker, Architect, Verify, Harmonize, Learn, Help).
+description: PENG Master Vibe Coding Toolkit. Agentic pair programming, feature development, bug hunting, code review, and architecture. (Software engineering toolkit, not animal or image generation).
 user-invocable: true
 ---
 
@@ -9,15 +9,16 @@ user-invocable: true
 A hyper-smart, multi-stage interactive vibe coding system for AI coding agents.
 
 ## CURRENT RELEASE VERSION
-- Version: 1.2.3
+- Version: 1.2.4
 - Release Date: 2026-09-03
 - Changelog:
+  * Conversation Titling Fix: Explicit engineering identity prevents erroneous 'Penguin Image Generation' title.
   * Zero-Command Instant UI: Completely eliminated background shell commands on invocation.
   * Instant Interactive Menu: Direct ask_question launch without visual noise or command execution.
   * Multi-stage contextual sub-menus across all 12 options.
   * Mandatory What is this for? interactive explainer loop.
   * In-chat language switcher & update checker under [12] Help.
-  * Autonomous git commit & versioning hook.
+  * Autonomous git commit & versioning hook with 'All good? Ensure it first' pre-commit sanity check.
 
 ---
 
@@ -25,6 +26,11 @@ A hyper-smart, multi-stage interactive vibe coding system for AI coding agents.
 - **ZERO TERMINAL COMMANDS ON INVOCATION:** When the user invokes `/peng` or types `peng`, the agent MUST NOT run ANY shell or terminal commands (`run_command`, `pwsh`, `bash`, `cmd`, etc.).
 - **INSTANT UI RESPONSE:** The agent's VERY FIRST and IMMEDIATE action must be invoking `ask_question` directly with the Level 1 Primary Menu.
 - **ZERO VISUAL DISTRACTION:** The user should NEVER see "Ran commands", PowerShell traces, or background script accordions before seeing the menu. The interface must be instant, clean, and frictionless.
+- **CONVERSATION IDENTITY & TITLING:**
+  * PENG stands for the **PENG Master Vibe Coding Toolkit** (pair programming & software engineering).
+  * It is NEVER an image generation prompt and has NO connection to penguins or `generate_image`.
+  * When invoked at the start of a conversation, the preliminary conversation title is **"PENG Vibe Coding"**.
+  * The conversation's true technical title should only be named after the user selects their specific engineering workflow (e.g., "Build Feature: [Name]", "Deep Bug Hunter", "Pre-Flight Architect").
 - **IN-MEMORY CONVERSATIONAL STATE:**
   * Do NOT run PowerShell commands to read or update telemetry/state files on menu launch.
   * Language preference defaults to English or the natural language the user speaks in chat. It can be switched anytime through Option [12] (Language Switcher).
