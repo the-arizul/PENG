@@ -1,10 +1,31 @@
 # AntiGravity PENG - Master Vibe Coding Toolkit
 
-This repository contains the unified **PENG Master Vibe Coding System** for Antigravity IDE.
+This repository contains the unified **PENG Master Vibe Coding System** for Antigravity IDE and universal AI coding agents.
 
-## Zero-Memory Slash Command: /peng
+## AUTONOLOUS VERSIONING & PRE-WRAP GIT COMMIT RULE (MANDATORY AGENT DIRECTIVE)
 
-Simply type /peng in chat. The agent will immediately present an interactive menu so you never need to remember keywords or numbers.
+Whenever the user finishes working on this project, completes an update, or indicates a session wrap-up:
+The agent MUST IMMEDIATELY trigger an interactive context menu using `ask_question`:
+
+- **Question:** "You have made updates to PENG. Would you like to bump the release version and commit the changes to Git now?"
+- **Options:**
+  1. Yes, bump patch version & commit (e.g., 1.2.0 -> 1.2.1)
+  2. Yes, bump minor version & commit (e.g., 1.2.0 -> 1.3.0)
+  3. Commit current changes without bumping version
+  4. No, keep uncommitted for now
+
+### Execution Handlers when User selects Yes:
+1. **Auto-Bump Version:** Update the `Version: X.Y.Z` file in `SKILL.md` (and release date & changelog summary).
+2. **Sync Mirrors:** Sync the updated `SKILL.md` to `~/.gemini/config/skills/peng/SKILL.md` and workspace copies.
+3. **Git Commit:** Stage all changes and run `git commit -m "release: bump version to vX.Y.Z" `.
+4. **Push Signal:** Inform the user that the release is sealed locally and ready to push to remote.
+
+---
+
+
+## Single Slash Command: `/penga
+
+Simply type `/peng` in chat. The agent will immediately present an interactive menu so you never need to remember keywords or numbers.
 
 ### Quick Reference & Usage Matrix
 
