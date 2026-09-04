@@ -52,14 +52,16 @@ Provide your goal or task directly when invoking PENG. The agent will autonomous
 /peng purge legacy stripe v1 endpoints and unused tables
 ```
 
-### Mode 2: Interactive Menu Mode (Zero-Memory)
-When you simply type `/peng` without a prompt:
+### Mode 2: Interactive Context-Aware Menu Mode
+When you type `/peng` without a prompt:
 
 ```text
 /peng
 ```
 
-The agent executes the swift pre-flight check and immediately renders the interactive Level-1 menu, followed by intelligent Level-2 contextual sub-menus.
+The agent executes pre-flight checks and evaluates active conversation context:
+- **Mid-Conversation Active Context:** If an active workflow, unresolved diagnostic scan, or post-resolution wrap-up state exists in the conversation, PENG automatically re-opens the active **Level-2, Level-3, or Level-4 Contextual Sub-Menu** (with an option to `Return to Top-Level Primary Menu`).
+- **Fresh Conversation State:** Directly renders the interactive Level-1 primary menu.
 
 ---
 

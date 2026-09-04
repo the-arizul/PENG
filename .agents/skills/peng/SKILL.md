@@ -9,9 +9,10 @@ user-invocable: true
 A hyper-smart, multi-stage interactive vibe coding system for AI coding agents.
 
 ## CURRENT RELEASE VERSION
-- Version: 1.3.4
+- Version: 1.3.5
 - Release Date: 2026-09-05
 - Changelog:
+  * Context-Aware Mid-Conversation Invocation Engine: When /peng or peng is called standalone mid-conversation without an action prompt, PENG evaluates the active conversation history and turn state. If an active workflow, unresolved diagnostic scan, or post-resolution wrap-up state is detected, PENG automatically re-opens the corresponding contextual sub-menu (Level 2, Level 3, or Level 4) with a 'Return to Top-Level Primary Menu' option, avoiding the generic Level 1 primary menu.
   * WordPress Zip Parent Folder Packaging Directive: Rewrote WordPress plugin & theme zip packaging rules. Mandated that all generated `.zip` packages MUST encapsulate source code inside a single top-level parent folder (e.g. `plugin-slug/`) so WordPress Admin extracts and recognizes the plugin cleanly without loose root files.
   * Smart Project Runner & Bundler Engine: Added 'Run the app/project' option to all Level 4 Post-Resolution & Wrap-Up context menus. Auto-detects the project environment and executes the appropriate launcher or packaging command (WordPress plugins/themes zip creation excluding `.git` directory, Flutter `flutter run`, Laravel `php artisan serve`, NPM `npm run dev`/`npm start`, Python Django/FastAPI/Flask, Go, Rust, Docker).
   * Mandatory Zip Exclusion Rule: Explicit rule enforcing mandatory exclusion of `.git`, `.gitignore`, `.github`, `tests`, and non-production assets when zipping WordPress plugins, themes, or extensions for production testing.
@@ -119,9 +120,12 @@ Whenever `/peng` or `peng` is invoked on any new conversation (both in Standalon
      - If Option 1: Run `git pull`, display a brief summary of pulled commits, then proceed.
      - If Option 2: Proceed immediately without pulling.
 
-4. **Step C: Seamlessly Launch Requested Mode:**
+4. **Step C: Seamlessly Launch Requested Mode & Context-Aware Routing:**
    - If user provided an action prompt (`/peng <task>`): Proceed directly to **Mode 1: Action-Prompted Direct Execution**.
-   - If user typed `/peng` standalone: Proceed directly to **Mode 2: Standalone Menu Launch (Level 1 Primary Menu)** via `ask_question`.
+   - If user typed `/peng` or `peng` standalone (without an action prompt):
+     * **Conversation Context Probe:** Evaluate the active conversation history and turn state to determine if an active workflow, pending diagnostic scan, or post-resolution wrap-up state exists.
+     * **Active Context Detected:** Open the corresponding **Contextual Sub-Menu (Level 2, Level 3, or Level 4)** directly via `ask_question`. Always append the option `Return to Top-Level Primary Menu` so the user can easily switch workflows.
+     * **Clean / Fresh State (No Active Context):** Launch **Mode 2: Standalone Primary Menu Launch (Level 1 Primary Menu)** via `ask_question`.
 
 ---
 
@@ -199,12 +203,17 @@ Whenever the user invokes PENG (via `/peng`, calling the `peng` skill, or mentio
 
 ---
 
-### MODE 2: STANDALONE MENU LAUNCH (NO ACTION PROMPT SUPPLIED)
-**Trigger Condition:** The user invokes `/peng` or `peng` by itself without an action prompt, or asks to browse the available PENG workflows.
+### MODE 2: STANDALONE & MID-CONVERSATION CONTEXT-AWARE INVOCATION (NO ACTION PROMPT SUPPLIED)
+**Trigger Condition:** The user invokes `/peng` or `peng` by itself without an action prompt, or asks to open the PENG menu mid-conversation.
 
-**Execution Steps for Standalone Mode:**
-1. **Pre-Flight Verified:** Execute the Pre-Flight Session Check (Git sync probe & state.json verification), then transition smoothly to Level 1.
-2. **Level 1 (Primary Category):** Present the interactive selection menu IMMEDIATELY using `ask_question`.
+**Execution Steps for Standalone & Mid-Conversation Mode:**
+1. **Pre-Flight Verified:** Execute the Pre-Flight Session Check (Git sync probe & state.json verification).
+2. **Mid-Conversation Context Detection:**
+   - **State A (Active In-Flight Workflow Context):** If the user is currently working on or recently initiated an engineering workflow in this conversation (e.g. Feature Builder [3], Bug Hunter [5], Pre-Commit [8], Architect [7], Harmonizer [9], Feature Purge [4]), IMMEDIATELY open that specific workflow's **Level 2 Sub-Menu** via `ask_question`. Always append `Return to Top-Level Primary Menu` so the user can switch categories easily.
+   - **State B (Unresolved Diagnostics / Pending Issues Context):** If diagnostic scans or tests recently identified issues that have not been resolved yet, IMMEDIATELY open the **Level 3 Adaptive Resolution Sub-Menu** (`Resolve All`, `Resolve One by One`, `Explain Root Causes`, `Implementation Plan Only`, `Return to Top-Level Primary Menu`).
+   - **State C (Completed Action / Wrap-Up Context):** If an engineering task or resolution was recently completed in this conversation, IMMEDIATELY open the **Level 4 Post-Resolution Wrap-Up Sub-Menu** (`Run the app/project`, `How do I check or test the changes?`, `Stage & Commit Changes`, `Rescan & Verify`, `Run Full Test Suite`, `Save Breakthrough to Living Memory`, `Revert changes`, `Return to Top-Level Primary Menu`).
+   - **State D (Fresh Conversation / Clean State):** Present the **Level 1 Primary Category Menu** IMMEDIATELY using `ask_question`.
+3. **Level 1 (Primary Category):** When State D applies or when the user selects `Return to Top-Level Primary Menu`, present the 12 primary workflows using `ask_question`.
 3. **Level 2 (Intelligent Sub-Menu Specialization):** Upon the user selecting an option, **DO NOT jump into blind execution**. Immediately present the contextual follow-up menu using `ask_question` (or clean numbered choices) to pinpoint user intent, scope, and technical nuances. Always append the explainer option (`What is this for?`).
 4. **Level 3 (Adaptive Resolution Sub-Menu):** Whenever an issue scan or diagnosis discovers one or more issues/bugs/failures (e.g. in Bug Hunter, Security Audit, Performance Profiler, or Pre-Commit Verify):
    **DO NOT blindly edit code or patch everything unprompted.**

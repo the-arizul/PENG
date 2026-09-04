@@ -53,10 +53,10 @@ When you invoke `/peng <action prompt>` or call `peng` with a prompt for action 
 - **Interactive Verification & Manual Testing Engine:** Every Level 4 Post-Resolution and Wrap-Up menu includes `How do I check or test the changes?`. Selecting this provides an exhaustive, step-by-step manual test walkthrough tailored to the project (web, mobile, backend API, CLI, or library). Immediately after outputting the test steps, it re-invokes the Level 4 Context Menu with `Run the app/project` as Option 1 so the user can instantly run or package the app.
 - **End-to-End Revert Engine:** Every Level 4 Post-Resolution and Wrap-Up menu includes `Revert changes`. Selecting this surgically undoes all file modifications (`git restore`), deletes created files, rolls back command side-effects (e.g. uninstalls newly added packages, rolls back migrations), and restores the exact pre-interaction state without affecting unrelated work.
 
-### 2. Standalone Menu Launch (When no prompt is provided)
+### 2. Standalone & Mid-Conversation Context-Aware Invocation (When no prompt is provided)
 When you type `/peng` or `peng` by itself:
-- **Instant Menu Transition:** Transitions seamlessly from pre-flight checks directly into the Level 1 menu.
-- **Immediate ask_question:** Renders the interactive Level 1 selection menu with zero latency.
+- **Context-Aware Sub-Menu Detection:** Checks active conversation state. If an active workflow, unresolved diagnostic scan, or post-resolution wrap-up state exists in the current conversation, automatically re-opens the corresponding **Level 2, Level 3, or Level 4 Contextual Sub-Menu** directly (with a `Return to Top-Level Primary Menu` option).
+- **Primary Menu Launch:** If in a fresh conversation or clean state without active context, opens the Level 1 Primary Menu immediately via `ask_question`.
 - **Smart Contextual Sub-Menus:** Prompts you through Level 2 specialization with mandatory `What is this for?` explainers.
 
 ### Quick Reference & Usage Matrix
