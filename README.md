@@ -2,7 +2,7 @@
 
 A hyper-smart, zero-memory interactive vibe coding system featuring **multi-stage conversational sub-menus** for AI agents (Antigravity IDE, Cursor, Windsurf, Claude Code).
 
-Type /peng in your agent chat. You will be greeted by a master menu, followed by an **intelligent contextual sub-menu** tailored to your exact goal:
+Type `/peng` in your agent chat. You will be greeted by a master menu, followed by an **intelligent contextual sub-menu** tailored to your exact goal:
 
 1. **[1] Autonomous Context Init** - Deep codebase scan, Gold Standard discovery, and .agents/ setup.
    - *Sub-options:* Full Autopilot | Audit & Review First | Rebuild & Reset Memory
@@ -33,7 +33,10 @@ Type /peng in your agent chat. You will be greeted by a master menu, followed by
 
 ## Usage
 
-PENG supports two seamless invocation modes in any supported agent chat (Antigravity IDE, Cursor, Windsurf, Claude Code):
+PENG supports two seamless invocation modes in any supported agent chat (Antigravity IDE, Cursor, Windsurf, Claude Code), backed by automatic **Pre-Flight Session Checks** on every new conversation:
+
+- **Git Remote Update Check:** Detects if new commits were pushed to git remote to pull (`git fetch` + behind tracking), prompting to pull latest updates with a single click before coding begins.
+- **State Verification (`state.json`):** Checks if `state.json` exists to restore preferred language and usage preferences, or presents the first-time setup modal if unconfigured.
 
 ### Mode 1: Action-Prompted Direct Execution (Fast-Track)
 Provide your goal or task directly when invoking PENG. The agent will autonomously match the optimal workflow from the skill catalog, elevate the workflow with PENG engineering standards, and execute without opening the Level-1 menu:
@@ -53,7 +56,7 @@ When you simply type `/peng` without a prompt:
 /peng
 ```
 
-The agent immediately renders the interactive Level-1 menu with zero terminal noise, followed by intelligent Level-2 contextual sub-menus.
+The agent executes the swift pre-flight check and immediately renders the interactive Level-1 menu, followed by intelligent Level-2 contextual sub-menus.
 
 ---
 

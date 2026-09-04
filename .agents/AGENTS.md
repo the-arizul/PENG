@@ -25,7 +25,16 @@ The agent MUST IMMEDIATELY trigger an interactive context menu using sk_questio
 
 ## Invocation Modes: /peng
 
-PENG supports two intelligent invocation modes:
+PENG supports two intelligent invocation modes, both preceded by automatic pre-flight checks on new conversations:
+
+### Pre-Flight Session Checks (Every New Conversation)
+Whenever `/peng` or `peng` is invoked at the start of a conversation:
+1. **Git Remote Sync Check:** Automatically runs a fast git remote tracking check. If new commits have been pushed to remote (`HEAD` is behind `@{u}`), prompts the user via `ask_question`:
+   - *"🚀 New updates were detected on git remote. Would you like to pull them now before proceeding?"*
+   - Allows instant `git pull` before any work begins.
+2. **State Verification (`state.json`):** Verifies if `state.json` exists (`$HOME/.peng/state.json` or `.agents/state.json`).
+   - If missing: Launches the First-Time Welcome & Language Setup modal via `ask_question`, then initializes `state.json`.
+   - If present: Loads user preferences (`preferred_language`) silently.
 
 ### 1. Action-Prompted Direct Execution (When a task or prompt is provided)
 When you invoke `/peng <action prompt>` or call `peng` with a prompt for action (e.g. `/peng build auth service`, `/peng fix checkout crash`, `/peng run pre-commit tests`):
@@ -36,7 +45,7 @@ When you invoke `/peng <action prompt>` or call `peng` with a prompt for action 
 
 ### 2. Standalone Menu Launch (When no prompt is provided)
 When you type `/peng` or `peng` by itself:
-- **Zero Terminal Commands:** Instant launch without running background shell scripts or causing UI clutter.
+- **Instant Menu Transition:** Transitions seamlessly from pre-flight checks directly into the Level 1 menu.
 - **Immediate ask_question:** Renders the interactive Level 1 selection menu with zero latency.
 - **Smart Contextual Sub-Menus:** Prompts you through Level 2 specialization with mandatory `What is this for?` explainers.
 

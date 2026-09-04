@@ -9,17 +9,17 @@ user-invocable: true
 A hyper-smart, multi-stage interactive vibe coding system for AI coding agents.
 
 ## CURRENT RELEASE VERSION
-- Version: 1.2.8
+- Version: 1.2.9
 - Release Date: 2026-09-04
 - Changelog:
+  * Session Git Remote Sync & state.json Verification: On any new conversation when peng is invoked, automatically checks if new git updates were pushed to remote to pull, and verifies if state.json exists. Prompts to git pull if remote is ahead, and initializes language setup if state.json is absent.
   * Action-Prompted Direct Execution Engine: Calling /peng <prompt> or invoking peng with a specific action/task bypasses the Level 1 context menu, autonomously selects the matching workflow (Options 1–12), infers the optimal sub-option, and elevates the workflow with PENG engineering rigor.
-  * Preserved Dual-Mode Flexibility: Standalone /peng continues to launch the instant interactive zero-command menu.
-  * First-Time User Detection: Silently checks ~/.peng/state.json via view_file (zero terminal noise). New users get a welcome + language setup; returning users go straight to the primary menu.
+  * Preserved Dual-Mode Flexibility: Standalone /peng continues to launch the instant interactive menu.
+  * First-Time User Detection: Checks state.json existence. New users get a welcome + language setup; returning users go straight to the primary menu.
   * Level 4 Post-Resolution Sub-Menu: When all issues are resolved, prompts with Rescan & Verify, Stage & Commit, Run Test Suite, Save to Memory, and Return to Menu.
   * Level 3 Adaptive Resolution Context Menu: When scans/diagnostics detect issues, dynamically prompts with 'Resolve All', 'Resolve One by One', 'Explain Root Causes', 'Plan Only', etc.
   * Conversation Titling Fix: Explicit engineering identity prevents erroneous 'Penguin Image Generation' title.
-  * Zero-Command Instant UI: Completely eliminated background shell commands on invocation.
-  * Instant Interactive Menu: Direct ask_question launch without visual noise or command execution.
+  * Instant Interactive Menu: Direct ask_question launch without visual noise or unnecessary prompts.
   * Multi-stage contextual sub-menus across all 12 options.
   * Mandatory What is this for? interactive explainer loop.
   * In-chat language switcher & update checker under [12] Help.
@@ -27,22 +27,35 @@ A hyper-smart, multi-stage interactive vibe coding system for AI coding agents.
 
 ---
 
-## STRICT ZERO-COMMAND LAUNCH DIRECTIVE (CRITICAL UI & VIBE RULE)
-- **ZERO TERMINAL COMMANDS ON INVOCATION:** When the user invokes `/peng` or types `peng`, the agent MUST NOT run ANY shell or terminal commands (`run_command`, `pwsh`, `bash`, `cmd`, etc.).
-- **CONVERSATION IDENTITY & TITLING:**
-  * PENG stands for the **PENG Master Vibe Coding Toolkit** (pair programming & software engineering).
-  * It is NEVER an image generation prompt and has NO connection to penguins or `generate_image`.
-  * When invoked standalone without an action prompt, the preliminary conversation title is **"PENG Vibe Coding"**.
-  * When invoked with an action prompt (e.g., `/peng build auth service` or `/peng fix crash`), the conversation title must immediately reflect the specific engineering action (e.g., "Build Feature: Auth Service", "Deep Bug Hunter: Crash").
-  * The conversation's true technical title should reflect the exact engineering task.
+## PRE-FLIGHT SESSION CHECKS & LAUNCH ENGINE (MANDATORY AGENT DIRECTIVE)
 
-### FIRST-TIME USER DETECTION (SILENT, ZERO TERMINAL NOISE)
-Every time `/peng` is invoked, the agent's VERY FIRST action must be:
-1. **Silently attempt to read `~/.peng/state.json`** using the `view_file` tool (NOT `run_command`).
-   - `view_file` is completely silent in the UI — the user sees no "Ran commands" accordion or terminal trace.
-   - On Windows, the path is `C:\Users\<USERNAME>\.peng\state.json`. Resolve `~` to the actual home directory.
-2. **If the file does NOT exist (view_file returns an error or file-not-found):** This is a **first-time user**.
-   - Present the **First-Time Welcome & Language Setup** using `ask_question`:
+### CONVERSATION IDENTITY & TITLING
+- PENG stands for the **PENG Master Vibe Coding Toolkit** (pair programming & software engineering).
+- It is NEVER an image generation prompt and has NO connection to penguins or `generate_image`.
+- When invoked standalone without an action prompt, the preliminary conversation title is **"PENG Vibe Coding"**.
+- When invoked with an action prompt (e.g., `/peng build auth service` or `/peng fix crash`), the conversation title must immediately reflect the specific engineering action (e.g., "Build Feature: Auth Service", "Deep Bug Hunter: Crash").
+- The conversation's true technical title should reflect the exact engineering task.
+
+---
+
+### PRE-FLIGHT SESSION CHECKS: GIT SYNC & STATE.JSON VERIFICATION
+Whenever `/peng` or `peng` is invoked on any new conversation (both in Standalone Menu Mode and Action-Prompted Mode), the agent's FIRST step is the **Pre-Flight Session Check**:
+
+1. **Swift Pre-Flight Probe:**
+   Execute a single fast, clean probe to check git remote tracking status and state file existence:
+   - **PowerShell (Windows):**
+     ```powershell
+     git fetch origin --quiet 2>$null; $behind = (git rev-list HEAD..@{u} --count 2>$null); $hasState = (Test-Path "$HOME\.peng\state.json") -or (Test-Path ".agents\state.json") -or (Test-Path ".peng\state.json"); Write-Output "BEHIND=$behind|STATE=$hasState"
+     ```
+   - **Bash (Linux / macOS):**
+     ```bash
+     git fetch origin --quiet 2>/dev/null; BEHIND=$(git rev-list HEAD..@{u} --count 2>/dev/null); [ -f "$HOME/.peng/state.json" ] || [ -f ".agents/state.json" ] || [ -f ".peng/state.json" ] && STATE=True || STATE=False; echo "BEHIND=$BEHIND|STATE=$STATE"
+     ```
+
+2. **Step A: Check if `state.json` Exists:**
+   - **If `STATE=False` (state.json does NOT exist):**
+     This is a **first-time user** or uninitialized setup.
+     Immediately present the **First-Time Welcome & Language Setup** using `ask_question`:
      * Question: "Welcome to PENG! 🚀 Select your preferred language for all workflows and explanations:"
      * Options:
        1. English
@@ -52,21 +65,34 @@ Every time `/peng` is invoked, the agent's VERY FIRST action must be:
        5. Chinese (中文)
        6. Japanese (日本語)
        7. French (Français)
-   - After the user selects a language, **create `~/.peng/state.json`** silently using `write_to_file` (set `UserFacing: false`) with:
+     After the user selects a language, initialize and save `state.json` (to `$HOME/.peng/state.json` and `.agents/state.json`):
      ```json
      {
        "preferred_language": "<selected>",
        "configured": true,
        "usage_count": 1,
        "first_used": "<ISO timestamp>",
-       "last_seen_version": "1.2.8"
+       "last_seen_version": "1.2.9"
      }
      ```
-   - Then proceed immediately to the Level 1 Primary Menu.
-3. **If the file EXISTS (view_file succeeds):** This is a **returning user**.
-   - Read the `preferred_language` from the JSON and respect it for all subsequent outputs.
-   - Proceed directly to the Level 1 Primary Menu via `ask_question` — instant, zero-delay.
-4. **ZERO VISUAL DISTRACTION:** The user should NEVER see "Ran commands", PowerShell traces, or background script accordions. The `view_file` check and `write_to_file` creation are both invisible to the user. The first thing the user visually experiences is either the welcome menu or the primary menu.
+   - **If `STATE=True` (state.json EXISTS):**
+     This is a **returning user**. Read the configured `preferred_language` and apply it to all subsequent interactions.
+
+3. **Step B: Check if Git Updates Were Pushed to Pull:**
+   - **If `BEHIND > 0` (remote repository has new commits):**
+     New updates were pushed on git! Prompt the user using `ask_question`:
+     * Question: "🚀 New updates were detected on git remote (local is [N] commit(s) behind). Would you like to pull them now before proceeding?"
+     * Options:
+       1. Yes, pull latest updates (git pull)
+       2. No, continue with current local branch
+     - If the user chooses "Yes, pull latest updates": Run `git pull`, display a brief summary of pulled commits, then proceed.
+     - If the user chooses "No, continue with current local branch": Proceed immediately without pulling.
+   - **If local is up-to-date (`BEHIND=0` or unconfigured remote):**
+     Proceed immediately without any git prompt.
+
+4. **Step C: Seamlessly Launch Requested Mode:**
+   - If user provided an action prompt (`/peng <task>`): Proceed directly to **Mode 1: Action-Prompted Direct Execution**.
+   - If user typed `/peng` standalone: Proceed directly to **Mode 2: Standalone Menu Launch (Level 1 Primary Menu)** via `ask_question`.
 
 ---
 
@@ -148,7 +174,7 @@ Whenever the user invokes PENG (via `/peng`, calling the `peng` skill, or mentio
 **Trigger Condition:** The user invokes `/peng` or `peng` by itself without an action prompt, or asks to browse the available PENG workflows.
 
 **Execution Steps for Standalone Mode:**
-1. **Zero Commands:** Do NOT run any terminal or shell commands (`run_command`, `pwsh`, etc.).
+1. **Pre-Flight Verified:** Execute the Pre-Flight Session Check (Git sync probe & state.json verification), then transition smoothly to Level 1.
 2. **Level 1 (Primary Category):** Present the interactive selection menu IMMEDIATELY using `ask_question`.
 3. **Level 2 (Intelligent Sub-Menu Specialization):** Upon the user selecting an option, **DO NOT jump into blind execution**. Immediately present the contextual follow-up menu using `ask_question` (or clean numbered choices) to pinpoint user intent, scope, and technical nuances. Always append the explainer option (`What is this for?`).
 4. **Level 3 (Adaptive Resolution Sub-Menu):** Whenever an issue scan or diagnosis discovers one or more issues/bugs/failures (e.g. in Bug Hunter, Security Audit, Performance Profiler, or Pre-Commit Verify):
