@@ -9,16 +9,17 @@ user-invocable: true
 A hyper-smart, multi-stage interactive vibe coding system for AI coding agents.
 
 ## CURRENT RELEASE VERSION
-- Version: 1.3.1
+- Version: 1.3.2
 - Release Date: 2026-09-04
 - Changelog:
+  * Interactive Verification & Manual Testing Engine: Added 'How do I check or test the changes?' option to all Level 4 Post-Resolution & Wrap-Up context menus. Generates instant, project-specific, step-by-step testing instructions including local URLs/ports, test credentials/mock data, click-by-click user journeys, before-vs-after expectations, DevTools network/console inspections, and edge case tests across any web app, mobile app, API, or project.
   * End-to-End Revert Engine: Added 'Revert changes' option to all Level 4 Post-Resolution & Wrap-Up menus. Allows instant, surgical rollback of all file edits, newly created files, and executed commands (package installs, migrations) from the last action, restoring the pre-interaction baseline without touching unrelated work.
   * Push-Based Update Detection via npx skills: No GitHub releases or tags required. The skill directly tracks git commits pushed to the-arizul/PENG on GitHub via git ls-remote. Consumer projects automatically detect newly pushed commits and prompt the user to update the skill safely via npx skills update peng (-y or -g -y).
   * Session Git Remote Sync & state.json Verification: On any new conversation when peng is invoked, automatically checks if new git updates were pushed to remote to pull, and verifies if state.json exists. Prompts to git pull if remote is ahead, and initializes language setup if state.json is absent.
   * Action-Prompted Direct Execution Engine: Calling /peng <prompt> or invoking peng with a specific action/task bypasses the Level 1 context menu, autonomously selects the matching workflow (Options 1–12), infers the optimal sub-option, and elevates the workflow with PENG engineering rigor.
   * Preserved Dual-Mode Flexibility: Standalone /peng continues to launch the instant interactive menu.
   * First-Time User Detection: Checks state.json existence. New users get a welcome + language setup; returning users go straight to the primary menu.
-  * Level 4 Post-Resolution Sub-Menu: When all issues are resolved, prompts with Rescan & Verify, Stage & Commit, Run Test Suite, Save to Memory, Revert changes, and Return to Menu.
+  * Level 4 Post-Resolution Sub-Menu: When all issues are resolved, prompts with How do I check or test the changes?, Stage & Commit, Rescan & Verify, Run Test Suite, Save to Memory, Revert changes, and Return to Menu.
   * Level 3 Adaptive Resolution Context Menu: When scans/diagnostics detect issues, dynamically prompts with 'Resolve All', 'Resolve One by One', 'Explain Root Causes', 'Plan Only', etc.
   * Conversation Titling Fix: Explicit engineering identity prevents erroneous 'Penguin Image Generation' title.
   * Instant Interactive Menu: Direct ask_question launch without visual noise or unnecessary prompts.
@@ -189,7 +190,7 @@ Whenever the user invokes PENG (via `/peng`, calling the `peng` skill, or mentio
 4. **Preserve Downstream Resolution & Verification Sub-Menus (Levels 3 & 4):**
    - While Level 1 and 2 menus are bypassed for speed, downstream interactive safety loops remain active:
      - **Level 3 (Adaptive Resolution Context Menu):** If diagnostic scans, audits, or tests discover issues, summarize them and invoke `ask_question` (`Resolve All`, `Resolve One by One`, `Explain Root Causes & Impact`, `Implementation Plan Only`).
-     - **Level 4 (Post-Resolution Wrap-Up Sub-Menu):** When all issues or features are resolved/implemented, invoke `ask_question` (`Rescan & Verify`, `Stage & Commit Changes`, `Run Full Test Suite`, `Save Breakthrough to Living Memory`, `Revert changes`, `Return to Primary Menu`).
+     - **Level 4 (Post-Resolution Wrap-Up Sub-Menu):** When all issues or features are resolved/implemented, invoke `ask_question` (`How do I check or test the changes?`, `Stage & Commit Changes`, `Rescan & Verify`, `Run Full Test Suite`, `Save Breakthrough to Living Memory`, `Revert changes`, `Return to Primary Menu`).
 5. **Instant Accurate Conversation Titling:**
    - Immediately title the conversation based on the specific action (e.g., `Build Feature: Auth Service`, `Deep Bug Hunter: Null Pointer`), NOT generic `PENG Vibe Coding`.
 
@@ -212,8 +213,9 @@ Whenever the user invokes PENG (via `/peng`, calling the `peng` skill, or mentio
 5. **Level 4 (Post-Resolution & Verification Wrap-Up Sub-Menu):** When all identified issues/bugs/failures have been resolved:
    **DO NOT end the turn abruptly or assume the work is done.**
    Present a clear summary of all resolved items, and IMMEDIATELY trigger the **Post-Resolution Wrap-Up Context Menu (`ask_question`)**:
-   - Rescan & Verify (Run a fresh regression check to guarantee 0 remaining issues)
+   - How do I check or test the changes? (Step-by-step verification guide with URLs, test data, and instructions)
    - Stage & Commit Changes (Review diff, generate clean git commit, and seal release)
+   - Rescan & Verify (Run a fresh regression check to guarantee 0 remaining issues)
    - Run Full Test Suite (Execute automated test suites to ensure zero side-effect regressions)
    - Save Breakthrough to Living Memory (Extract resolution pattern into `.agents/AGENTS.md`)
    - Revert changes (Undo all edits, created files, and commands executed in the last action)
@@ -264,6 +266,66 @@ When the user clicks `Revert changes`:
 
 ---
 
+## INTERACTIVE VERIFICATION & MANUAL TESTING ENGINE (MANDATORY AGENT DIRECTIVE)
+
+Whenever the user selects **`How do I check or test the changes?`** from ANY Level 4 Post-Resolution or Wrap-Up Context Menu:
+The agent MUST NOT output generic advice (e.g., "open your browser to test it" or "test the feature").
+The agent is STRICTLY REQUIRED to deliver an exhaustive, crystal-clear, step-by-step verification guide tailored specifically to the project type (Web App, Mobile App, Backend API, CLI tool, or Library/Worker) and the exact changes just executed.
+
+### Core Structure of the Verification Guide:
+
+1. **Target Area & Change Summary:**
+   - Concise 1-2 sentence recap of the exact functional components touched (e.g., checkout shipping addresses, payment gateway integration, API routes, data validation).
+
+2. **Local Environment & Dev Server Launch:**
+   - Exact CLI command to ensure the app/dev server is running (e.g., `npm run dev`, `pnpm dev`, `python manage.py runserver`, `php artisan serve`, `docker compose up`, etc.).
+   - Explicit local URLs, ports, and route paths:
+     * Base URL (e.g., `http://localhost:3000` or `http://127.0.0.1:8000`)
+     * Target Page / Screen URL (e.g., `http://localhost:3000/checkout`, `http://localhost:5173/cart`, or API endpoint `http://127.0.0.1:8000/api/v1/orders`)
+
+3. **Pre-Requisites, Seed Data & Mock Credentials:**
+   - Provide exact test credentials if authentication is required (e.g., `test@example.com / password123` or "Click 'Continue as Guest'").
+   - Define exact prerequisite state (e.g., "Add at least 1 item to cart so the checkout button is enabled").
+   - Provide realistic dummy input data to copy-paste (e.g., dummy shipping address, Stripe test card `4242 4242 4242 4242`, Exp: `12/28`, CVC: `123`, phone number `+1 555-0199`).
+
+4. **Step-by-Step Test Procedure (User Journey):**
+   - Click-by-click, numbered instructions for the user:
+     1. Open browser/client and navigate to `http://localhost:.../path`.
+     2. Locate the specific modified component, form, or button.
+     3. Enter the provided test data into the input fields.
+     4. Click the action button (e.g., "Save Address", "Proceed to Payment", "Submit Order").
+
+5. **Expected Outcome vs Previous State (What to Verify):**
+   - **Expected Behavior:** Exactly what should appear on screen (e.g., success toast "Address saved successfully", order summary recalculates, order confirmation page displays with Order ID).
+   - **Before vs After:** Contrast what was broken or missing previously vs what happens now, so the user knows exactly what defect was repaired or what feature was added.
+
+6. **DevTools & Under-the-Hood Inspection (Network, Console & Logs):**
+   - **DevTools Network Tab:** The exact HTTP request to look for (e.g., `POST /api/v1/checkout/address`), expected status code (`200 OK` or `201 Created`), and sample payload inspection.
+   - **Browser / Terminal Console:** Confirm zero uncaught red errors, warnings, or unhandled promise rejections.
+   - **Backend / Database State (if applicable):** Specific SQL query, ORM check, or log line to confirm persistence (e.g., `SELECT * FROM orders ORDER BY id DESC LIMIT 1;`).
+
+7. **Edge Cases & Negative Tests to Verify:**
+   - 1-2 rapid edge case tests (e.g., "Submit form with empty required fields -> verify red inline validation errors appear without page reload", "Test network disconnect -> verify graceful retry toast").
+
+8. **Universal Multi-Platform Adaptability:**
+   - **Web Apps (React, Next.js, Vue, Angular, Laravel, Django):** Browser URLs, DevTools network/console, form fields.
+   - **Mobile Apps (React Native, Flutter, iOS, Android):** Simulator/emulator run commands, deep links, navigation screens, gestures, native logs (`adb logcat`, Xcode console).
+   - **Backend APIs & Microservices (FastAPI, Express, Spring Boot, Go):** Ready-to-run `curl` commands, Postman/Thunder Client payloads, Swagger UI URLs (`http://localhost:8000/docs`).
+   - **CLI Tools & Scripts:** Exact terminal command invocations with test arguments, flags, and expected terminal output.
+   - **Libraries / Packages:** Example import snippet or runner script (`node test.js` or `pytest tests/test_feature.py`).
+
+9. **Seamless Follow-Up Loop:**
+   - Immediately following the verification guide, re-invoke the Level 4 Wrap-Up Menu via `ask_question`:
+     * Question: "Ready after testing the changes? How would you like to proceed?"
+     * Options:
+       1. Stage & Commit Changes (Review diff and seal release with clean git commit)
+       2. Rescan & Verify (Run fresh automated regression & linter check)
+       3. Save Breakthrough to Living Memory (Record pattern into .agents/AGENTS.md)
+       4. Revert changes (Undo all edits, created files, and commands executed in this action)
+       5. Return to Primary Menu (Select another workflow)
+
+---
+
 ### Primary Menu (Level 1)
 1. [1] Autonomous Context Init (Deep scan codebase & generate living .agents/ setup)
 2. [2] Fresh Chat Context Primer (Quick-sync memory, active branch, and recent diffs)
@@ -311,12 +373,13 @@ When the user clicks `Revert changes`:
   * Once the feature code and components are generated, invoke `ask_question`:
     - Question: "Feature implementation completed! How would you like to proceed?"
     - Options:
-      1. Run Verification & Tests (Execute tests and linters on the new feature)
+      1. How do I check or test the changes? (Step-by-step verification guide with URLs, test data, and instructions)
       2. Stage & Commit Changes (Review diff and seal release with clean git commit)
-      3. Save Architecture Pattern to Memory (Record patterns into .agents/AGENTS.md)
-      4. Revert changes (Undo all edits, created files, and commands executed in this feature build)
-      5. Return to Primary Menu (Select another workflow)
-      6. What is this for? (Explain feature wrap-up and verification options)
+      3. Run Verification & Tests (Execute tests and linters on the new feature)
+      4. Save Architecture Pattern to Memory (Record patterns into .agents/AGENTS.md)
+      5. Revert changes (Undo all edits, created files, and commands executed in this feature build)
+      6. Return to Primary Menu (Select another workflow)
+      7. What is this for? (Explain feature wrap-up and verification options)
 
 ---
 
@@ -326,6 +389,17 @@ When the user clicks `Revert changes`:
   - Soft Deprecation / Feature-Flagging: Wrap feature behind an environment flag or deprecation warning without deleting files yet.
   - Dry-Run Blast-Radius Audit: Only list all affected references, imports, and foreign keys without deleting anything.
   - What is this for? (Explain Delete / Deprecate Feature, its value, and when to use it)
+- Level 4 Post-Resolution Context Menu (Triggered when purge is complete):
+  * Once all references and dead code are purged, invoke `ask_question`:
+    - Question: "Feature purge completed! How would you like to proceed?"
+    - Options:
+      1. How do I check or test the changes? (Verification steps to confirm feature is purged without breaking remaining app)
+      2. Stage & Commit Changes (Review diff and seal purge with clean commit)
+      3. Rescan & Verify (Run blast-radius regression check to guarantee 0 broken imports)
+      4. Run Full Test Suite (Execute automated test suites)
+      5. Revert changes (Undo all deletions and restore pre-interaction baseline)
+      6. Return to Primary Menu (Select another workflow)
+      7. What is this for? (Explain purge wrap-up and safety verification)
 
 ---
 
@@ -350,13 +424,14 @@ When the user clicks `Revert changes`:
   * Once the fixes are applied and confirmed, invoke `ask_question`:
     - Question: "All issues have been resolved! How would you like to proceed?"
     - Options:
-      1. Rescan & Verify (Run diagnostic probes again to confirm zero remaining issues)
+      1. How do I check or test the changes? (Step-by-step verification guide with URLs, test data, and instructions)
       2. Stage & Commit Changes (Review diff and commit fix to Git)
-      3. Run Full Test Suite (Execute automated test suites to ensure zero regressions)
-      4. Save Breakthrough to Living Memory (Record root cause & fix pattern into .agents/AGENTS.md)
-      5. Revert changes (Undo all edits, created files, and commands executed in the last action)
-      6. Return to Primary Menu (Select another workflow)
-      7. What is this for? (Explain post-resolution verification and next steps)
+      3. Rescan & Verify (Run diagnostic probes again to confirm zero remaining issues)
+      4. Run Full Test Suite (Execute automated test suites to ensure zero regressions)
+      5. Save Breakthrough to Living Memory (Record root cause & fix pattern into .agents/AGENTS.md)
+      6. Revert changes (Undo all edits, created files, and commands executed in the last action)
+      7. Return to Primary Menu (Select another workflow)
+      8. What is this for? (Explain post-resolution verification and next steps)
 
 ---
 
@@ -399,12 +474,13 @@ When the user clicks `Revert changes`:
   * Once all failures or warnings are patched and verified, invoke `ask_question`:
     - Question: "All verification checks have passed! How would you like to proceed?"
     - Options:
-      1. Rescan & Final Pre-Commit Pass (Run full verify suite again to ensure 100% clean check)
+      1. How do I check or test the changes? (Step-by-step verification guide with URLs, test data, and instructions)
       2. Stage & Commit to Git (Review diff and seal release with clean commit)
-      3. Save Breakthrough to Living Memory (Record learnings into .agents/AGENTS.md)
-      4. Revert changes (Undo all edits, created files, and commands executed in the last action)
-      5. Return to Primary Menu (Select another workflow)
-      6. What is this for? (Explain commit finalization best practices)
+      3. Rescan & Final Pre-Commit Pass (Run full verify suite again to ensure 100% clean check)
+      4. Save Breakthrough to Living Memory (Record learnings into .agents/AGENTS.md)
+      5. Revert changes (Undo all edits, created files, and commands executed in the last action)
+      6. Return to Primary Menu (Select another workflow)
+      7. What is this for? (Explain commit finalization best practices)
 
 ---
 
@@ -414,6 +490,16 @@ When the user clicks `Revert changes`:
   - User-Specified Reference File: I will paste the exact file path to mirror for this implementation.
   - Refactor Existing File to Match: Take an existing messy file and rewrite it to match our designated Gold Standard.
   - What is this for? (Explain Gold Standard Harmonizer, its value, and when to use it)
+- Level 4 Post-Resolution Context Menu (Triggered when refactor/harmonization is complete):
+  * Once refactoring is applied, invoke `ask_question`:
+    - Question: "Code harmonization completed! How would you like to proceed?"
+    - Options:
+      1. How do I check or test the changes? (Step-by-step verification guide with URLs, test data, and instructions)
+      2. Stage & Commit Changes (Review diff and seal clean commit)
+      3. Rescan & Verify (Run linters and tests to verify architectural conformance)
+      4. Revert changes (Undo all edits and restore pre-interaction baseline)
+      5. Return to Primary Menu (Select another workflow)
+      6. What is this for? (Explain harmonization verification and next steps)
 
 ---
 

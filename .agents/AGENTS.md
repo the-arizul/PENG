@@ -49,6 +49,7 @@ When you invoke `/peng <action prompt>` or call `peng` with a prompt for action 
 - **Autonomous Workflow Selection:** Maps your prompt directly to the best matching PENG workflow [1]–[12] and auto-infers the optimal sub-option.
 - **Elevates Workflow Rigor:** Enforces PENG engineering standards (autopsy probes for bugs, layered architecture for features, impact matrix for architecture, clean test runs for pre-commit).
 - **Interactive Resolution Sub-Menus:** If issues or failures are detected during execution, seamlessly launches the Level 3 (Resolution) and Level 4 (Wrap-Up) menus.
+- **Interactive Verification & Manual Testing Engine:** Every Level 4 Post-Resolution and Wrap-Up menu includes `How do I check or test the changes?`. Selecting this provides an exhaustive, step-by-step manual test walkthrough tailored to the project (web, mobile, backend API, CLI, or library), complete with local URLs/ports, test credentials/data, user journeys, before-and-after expectations, DevTools network/console inspections, and edge case tests.
 - **End-to-End Revert Engine:** Every Level 4 Post-Resolution and Wrap-Up menu includes `Revert changes`. Selecting this surgically undoes all file modifications (`git restore`), deletes created files, rolls back command side-effects (e.g. uninstalls newly added packages, rolls back migrations), and restores the exact pre-interaction state without affecting unrelated work.
 
 ### 2. Standalone Menu Launch (When no prompt is provided)
