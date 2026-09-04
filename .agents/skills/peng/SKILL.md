@@ -9,9 +9,10 @@ user-invocable: true
 A hyper-smart, multi-stage interactive vibe coding system for AI coding agents.
 
 ## CURRENT RELEASE VERSION
-- Version: 1.3.3
+- Version: 1.3.4
 - Release Date: 2026-09-05
 - Changelog:
+  * WordPress Zip Parent Folder Packaging Directive: Rewrote WordPress plugin & theme zip packaging rules. Mandated that all generated `.zip` packages MUST encapsulate source code inside a single top-level parent folder (e.g. `plugin-slug/`) so WordPress Admin extracts and recognizes the plugin cleanly without loose root files.
   * Smart Project Runner & Bundler Engine: Added 'Run the app/project' option to all Level 4 Post-Resolution & Wrap-Up context menus. Auto-detects the project environment and executes the appropriate launcher or packaging command (WordPress plugins/themes zip creation excluding `.git` directory, Flutter `flutter run`, Laravel `php artisan serve`, NPM `npm run dev`/`npm start`, Python Django/FastAPI/Flask, Go, Rust, Docker).
   * Mandatory Zip Exclusion Rule: Explicit rule enforcing mandatory exclusion of `.git`, `.gitignore`, `.github`, `tests`, and non-production assets when zipping WordPress plugins, themes, or extensions for production testing.
   * Interactive Verification & Manual Testing Engine: Added 'How do I check or test the changes?' option to all Level 4 Post-Resolution & Wrap-Up context menus. Generates instant, project-specific, step-by-step testing instructions including local URLs/ports, test credentials/mock data, click-by-click user journeys, before-vs-after expectations, DevTools network/console inspections, and edge case tests across any web app, mobile app, API, or project.
@@ -340,20 +341,29 @@ The agent MUST auto-detect the project ecosystem and execute or present the exac
 
 1. **WordPress Plugins, Themes & Extension Packages (Distribution Zip Packaging):**
    - **Trigger Condition:** WordPress plugin file detected (`plugin-name.php` with `Plugin Name:` header), theme (`style.css` with `Theme Name:` header), or WP folder structure.
-   - **Action:** Create a clean, production-ready `.zip` distribution archive in the workspace root named `<plugin-folder-name>.zip` ready for direct upload to a WordPress installation (`Plugins > Add New > Upload Plugin`).
+   - **MANDATORY SINGLE PARENT FOLDER PACKAGING RULE:**
+     * **ALL SOURCE FILES MUST BE WRAPPED IN A SINGLE TOP-LEVEL PARENT FOLDER:** The generated `.zip` archive MUST encapsulate all files inside a single root folder named after the plugin/theme slug (e.g., `plugin-slug/plugin-slug.php`, `plugin-slug/includes/`). It MUST NEVER dump files loosely directly at the root of the archive without the parent directory.
    - **CRITICAL MANDATORY ZIP EXCLUSION RULE:**
      * **MUST ALWAYS EXCLUDE `.git` DIRECTORY AND GIT METADATA:** (`.git`, `.gitignore`, `.gitattributes`, `.github`).
      * Exclude dev-only files & directories: `tests/`, `node_modules` (unless production bundled assets), uncompiled source files, `.env*`, `.agent*`, scratch files, and existing `.zip` files.
-   - **Execution Commands:**
+   - **Execution Commands (Zipping Parent Folder relative to Parent Directory):**
      - **PowerShell (Windows):**
        ```powershell
-       $pkgName = (Get-Item .).Name; Get-ChildItem -Path . -Exclude ".git*", ".github*", "tests*", "*.zip", ".agents*", ".env*" | Compress-Archive -DestinationPath "$pkgName.zip" -Force; Write-Output "CREATED_ZIP=$pkgName.zip"
+       $folderName = (Get-Item .).Name
+       $parentDir = (Get-Item .).Parent.FullName
+       $zipPath = Join-Path $parentDir "$folderName.zip"
+       Set-Location $parentDir
+       Get-ChildItem -Path $folderName -Recurse | Where-Object { $_.FullName -notmatch '[\\/](\.git|\.github|\.agents|tests|\.env|\.zip)' } | Compress-Archive -DestinationPath $zipPath -Force
+       Set-Location $folderName
+       Write-Output "CREATED_ZIP=$zipPath"
        ```
      - **Bash (Linux/macOS):**
        ```bash
-       PKG_NAME=$(basename "$PWD"); zip -r "${PKG_NAME}.zip" . -x "*.git*" "*.github*" "tests/*" "*.zip" ".agents/*" ".env*"
+       FOLDER_NAME=$(basename "$PWD")
+       cd .. && zip -r "${FOLDER_NAME}.zip" "${FOLDER_NAME}" -x "${FOLDER_NAME}/*.git*" "${FOLDER_NAME}/*.github*" "${FOLDER_NAME}/tests/*" "${FOLDER_NAME}/*.zip" "${FOLDER_NAME}/.agents/*" "${FOLDER_NAME}/.env*" && cd "${FOLDER_NAME}"
+       echo "CREATED_ZIP=$(pwd)/../${FOLDER_NAME}.zip"
        ```
-   - Display the clean zip artifact path and simple upload steps for WordPress admin testing.
+   - Display the clean zip artifact path and simple upload steps for WordPress admin testing (`Plugins > Add New > Upload Plugin`).
 
 2. **Flutter Mobile & Cross-Platform Applications:**
    - **Trigger Condition:** `pubspec.yaml` with Flutter dependency detected.
