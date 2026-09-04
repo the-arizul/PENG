@@ -9,9 +9,10 @@ user-invocable: true
 A hyper-smart, multi-stage interactive vibe coding system for AI coding agents.
 
 ## CURRENT RELEASE VERSION
-- Version: 1.2.9
+- Version: 1.3.0
 - Release Date: 2026-09-04
 - Changelog:
+  * Push-Based Update Detection via npx skills: No GitHub releases or tags required. The skill directly tracks git commits pushed to the-arizul/PENG on GitHub via git ls-remote. Consumer projects automatically detect newly pushed commits and prompt the user to update the skill safely via npx skills update peng (-y or -g -y).
   * Session Git Remote Sync & state.json Verification: On any new conversation when peng is invoked, automatically checks if new git updates were pushed to remote to pull, and verifies if state.json exists. Prompts to git pull if remote is ahead, and initializes language setup if state.json is absent.
   * Action-Prompted Direct Execution Engine: Calling /peng <prompt> or invoking peng with a specific action/task bypasses the Level 1 context menu, autonomously selects the matching workflow (Options 1–12), infers the optimal sub-option, and elevates the workflow with PENG engineering rigor.
   * Preserved Dual-Mode Flexibility: Standalone /peng continues to launch the instant interactive menu.
@@ -38,18 +39,28 @@ A hyper-smart, multi-stage interactive vibe coding system for AI coding agents.
 
 ---
 
-### PRE-FLIGHT SESSION CHECKS: GIT SYNC & STATE.JSON VERIFICATION
-Whenever `/peng` or `peng` is invoked on any new conversation (both in Standalone Menu Mode and Action-Prompted Mode), the agent's FIRST step is the **Pre-Flight Session Check**:
+### PRE-FLIGHT SESSION CHECKS: GIT COMMIT TRACKING, NPX SKILLS UPDATES & STATE.JSON
+Whenever `/peng` or `peng` is invoked on any new conversation (both in Standalone Menu Mode and Action-Prompted Mode):
 
-1. **Swift Pre-Flight Probe:**
-   Execute a single fast, clean probe to check git remote tracking status and state file existence:
+- **STRICT UI CLEANLINESS DIRECTIVE:**
+  * The agent MUST run **EXACTLY ONE single combined probe command** behind the scenes. NEVER run multiple individual shell commands in sequence in front of the user.
+  * **Strict Execution Order:** The update check and state setup ALWAYS happen first. If updates exist, the update prompt is rendered first. Once resolved (or if already up-to-date), the agent immediately transitions into the Level 1 Context Menu (or direct execution). The user never experiences command clutter.
+
+1. **Swift Pre-Flight Probe (Single Command, Zero UI Clutter):**
+   PENG does NOT require GitHub Releases or tags. It tracks raw commits pushed to the `the-arizul/PENG` repository directly.
+   Execute a single fast probe to check git remote tracking, latest GitHub commit, and state file:
    - **PowerShell (Windows):**
      ```powershell
-     git fetch origin --quiet 2>$null; $behind = (git rev-list HEAD..@{u} --count 2>$null); $hasState = (Test-Path "$HOME\.peng\state.json") -or (Test-Path ".agents\state.json") -or (Test-Path ".peng\state.json"); Write-Output "BEHIND=$behind|STATE=$hasState"
+     $isPengRepo = (git remote get-url origin 2>$null) -match "the-arizul/PENG"; $hasState = (Test-Path "$HOME\.peng\state.json") -or (Test-Path ".agents\state.json"); $remoteCommit = (git ls-remote https://github.com/the-arizul/PENG.git refs/heads/main 2>$null).Split("`t")[0]; $localCommit = if (Test-Path "$HOME\.peng\state.json") { (Get-Content "$HOME\.peng\state.json" -Raw | ConvertFrom-Json).last_seen_commit } elseif (Test-Path ".agents\state.json") { (Get-Content ".agents\state.json" -Raw | ConvertFrom-Json).last_seen_commit } else { "" }; $behind = if ($isPengRepo) { git fetch origin --quiet 2>$null; (git rev-list HEAD..@{u} --count 2>$null) } else { "" }; Write-Output "IS_PENG_REPO=$isPengRepo|BEHIND=$behind|STATE=$hasState|REMOTE_COMMIT=$remoteCommit|LOCAL_COMMIT=$localCommit"
      ```
    - **Bash (Linux / macOS):**
      ```bash
-     git fetch origin --quiet 2>/dev/null; BEHIND=$(git rev-list HEAD..@{u} --count 2>/dev/null); [ -f "$HOME/.peng/state.json" ] || [ -f ".agents/state.json" ] || [ -f ".peng/state.json" ] && STATE=True || STATE=False; echo "BEHIND=$BEHIND|STATE=$STATE"
+     IS_PENG_REPO=$(git remote get-url origin 2>/dev/null | grep -q "the-arizul/PENG" && echo "True" || echo "False")
+     [ -f "$HOME/.peng/state.json" ] || [ -f ".agents/state.json" ] && HAS_STATE="True" || HAS_STATE="False"
+     REMOTE_COMMIT=$(git ls-remote https://github.com/the-arizul/PENG.git refs/heads/main 2>/dev/null | cut -f1)
+     LOCAL_COMMIT=$(jq -r '.last_seen_commit // empty' "$HOME/.peng/state.json" 2>/dev/null || jq -r '.last_seen_commit // empty' ".agents/state.json" 2>/dev/null || echo "")
+     [ "$IS_PENG_REPO" = "True" ] && { git fetch origin --quiet 2>/dev/null; BEHIND=$(git rev-list HEAD..@{u} --count 2>/dev/null); } || BEHIND=""
+     echo "IS_PENG_REPO=$IS_PENG_REPO|BEHIND=$BEHIND|STATE=$HAS_STATE|REMOTE_COMMIT=$REMOTE_COMMIT|LOCAL_COMMIT=$LOCAL_COMMIT"
      ```
 
 2. **Step A: Check if `state.json` Exists:**
@@ -72,23 +83,36 @@ Whenever `/peng` or `peng` is invoked on any new conversation (both in Standalon
        "configured": true,
        "usage_count": 1,
        "first_used": "<ISO timestamp>",
-       "last_seen_version": "1.2.9"
+       "last_seen_commit": "<REMOTE_COMMIT>",
+       "last_seen_version": "1.3.0"
      }
      ```
    - **If `STATE=True` (state.json EXISTS):**
      This is a **returning user**. Read the configured `preferred_language` and apply it to all subsequent interactions.
 
-3. **Step B: Check if Git Updates Were Pushed to Pull:**
-   - **If `BEHIND > 0` (remote repository has new commits):**
-     New updates were pushed on git! Prompt the user using `ask_question`:
+3. **Step B: Detect Pushed Updates & Prompt User to Update:**
+   - **Scenario 1: In a project where PENG is installed as a skill (via `npx skills`):**
+     If `$remoteCommit` is non-empty, `$localCommit` is non-empty, and `$remoteCommit` != `$localCommit`:
+     New commits were pushed to the PENG repository on GitHub!
+     Prompt the user immediately using `ask_question`:
+     * Question: "🚀 New updates have been pushed to PENG on GitHub! Would you like to update the skill now using npx skills?"
+     * Options:
+       1. Yes, update project skill (npx skills update peng -y)
+       2. Yes, update global skill (npx skills update peng -g -y)
+       3. No, keep current version for now
+     - If the user chooses Option 1: Run `npx skills update peng -y`, update `last_seen_commit` in `state.json`, and proceed.
+     - If the user chooses Option 2: Run `npx skills update peng -g -y`, update `last_seen_commit` in `state.json`, and proceed.
+     - If the user chooses Option 3: Proceed immediately without updating.
+
+   - **Scenario 2: In the PENG source repository itself (`IS_PENG_REPO=True`):**
+     If `BEHIND > 0` (local is behind remote tracking branch):
+     Prompt the user using `ask_question`:
      * Question: "🚀 New updates were detected on git remote (local is [N] commit(s) behind). Would you like to pull them now before proceeding?"
      * Options:
        1. Yes, pull latest updates (git pull)
        2. No, continue with current local branch
-     - If the user chooses "Yes, pull latest updates": Run `git pull`, display a brief summary of pulled commits, then proceed.
-     - If the user chooses "No, continue with current local branch": Proceed immediately without pulling.
-   - **If local is up-to-date (`BEHIND=0` or unconfigured remote):**
-     Proceed immediately without any git prompt.
+     - If Option 1: Run `git pull`, display a brief summary of pulled commits, then proceed.
+     - If Option 2: Proceed immediately without pulling.
 
 4. **Step C: Seamlessly Launch Requested Mode:**
    - If user provided an action prompt (`/peng <task>`): Proceed directly to **Mode 1: Action-Prompted Direct Execution**.
@@ -357,7 +381,7 @@ Whenever the user invokes PENG (via `/peng`, calling the `peng` skill, or mentio
 
 ### 12. [HELP] Help & Comprehensive User Guide
 - Level 2 Context Menu:
-  - Check for Updates & What's New: Review v1.2.3 features, improvements, and update notes.
+  - Check for Updates & What's New: Probe GitHub (the-arizul/PENG) for new pushed commits and prompt instant update via `npx skills update peng`.
   - Change Language Preference: Switch conversation & prompt language (English, Bengali, Spanish, Hindi, etc.) at any time.
   - Interactive Topic Browser: Choose between Vibe Coding Philosophy, Context Hygiene, Workflow Matrix, or Troubleshooting.
   - Print Full Master Manual: Output the complete comprehensive developer guide directly to chat.

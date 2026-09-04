@@ -29,11 +29,18 @@ PENG supports two intelligent invocation modes, both preceded by automatic pre-f
 
 ### Pre-Flight Session Checks (Every New Conversation)
 Whenever `/peng` or `peng` is invoked at the start of a conversation:
-1. **Git Remote Sync Check:** Automatically runs a fast git remote tracking check. If new commits have been pushed to remote (`HEAD` is behind `@{u}`), prompts the user via `ask_question`:
-   - *"🚀 New updates were detected on git remote. Would you like to pull them now before proceeding?"*
-   - Allows instant `git pull` before any work begins.
-2. **State Verification (`state.json`):** Verifies if `state.json` exists (`$HOME/.peng/state.json` or `.agents/state.json`).
-   - If missing: Launches the First-Time Welcome & Language Setup modal via `ask_question`, then initializes `state.json`.
+- **Zero Command Clutter Directive:** Must execute as **EXACTLY ONE single combined probe command** behind the scenes. Never spam individual commands in the user's terminal/accordion.
+- **Strict Execution Flow:** Update / Git check and State check occur **FIRST**. If updates exist, the update prompt is rendered first. Once resolved (or if already up to date), it transitions directly into the Level 1 Primary Menu.
+
+1. **Push-Based Update Detection (`npx skills`):**
+   - PENG does not require GitHub Releases or tags. It directly tracks commits pushed to `the-arizul/PENG` on GitHub via `git ls-remote`.
+   - In projects using PENG as an installed skill, when newly pushed commits are detected, prompts via `ask_question`:
+     * *"🚀 New updates have been pushed to PENG on GitHub! Would you like to update the skill now using npx skills?"*
+     * Options: `Yes, update project skill (npx skills update peng -y)`, `Yes, update global skill (npx skills update peng -g -y)`, `No, keep current version for now`.
+   - In the PENG source repo itself: If local is behind `origin/main`, prompts for instant `git pull`.
+2. **State Verification (`state.json`):**
+   - Verifies if `state.json` exists (`$HOME/.peng/state.json` or `.agents/state.json`).
+   - If missing: Launches the First-Time Welcome & Language Setup modal via `ask_question`, then initializes `state.json` (recording preferred language and latest commit hash).
    - If present: Loads user preferences (`preferred_language`) silently.
 
 ### 1. Action-Prompted Direct Execution (When a task or prompt is provided)

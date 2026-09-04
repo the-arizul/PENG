@@ -35,7 +35,8 @@ Type `/peng` in your agent chat. You will be greeted by a master menu, followed 
 
 PENG supports two seamless invocation modes in any supported agent chat (Antigravity IDE, Cursor, Windsurf, Claude Code), backed by automatic **Pre-Flight Session Checks** on every new conversation:
 
-- **Git Remote Update Check:** Detects if new commits were pushed to git remote to pull (`git fetch` + behind tracking), prompting to pull latest updates with a single click before coding begins.
+- **Push-Based Update Detection (`npx skills`):** No GitHub Releases or tags needed. PENG directly tracks commits pushed to `the-arizul/PENG` on GitHub via `git ls-remote`. When new commits are detected, it prompts the user to update the skill safely in one click (`npx skills update peng -y` or `npx skills update peng -g -y`).
+- **Git Remote Tracking (Source Repo):** In the PENG codebase itself, checks if remote updates are available and offers instant `git pull`.
 - **State Verification (`state.json`):** Checks if `state.json` exists to restore preferred language and usage preferences, or presents the first-time setup modal if unconfigured.
 
 ### Mode 1: Action-Prompted Direct Execution (Fast-Track)
