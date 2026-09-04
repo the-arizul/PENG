@@ -38,6 +38,7 @@ PENG supports two seamless invocation modes in any supported agent chat (Antigra
 - **Push-Based Update Detection (`npx skills`):** No GitHub Releases or tags needed. PENG directly tracks commits pushed to `the-arizul/PENG` on GitHub via `git ls-remote`. When new commits are detected, it prompts the user to update the skill safely in one click (`npx skills update peng -y` or `npx skills update peng -g -y`).
 - **Git Remote Tracking (Source Repo):** In the PENG codebase itself, checks if remote updates are available and offers instant `git pull`.
 - **State Verification (`state.json`):** Checks if `state.json` exists to restore preferred language and usage preferences, or presents the first-time setup modal if unconfigured.
+- **End-to-End Revert Engine:** Every Level-4 Post-Resolution and Wrap-Up context menu features `Revert changes` to surgically undo all edits, delete created files, and roll back command side-effects (e.g. newly installed dependencies) from the last action.
 
 ### Mode 1: Action-Prompted Direct Execution (Fast-Track)
 Provide your goal or task directly when invoking PENG. The agent will autonomously match the optimal workflow from the skill catalog, elevate the workflow with PENG engineering standards, and execute without opening the Level-1 menu:

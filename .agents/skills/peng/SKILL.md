@@ -9,15 +9,16 @@ user-invocable: true
 A hyper-smart, multi-stage interactive vibe coding system for AI coding agents.
 
 ## CURRENT RELEASE VERSION
-- Version: 1.3.0
+- Version: 1.3.1
 - Release Date: 2026-09-04
 - Changelog:
+  * End-to-End Revert Engine: Added 'Revert changes' option to all Level 4 Post-Resolution & Wrap-Up menus. Allows instant, surgical rollback of all file edits, newly created files, and executed commands (package installs, migrations) from the last action, restoring the pre-interaction baseline without touching unrelated work.
   * Push-Based Update Detection via npx skills: No GitHub releases or tags required. The skill directly tracks git commits pushed to the-arizul/PENG on GitHub via git ls-remote. Consumer projects automatically detect newly pushed commits and prompt the user to update the skill safely via npx skills update peng (-y or -g -y).
   * Session Git Remote Sync & state.json Verification: On any new conversation when peng is invoked, automatically checks if new git updates were pushed to remote to pull, and verifies if state.json exists. Prompts to git pull if remote is ahead, and initializes language setup if state.json is absent.
   * Action-Prompted Direct Execution Engine: Calling /peng <prompt> or invoking peng with a specific action/task bypasses the Level 1 context menu, autonomously selects the matching workflow (Options 1–12), infers the optimal sub-option, and elevates the workflow with PENG engineering rigor.
   * Preserved Dual-Mode Flexibility: Standalone /peng continues to launch the instant interactive menu.
   * First-Time User Detection: Checks state.json existence. New users get a welcome + language setup; returning users go straight to the primary menu.
-  * Level 4 Post-Resolution Sub-Menu: When all issues are resolved, prompts with Rescan & Verify, Stage & Commit, Run Test Suite, Save to Memory, and Return to Menu.
+  * Level 4 Post-Resolution Sub-Menu: When all issues are resolved, prompts with Rescan & Verify, Stage & Commit, Run Test Suite, Save to Memory, Revert changes, and Return to Menu.
   * Level 3 Adaptive Resolution Context Menu: When scans/diagnostics detect issues, dynamically prompts with 'Resolve All', 'Resolve One by One', 'Explain Root Causes', 'Plan Only', etc.
   * Conversation Titling Fix: Explicit engineering identity prevents erroneous 'Penguin Image Generation' title.
   * Instant Interactive Menu: Direct ask_question launch without visual noise or unnecessary prompts.
@@ -188,7 +189,7 @@ Whenever the user invokes PENG (via `/peng`, calling the `peng` skill, or mentio
 4. **Preserve Downstream Resolution & Verification Sub-Menus (Levels 3 & 4):**
    - While Level 1 and 2 menus are bypassed for speed, downstream interactive safety loops remain active:
      - **Level 3 (Adaptive Resolution Context Menu):** If diagnostic scans, audits, or tests discover issues, summarize them and invoke `ask_question` (`Resolve All`, `Resolve One by One`, `Explain Root Causes & Impact`, `Implementation Plan Only`).
-     - **Level 4 (Post-Resolution Wrap-Up Sub-Menu):** When all issues or features are resolved/implemented, invoke `ask_question` (`Rescan & Verify`, `Stage & Commit Changes`, `Run Full Test Suite`, `Save Breakthrough to Living Memory`).
+     - **Level 4 (Post-Resolution Wrap-Up Sub-Menu):** When all issues or features are resolved/implemented, invoke `ask_question` (`Rescan & Verify`, `Stage & Commit Changes`, `Run Full Test Suite`, `Save Breakthrough to Living Memory`, `Revert changes`, `Return to Primary Menu`).
 5. **Instant Accurate Conversation Titling:**
    - Immediately title the conversation based on the specific action (e.g., `Build Feature: Auth Service`, `Deep Bug Hunter: Null Pointer`), NOT generic `PENG Vibe Coding`.
 
@@ -215,8 +216,51 @@ Whenever the user invokes PENG (via `/peng`, calling the `peng` skill, or mentio
    - Stage & Commit Changes (Review diff, generate clean git commit, and seal release)
    - Run Full Test Suite (Execute automated test suites to ensure zero side-effect regressions)
    - Save Breakthrough to Living Memory (Extract resolution pattern into `.agents/AGENTS.md`)
+   - Revert changes (Undo all edits, created files, and commands executed in the last action)
    - Return to PENG Primary Menu (Start another engineering workflow)
    - What is this for? (Explain post-resolution validation and best practices)
+
+---
+
+## END-TO-END REVERT ENGINE (MANDATORY AGENT DIRECTIVE)
+
+Whenever the user selects **`Revert changes`** from ANY Level 4 Post-Resolution or Wrap-Up Context Menu:
+The agent MUST perform a 100% complete, surgical, end-to-end rollback of everything that was done during that specific interaction. Nothing may be left behind.
+
+### 1. Interaction Scope Tracking
+The agent inherently tracks all actions taken from the start of the action/workflow until the presentation of the Level 4 menu:
+- **Files Modified:** Every existing file that was updated or edited.
+- **Files Created:** Every new file, component, style, or test created.
+- **Commands Executed:** Any commands run that altered system/dependency/database state.
+
+### 2. Surgical Rollback Execution (End-to-End)
+When the user clicks `Revert changes`:
+1. **Restore Modified Files:**
+   - Run `git restore <file1> <file2>...` (and `git restore --staged <files>` if staged) for ONLY the files touched by the agent during this action.
+   - **CRITICAL ANTI-CORRUPTION RULE:** NEVER run a blanket `git reset --hard` or `git restore .` that wipes the user's pre-existing uncommitted work. Only revert the specific files touched during this interaction.
+2. **Purge Created Files:**
+   - Delete all files and directories created during the interaction using `Remove-Item -Force -Recurse` (Windows) or `rm -rf` (Unix).
+3. **Rollback Executed Commands (Dependency & Database Reversal):**
+   - **Package Installations:** If the agent ran `npm i <pkg>`, `pnpm add <pkg>`, `pip install <pkg>`, etc., automatically run the exact inverse (e.g. `npm uninstall <pkg>`, `pip uninstall -y <pkg>`) and restore the original lockfiles (`package.json`, `package-lock.json`, `pnpm-lock.yaml`, etc.).
+   - **Database Migrations:** If migrations were executed, automatically run the migration rollback (e.g. `php artisan migrate:rollback --step=1`, `npx prisma migrate reset`, or equivalent).
+   - **Probe Scripts & Scratch Artifacts:** Delete any temporary test or benchmark files created.
+4. **Verification & Audit Log:**
+   - Run `git status` to verify the working tree is cleanly restored.
+   - Display a transparent, itemized rollback log:
+     ```text
+     ⏪ [PENG Revert Engine: Rollback Complete]
+     - Restored modified file: <path>
+     - Deleted created file: <path>
+     - Rolled back command: <inverse command> (dependencies restored)
+     - Status: 100% clean rollback. Repository state is identical to pre-interaction baseline.
+     ```
+5. **Post-Revert Navigation Loop:**
+   - Immediately re-open navigation via `ask_question`:
+     * Question: "All changes and command side-effects from the last action have been completely reverted. How would you like to proceed?"
+     * Options:
+       1. Return to Primary Menu (Select another workflow)
+       2. Retry with a different approach or instructions
+       3. What is this for? (Explain revert and safety recovery)
 
 ---
 
@@ -263,6 +307,16 @@ Whenever the user invokes PENG (via `/peng`, calling the `peng` skill, or mentio
   - Frontend / UI Component Only: Client-side components, state management, and API client integration using design system tokens.
   - Interactive Requirement Interview (`/grill-me` mode): Ask me 3-5 clarifying questions on edge cases, validation rules, and business constraints before writing any code.
   - What is this for? (Explain Build New Feature, its value, and when to use it)
+- Level 4 Post-Resolution Context Menu (Triggered when feature implementation is complete):
+  * Once the feature code and components are generated, invoke `ask_question`:
+    - Question: "Feature implementation completed! How would you like to proceed?"
+    - Options:
+      1. Run Verification & Tests (Execute tests and linters on the new feature)
+      2. Stage & Commit Changes (Review diff and seal release with clean git commit)
+      3. Save Architecture Pattern to Memory (Record patterns into .agents/AGENTS.md)
+      4. Revert changes (Undo all edits, created files, and commands executed in this feature build)
+      5. Return to Primary Menu (Select another workflow)
+      6. What is this for? (Explain feature wrap-up and verification options)
 
 ---
 
@@ -300,8 +354,9 @@ Whenever the user invokes PENG (via `/peng`, calling the `peng` skill, or mentio
       2. Stage & Commit Changes (Review diff and commit fix to Git)
       3. Run Full Test Suite (Execute automated test suites to ensure zero regressions)
       4. Save Breakthrough to Living Memory (Record root cause & fix pattern into .agents/AGENTS.md)
-      5. Return to Primary Menu (Select another workflow)
-      6. What is this for? (Explain post-resolution verification and next steps)
+      5. Revert changes (Undo all edits, created files, and commands executed in the last action)
+      6. Return to Primary Menu (Select another workflow)
+      7. What is this for? (Explain post-resolution verification and next steps)
 
 ---
 
@@ -347,8 +402,9 @@ Whenever the user invokes PENG (via `/peng`, calling the `peng` skill, or mentio
       1. Rescan & Final Pre-Commit Pass (Run full verify suite again to ensure 100% clean check)
       2. Stage & Commit to Git (Review diff and seal release with clean commit)
       3. Save Breakthrough to Living Memory (Record learnings into .agents/AGENTS.md)
-      4. Return to Primary Menu (Select another workflow)
-      5. What is this for? (Explain commit finalization best practices)
+      4. Revert changes (Undo all edits, created files, and commands executed in the last action)
+      5. Return to Primary Menu (Select another workflow)
+      6. What is this for? (Explain commit finalization best practices)
 
 ---
 
