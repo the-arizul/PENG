@@ -9,9 +9,11 @@ user-invocable: true
 A hyper-smart, multi-stage interactive vibe coding system for AI coding agents.
 
 ## CURRENT RELEASE VERSION
-- Version: 1.2.7
-- Release Date: 2026-09-03
+- Version: 1.2.8
+- Release Date: 2026-09-04
 - Changelog:
+  * Action-Prompted Direct Execution Engine: Calling /peng <prompt> or invoking peng with a specific action/task bypasses the Level 1 context menu, autonomously selects the matching workflow (Options 1–12), infers the optimal sub-option, and elevates the workflow with PENG engineering rigor.
+  * Preserved Dual-Mode Flexibility: Standalone /peng continues to launch the instant interactive zero-command menu.
   * First-Time User Detection: Silently checks ~/.peng/state.json via view_file (zero terminal noise). New users get a welcome + language setup; returning users go straight to the primary menu.
   * Level 4 Post-Resolution Sub-Menu: When all issues are resolved, prompts with Rescan & Verify, Stage & Commit, Run Test Suite, Save to Memory, and Return to Menu.
   * Level 3 Adaptive Resolution Context Menu: When scans/diagnostics detect issues, dynamically prompts with 'Resolve All', 'Resolve One by One', 'Explain Root Causes', 'Plan Only', etc.
@@ -30,8 +32,9 @@ A hyper-smart, multi-stage interactive vibe coding system for AI coding agents.
 - **CONVERSATION IDENTITY & TITLING:**
   * PENG stands for the **PENG Master Vibe Coding Toolkit** (pair programming & software engineering).
   * It is NEVER an image generation prompt and has NO connection to penguins or `generate_image`.
-  * When invoked at the start of a conversation, the preliminary conversation title is **"PENG Vibe Coding"**.
-  * The conversation's true technical title should only be named after the user selects their specific engineering workflow (e.g., "Build Feature: [Name]", "Deep Bug Hunter", "Pre-Flight Architect").
+  * When invoked standalone without an action prompt, the preliminary conversation title is **"PENG Vibe Coding"**.
+  * When invoked with an action prompt (e.g., `/peng build auth service` or `/peng fix crash`), the conversation title must immediately reflect the specific engineering action (e.g., "Build Feature: Auth Service", "Deep Bug Hunter: Crash").
+  * The conversation's true technical title should reflect the exact engineering task.
 
 ### FIRST-TIME USER DETECTION (SILENT, ZERO TERMINAL NOISE)
 Every time `/peng` is invoked, the agent's VERY FIRST action must be:
@@ -56,7 +59,7 @@ Every time `/peng` is invoked, the agent's VERY FIRST action must be:
        "configured": true,
        "usage_count": 1,
        "first_used": "<ISO timestamp>",
-       "last_seen_version": "1.2.7"
+       "last_seen_version": "1.2.8"
      }
      ```
    - Then proceed immediately to the Level 1 Primary Menu.
@@ -93,10 +96,61 @@ When calling `ask_question` or generating any menu choices:
 
 ---
 
-When the user invokes /peng or asks about peng without specifying an exact branch:
+## INVOCATION ROUTING ENGINE (MANDATORY AGENT DIRECTIVE)
+
+Whenever the user invokes PENG (via `/peng`, calling the `peng` skill, or mentioning `peng` with a task), the agent MUST first evaluate whether an action prompt is present:
+
+---
+
+### MODE 1: ACTION-PROMPTED DIRECT EXECUTION (USER PROVIDED A PROMPT/TASK)
+**Trigger Condition:** The user invokes `peng` or `/peng` accompanied by a prompt for action, task, bug report, feature request, or engineering command (e.g., `/peng build auth service with jwt`, `peng: fix the checkout null pointer error`, `/peng review security on api routes`, `/peng run pre-commit suite`, `@peng deprecate old billing tables`).
+
+**Strict Directives for Action-Prompted Mode:**
+1. **DO NOT OPEN THE LEVEL 1 CONTEXT MENU:** The agent MUST NOT call `ask_question` with the generic 12-item menu. Do not add cognitive friction or force the user to re-select what they already clearly requested.
+2. **Autonomous Workflow Mapping:** Deeply analyze the user's action prompt and map it directly to the matching PENG workflow:
+   - **Feature / Creation / Implementation** → `[3] [FEATURE-BUILDER] Build New Feature`
+     - Auto-infer sub-option based on request: Full Stack Vertical Slice, Backend API & Data Layer Only, Frontend / UI Component Only, or Interactive Requirement Interview (`/grill-me`).
+   - **Bug / Error / Crash / Diagnostic / Probe** → `[5] [BUG-HUNTER] Deep Bug Hunter & Fixer`
+     - Auto-infer sub-option: Specific Error or Stack Trace, Heisenbug / Race Condition, Security & Vulnerability Audit, or Performance & Query Profiling.
+   - **Planning / Architecture / Schema / Feasibility** → `[7] [ARCHITECT] Strict Pre-Flight Architecture Review`
+     - Auto-infer sub-option: Standard Pre-Flight Matrix, Comparative Architecture, or Database & Schema Impact Only.
+   - **Testing / Linting / Format / Git Prep** → `[8] [VERIFY] Self-Correction & Pre-Commit Audit`
+     - Auto-infer sub-option: Full Suite & Hygiene, Test-Only Run, Linter & Style Cleanup, or Pre-PR Security & Sanity Check.
+   - **Removal / Cleanup / Deletion / Deprecation** → `[4] [FEATURE-PURGE] Delete / Deprecate Feature`
+     - Auto-infer sub-option: Complete Zero-Dead-Code Purge, Soft Deprecation / Feature-Flagging, or Dry-Run Blast-Radius Audit.
+   - **Style Uniformity / Harmonization / Matching Clean File** → `[9] [HARMONIZE] Gold Standard Style Harmonizer`
+     - Auto-infer sub-option: Auto-Detect Best Reference, User-Specified Reference File, or Refactor Existing File to Match.
+   - **Repository Initialization / Living Memory Setup** → `[1] [INIT] Autonomous Context Generator`
+   - **Branch / Session Catchup** → `[2] [CONTEXT-PRIMER] Fresh Chat Context Primer`
+   - **Halting Stuck Edit Loops / Hallucinations** → `[6] [CIRCUIT-BREAKER] Emergency Halt & Diagnosis`
+   - **Extracting Permanent Session Learnings** → `[10] [LEARN] Session Living Memory Extractor`
+   - **Customizing Prompts / Catalog** → `[11] [CUSTOM] Add or Edit a Prompt`
+   - **Help / Manual / Settings / Language** → `[12] [HELP] Help & Comprehensive User Guide`
+3. **Elevate & Improve the Workflow (PENG Master Rigor):**
+   - Display a clean execution banner at the start of the response:
+     `⚡ [PENG Engine Activated: [Workflow Number] Name → Selected Sub-Option]`
+   - Enhance the execution using PENG's professional engineering standards:
+     - **For Features:** Apply layered architecture, inspect schema/database state, check gold standard patterns, handle edge cases, and ensure no dead code.
+     - **For Bugs:** Formulate hypotheses, run isolated diagnostic probes, autopsy root cause, and verify resolution without regressions.
+     - **For Architecture:** Formulate a File Impact Matrix, assess migration lock & breaking risks before touching any code.
+     - **For Pre-Commit:** Execute test suites, run linters, verify no secrets/credentials are staged, and strip debug logs.
+     - **For Feature Purge:** Execute zero-dead-code purge across models, routes, controllers, foreign keys, and UI.
+4. **Preserve Downstream Resolution & Verification Sub-Menus (Levels 3 & 4):**
+   - While Level 1 and 2 menus are bypassed for speed, downstream interactive safety loops remain active:
+     - **Level 3 (Adaptive Resolution Context Menu):** If diagnostic scans, audits, or tests discover issues, summarize them and invoke `ask_question` (`Resolve All`, `Resolve One by One`, `Explain Root Causes & Impact`, `Implementation Plan Only`).
+     - **Level 4 (Post-Resolution Wrap-Up Sub-Menu):** When all issues or features are resolved/implemented, invoke `ask_question` (`Rescan & Verify`, `Stage & Commit Changes`, `Run Full Test Suite`, `Save Breakthrough to Living Memory`).
+5. **Instant Accurate Conversation Titling:**
+   - Immediately title the conversation based on the specific action (e.g., `Build Feature: Auth Service`, `Deep Bug Hunter: Null Pointer`), NOT generic `PENG Vibe Coding`.
+
+---
+
+### MODE 2: STANDALONE MENU LAUNCH (NO ACTION PROMPT SUPPLIED)
+**Trigger Condition:** The user invokes `/peng` or `peng` by itself without an action prompt, or asks to browse the available PENG workflows.
+
+**Execution Steps for Standalone Mode:**
 1. **Zero Commands:** Do NOT run any terminal or shell commands (`run_command`, `pwsh`, etc.).
 2. **Level 1 (Primary Category):** Present the interactive selection menu IMMEDIATELY using `ask_question`.
-3. **Level 2 (Intelligent Sub-Menu Specialization):** Upon the user selecting an option, **DO NOT jump into blind execution**. Immediately present the contextual follow-up menu using `ask_question` (or clean numbered choices) to pinpoint user intent, scope, and technical nuances. Always append the explainer option.
+3. **Level 2 (Intelligent Sub-Menu Specialization):** Upon the user selecting an option, **DO NOT jump into blind execution**. Immediately present the contextual follow-up menu using `ask_question` (or clean numbered choices) to pinpoint user intent, scope, and technical nuances. Always append the explainer option (`What is this for?`).
 4. **Level 3 (Adaptive Resolution Sub-Menu):** Whenever an issue scan or diagnosis discovers one or more issues/bugs/failures (e.g. in Bug Hunter, Security Audit, Performance Profiler, or Pre-Commit Verify):
    **DO NOT blindly edit code or patch everything unprompted.**
    Present a clear, high-density summary list of the issues, then IMMEDIATELY trigger the **Resolution Context Menu (`ask_question`)**:

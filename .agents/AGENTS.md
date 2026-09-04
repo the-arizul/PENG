@@ -23,14 +23,22 @@ The agent MUST IMMEDIATELY trigger an interactive context menu using sk_questio
 
 ---
 
-## Single Slash Command: /peng
+## Invocation Modes: /peng
 
-Simply type /peng in chat. The agent will immediately present an interactive menu so you never need to remember keywords or numbers.
+PENG supports two intelligent invocation modes:
 
-### Strict Zero-Command Launch Directive
-When /peng is invoked:
-- **Zero terminal commands:** The agent must NOT run any PowerShell or shell commands before displaying the menu.
-- **Immediate ask_question:** The agent calls sk_question directly to render the menu with zero latency and zero visual noise.
+### 1. Action-Prompted Direct Execution (When a task or prompt is provided)
+When you invoke `/peng <action prompt>` or call `peng` with a prompt for action (e.g. `/peng build auth service`, `/peng fix checkout crash`, `/peng run pre-commit tests`):
+- **Bypasses Context Menu:** Does NOT open the Level 1 main menu.
+- **Autonomous Workflow Selection:** Maps your prompt directly to the best matching PENG workflow [1]–[12] and auto-infers the optimal sub-option.
+- **Elevates Workflow Rigor:** Enforces PENG engineering standards (autopsy probes for bugs, layered architecture for features, impact matrix for architecture, clean test runs for pre-commit).
+- **Interactive Resolution Sub-Menus:** If issues or failures are detected during execution, seamlessly launches the Level 3 (Resolution) and Level 4 (Wrap-Up) menus.
+
+### 2. Standalone Menu Launch (When no prompt is provided)
+When you type `/peng` or `peng` by itself:
+- **Zero Terminal Commands:** Instant launch without running background shell scripts or causing UI clutter.
+- **Immediate ask_question:** Renders the interactive Level 1 selection menu with zero latency.
+- **Smart Contextual Sub-Menus:** Prompts you through Level 2 specialization with mandatory `What is this for?` explainers.
 
 ### Quick Reference & Usage Matrix
 

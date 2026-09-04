@@ -31,30 +31,43 @@ Type /peng in your agent chat. You will be greeted by a master menu, followed by
 
 ---
 
+## Usage
+
+PENG supports two seamless invocation modes in any supported agent chat (Antigravity IDE, Cursor, Windsurf, Claude Code):
+
+### Mode 1: Action-Prompted Direct Execution (Fast-Track)
+Provide your goal or task directly when invoking PENG. The agent will autonomously match the optimal workflow from the skill catalog, elevate the workflow with PENG engineering standards, and execute without opening the Level-1 menu:
+
+```text
+/peng build an authentication service with JWT and refresh tokens
+/peng fix the null pointer exception during checkout
+/peng review security and SQL injection vectors on API routes
+/peng run pre-commit verification and lint cleanup
+/peng purge legacy stripe v1 endpoints and unused tables
+```
+
+### Mode 2: Interactive Menu Mode (Zero-Memory)
+When you simply type `/peng` without a prompt:
+
+```text
+/peng
+```
+
+The agent immediately renders the interactive Level-1 menu with zero terminal noise, followed by intelligent Level-2 contextual sub-menus.
+
+---
+
 ## Installation
 
-Install via the standard Agent Skills CLI (
-px skills):
+Install via the standard Agent Skills CLI (`npx skills`):
 
-`ash
+```bash
 # Install to current project
 npx skills add the-arizul/PENG
 
 # Or install globally across all projects and agents
 npx skills add the-arizul/PENG -g
-`
-
----
-
-## Usage
-
-In any supported agent chat (Antigravity, Cursor, Windsurf, Claude Code):
-
-`	ext
-/peng
-`
-
-The agent will prompt you with an interactive Level-1 menu, followed by a smart Level-2 contextual sub-menu. You never have to memorize prompt keywords.
+```
 
 ---
 
