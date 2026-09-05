@@ -4,8 +4,10 @@ This repository contains the unified **PENG Master Vibe Coding System** for Anti
 
 ## AUTONOMOUS VERSIONING & PRE-WRAP GIT COMMIT RULE (MANDATORY AGENT DIRECTIVE)
 
+**STRICT RULE:** The agent MUST NOT update or bump the version in `SKILL.md` in advance before asking the user! The version in `SKILL.md` must only be updated AFTER the user responds to the `ask_question` modal.
+
 Whenever the user finishes working on this project, completes an update, or indicates a session wrap-up:
-The agent MUST IMMEDIATELY trigger an interactive context menu using sk_question:
+The agent MUST IMMEDIATELY trigger an interactive context menu using `ask_question`:
 
 - **Question:**  You have made updates to PENG. Would you like to bump the release version and commit the changes to Git now?
 - **Options:**
@@ -15,11 +17,18 @@ The agent MUST IMMEDIATELY trigger an interactive context menu using sk_questio
   4. All good? Ensure it first (Run sanity audit, verify changes, and confirm readiness)
   5. No, keep uncommitted for now
 
-### Execution Handlers when User selects Yes:
-1. **Auto-Bump Version:** Update the Version: X.Y.Z in SKILL.md (and release date & changelog summary).
+### Execution Handlers when User selects an option:
+1. **Auto-Bump Version (Only if Option 1 or 2 selected):** Update the Version: X.Y.Z in SKILL.md (and release date & changelog summary).
 2. **Sync Mirrors:** Sync the updated SKILL.md to workspace copies.
 3. **Git Commit:** Stage all changes and run git commit -m release: vX.Y.Z.
 4. **Push Signal:** Inform the user that the release is sealed locally and ready to push to remote.
+
+---
+
+## ZERO-FILE-READ INSTANT EXECUTION DIRECTIVE (MANDATORY PERFORMANCE RULE)
+- **Instant In-Memory Execution:** All PENG workflows, menus, prompts, and execution instructions are natively pre-loaded in active context memory through `AGENTS.md`.
+- **Skip `view_file` on `SKILL.md`:** When the user selects an option from any level of the PENG context menu (Level 1, Level 2, Level 3, Level 4, or Help Guide), or invokes `/peng <action>`, the agent MUST NOT execute a `view_file` tool call to re-read `SKILL.md`.
+- **Immediate Response:** Respond INSTANTLY to menu selections, prompts, and options using the context and rules already present in active memory. Only invoke `view_file` on `SKILL.md` if the user explicitly asks to edit, audit, or view the raw `SKILL.md` file itself.
 
 ---
 
@@ -65,7 +74,7 @@ When you type `/peng` or `peng` by itself:
 
 | Option | Workflow | When to Use (Usage Time) | Goal & Impact |
 | :--- | :--- | :--- | :--- |
-| **[1]** | **Autonomous Context Init** | First chat in a new codebase or restructuring agent context. | Deep scan manifests, architectures, quirks, and generate living .agents/ setup. |
+| **[1]** | **Autonomous Context Init** | First chat in a new codebase or restructuring agent context. | Deep scan manifests, architectures, quirks, generate living .agents/ setup, and prompt to add recommended PENG directive rule. |
 | **[2]** | **Fresh Chat Context Primer** | Starting a new chat session on an active branch. | Fast-sync active branch, uncommitted diffs, recent commits, and living memory. |
 | **[3]** | **Build New Feature** | Developing new capabilities or components. | End-to-end vertical slices, API data layer, UI components, or requirement interview. |
 | **[4]** | **Delete / Deprecate Feature** | Cleaning up legacy or unused code. | Complete zero-dead-code purge: models, routes, migrations, UI. |

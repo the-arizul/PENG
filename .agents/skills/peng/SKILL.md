@@ -9,9 +9,12 @@ user-invocable: true
 A hyper-smart, multi-stage interactive vibe coding system for AI coding agents.
 
 ## CURRENT RELEASE VERSION
-- Version: 1.4.0
+- Version: 1.4.1
 - Release Date: 2026-09-05
 - Changelog:
+  * Zero-File-Read Instant Execution Directive: Mandated that PENG context menus and workflows execute instantly from active context memory (AGENTS.md) without executing view_file tool calls to re-read SKILL.md for every menu selection.
+  * User-Approved Versioning Hook Directive: Explicitly mandated in AGENTS.md that AI agents MUST NOT update or bump the version in SKILL.md in advance before the user responds to the ask_question release prompt.
+  * Post-Initialization Recommended PENG Directive Rule Prompt: Enhanced Workflow [1] Autonomous Context Init so that immediately after initializing AGENTS.md and repo context, PENG prompts the user via ask_question whether to add a recommended directive rule into AGENTS.md enforcing that AI agents must always use PENG (/peng) for any task in the repository. Added Option 1 in Level 4 Post-Resolution Menu for Workflow [1] to easily add or update this directive at any time.
   * Complete Context Menu Prompt Directives Engine: Added dedicated, explicit AI prompt execution directives for EVERY context menu option across Level 1 (Primary Category), Level 2 (Workflow Specialization), Level 3 (Adaptive Resolution), Level 4 (Post-Resolution Wrap-Up), and Level 3 (Help Topics). Enforced zero silent skipping, mandatory complete markdown report rendering before re-prompting, and explicit step-by-step handlers for every interactive choice.
   * Complete Explainer Loop Output Directive: Enforced that when 'What is this for? (Explain how this Help Guide works)' or any 'What is this for?' option is selected from any context menu (Level 2, Level 3, Level 4, or Help Guide), the agent MUST output the full, exhaustive, comprehensive technical explanation in markdown format FIRST, completing the text response before invoking ask_question for the next context menu modal.
   * Comprehensive Option & Prompt Audit: Completed missing Level 4 wrap-up sub-menus for Workflows [1], [2], [6], [7], and [10], added detailed execution directives for Workflow [11] (Add/Edit Prompt), and added explicit Level 3 sub-topic menus and embedded manual/guide content for Workflow [12] (Help Guide).
@@ -47,6 +50,11 @@ A hyper-smart, multi-stage interactive vibe coding system for AI coding agents.
 - When invoked standalone without an action prompt, the preliminary conversation title is **"PENG Vibe Coding"**.
 - When invoked with an action prompt (e.g., `/peng build auth service` or `/peng fix crash`), the conversation title must immediately reflect the specific engineering action (e.g., "Build Feature: Auth Service", "Deep Bug Hunter: Crash").
 - The conversation's true technical title should reflect the exact engineering task.
+
+### ZERO-FILE-READ INSTANT EXECUTION DIRECTIVE (MANDATORY PERFORMANCE RULE)
+- **Instant In-Memory Execution:** All PENG workflows, menus, prompts, and execution instructions are natively pre-loaded in active context memory through `AGENTS.md`.
+- **Skip `view_file` on `SKILL.md`:** When the user selects an option from any level of the PENG context menu (Level 1, Level 2, Level 3, Level 4, or Help Guide), or invokes `/peng <action>`, the agent MUST NOT execute a `view_file` tool call to re-read `SKILL.md`.
+- **Immediate Response:** Respond INSTANTLY to menu selections, prompts, and options using the context and rules already present in active memory. Only invoke `view_file` on `SKILL.md` if the user explicitly asks to edit, audit, or view the raw `SKILL.md` file itself.
 
 ---
 
@@ -440,14 +448,24 @@ The agent MUST auto-detect the project ecosystem and execute or present the exac
   - Audit & Review First: Present discovered tech stack and proposed Gold Standard files for my manual confirmation before writing any memory files.
   - Rebuild / Reset Memory: Overwrite existing `.agents/` configurations and wipe stale rules.
   - What is this for? (Explain Autonomous Context Init, its value, and when to use it)
+- Post-Initialization Recommended Rule Prompt (MANDATORY AGENT DIRECTIVE):
+  * Immediately after `.agents/AGENTS.md` and repo context are generated or updated, PENG MUST prompt the user via `ask_question`:
+    - Question: "AGENTS.md initialized! Would you like to add a recommended rule to AGENTS.md enforcing that AI agents must ALWAYS use PENG (/peng) to proceed with any task in this codebase?"
+    - Options:
+      1. Yes, add recommended PENG directive rule to AGENTS.md (Recommended)
+      2. No, keep standard AGENTS.md without mandatory PENG directive
+  * If Option 1 is selected, append the following directive section to `.agents/AGENTS.md`:
+    `## MANDATORY PENG VIBE CODING DIRECTIVE`
+    `AI agents working on this codebase MUST ALWAYS use **PENG** (/peng or peng) to proceed with any software engineering task, feature development, bug fix, code refactoring, pre-commit audit, or architecture design. All tasks should follow PENG engineering standards and workflows documented in SKILL.md.`
 - Level 4 Post-Resolution Context Menu (Triggered when context generation is complete):
   * Once `.agents/AGENTS.md` and Gold Standards are initialized or updated, invoke `ask_question`:
     - Question: "Autonomous context initialization complete! How would you like to proceed?"
     - Options:
-      1. Return to Primary Menu (Select an engineering workflow)
+      1. Add rule to AGENTS.md to always use PENG for any task (Recommended)
       2. Start Engineering Task (Launch Feature Builder, Bug Hunter, or Architect)
       3. Review Discovered Architecture (Display tech stack & Gold Standard summary)
-      4. What is this for? (Explain context initialization wrap-up)
+      4. Return to Primary Menu (Select an engineering workflow)
+      5. What is this for? (Explain context initialization wrap-up)
 
 ---
 
@@ -732,9 +750,9 @@ Whenever the user selects an option from ANY context menu across Level 1, Level 
 ### 3. Level 2 Workflow Specialization Prompt Directives
 
 #### Workflow [1] [INIT] Autonomous Context Generator
-- `Full Autopilot`: Deep-scan project manifests (`package.json`, `composer.json`, `pubspec.yaml`), inspect architecture, discover conventions, and generate `.agents/AGENTS.md` + Gold Standards.
-- `Audit & Review First`: Render tech stack discovery report and proposed `.agents/` rules in chat; wait for user confirmation before writing memory files.
-- `Rebuild / Reset Memory`: Overwrite existing `.agents/` configurations, wipe stale rules, and re-index project baseline.
+- `Full Autopilot`: Deep-scan project manifests (`package.json`, `composer.json`, `pubspec.yaml`), inspect architecture, discover conventions, and generate `.agents/AGENTS.md` + Gold Standards. Immediately after creating `AGENTS.md`, ask the user via `ask_question` whether to add the recommended rule enforcing mandatory PENG (`/peng`) usage for all repository tasks. If approved, append the directive section to `.agents/AGENTS.md`.
+- `Audit & Review First`: Render tech stack discovery report and proposed `.agents/` rules in chat; wait for user confirmation before writing memory files. Include the recommended PENG directive rule option in the confirmation prompt.
+- `Rebuild / Reset Memory`: Overwrite existing `.agents/` configurations, wipe stale rules, re-index project baseline, and prompt user via `ask_question` whether to add the recommended PENG directive rule to `.agents/AGENTS.md`.
 
 #### Workflow [2] [CONTEXT-PRIMER] Fresh Chat Context Primer
 - `Standard Sync`: Fast-sync git branch, uncommitted diffs, last 3 commits, and load `.agents/AGENTS.md` into turn context.
