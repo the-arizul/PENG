@@ -9,9 +9,11 @@ user-invocable: true
 A hyper-smart, multi-stage interactive vibe coding system for AI coding agents.
 
 ## CURRENT RELEASE VERSION
-- Version: 1.3.7
+- Version: 1.3.8
 - Release Date: 2026-09-05
 - Changelog:
+  * Complete Explainer Loop Output Directive: Enforced that when 'What is this for? (Explain how this Help Guide works)' or any 'What is this for?' option is selected from any context menu (Level 2, Level 3, Level 4, or Help Guide), the agent MUST output the full, exhaustive, comprehensive technical explanation in markdown format FIRST, completing the text response before invoking ask_question for the next context menu modal.
+  * Comprehensive Option & Prompt Audit: Completed missing Level 4 wrap-up sub-menus for Workflows [1], [2], [6], [7], and [10], added detailed execution directives for Workflow [11] (Add/Edit Prompt), and added explicit Level 3 sub-topic menus and embedded manual/guide content for Workflow [12] (Help Guide).
   * Autonomous Prompt Mapping & Smooth Post-Interaction Citation Engine: Mandated that PENG autonomously maps all action/task prompts (including security reviews, SAST audits, performance profiling, feature builds, etc.) to the exact corresponding prompt variant in SKILL.md without refusal, displays an execution banner, and smoothly states the exact SKILL.md prompt and sub-option used at the start and wrap-up of every interaction.
   * Direct Question & Inquiry Context Menu Bypass Directive: Mandated that when a user asks an informational question, investigatory prompt, or query (e.g., 'How does X work?', 'Why did Y happen?', 'Explain Z'), PENG strictly bypasses all interactive context menus (ask_question) and provides a direct, comprehensive answer immediately without popping up any context menu modal.
   * Context-Aware Mid-Conversation Invocation Engine: When /peng or peng is called standalone mid-conversation without an action prompt, PENG evaluates the active conversation history and turn state. If an active workflow, unresolved diagnostic scan, or post-resolution wrap-up state is detected, PENG automatically re-opens the corresponding contextual sub-menu (Level 2, Level 3, or Level 4) with a 'Return to Top-Level Primary Menu' option, avoiding the generic Level 1 primary menu.
@@ -151,9 +153,9 @@ Whenever `/peng` or `peng` is invoked on any new conversation (both in Standalon
 When calling `ask_question` or generating any menu choices:
 - DO NOT prefix any option with `(Recommended)` (keep every option neutral).
 - **MANDATORY EXPLAINER OPTION ON SUB-MENUS:** Every Level-2 sub-menu MUST include a dedicated explainer option at the end: `What is this for? (Explain this workflow, its value, and usage guidelines)`.
-- **EXPLAINER LOOP BEHAVIOR:** If the user selects `What is this for?`, the agent MUST:
-  1. Print a concise, high-value explanation of what the selected workflow accomplishes, when to use it, and what risks it eliminates (in the user's configured language).
-  2. Immediately RE-OPEN the Level-2 sub-menu so the user can now make an informed technical decision without restarting the session.
+- **EXPLAINER COMPLETE OUTPUT BEHAVIOR (MANDATORY AGENT DIRECTIVE):** If the user selects `What is this for?` (or `What is this for? (Explain how this Help Guide works)` or any variant) from ANY context menu (Level 2, Level 3, Level 4, or Help Guide):
+  1. The agent MUST output a complete, exhaustive, high-value technical explanation of what the selected workflow or guide accomplishes, when to use it, and what risks it eliminates (in the user's configured language) FIRST, ensuring all text explanation is rendered completely in the chat turn response before invoking `ask_question` for the next context menu modal.
+  2. Immediately AFTER outputting the complete explanation text, RE-OPEN the corresponding sub-menu via `ask_question` so the user can make an informed technical decision without restarting the session.
 
 ---
 
@@ -437,6 +439,14 @@ The agent MUST auto-detect the project ecosystem and execute or present the exac
   - Audit & Review First: Present discovered tech stack and proposed Gold Standard files for my manual confirmation before writing any memory files.
   - Rebuild / Reset Memory: Overwrite existing `.agents/` configurations and wipe stale rules.
   - What is this for? (Explain Autonomous Context Init, its value, and when to use it)
+- Level 4 Post-Resolution Context Menu (Triggered when context generation is complete):
+  * Once `.agents/AGENTS.md` and Gold Standards are initialized or updated, invoke `ask_question`:
+    - Question: "Autonomous context initialization complete! How would you like to proceed?"
+    - Options:
+      1. Return to Primary Menu (Select an engineering workflow)
+      2. Start Engineering Task (Launch Feature Builder, Bug Hunter, or Architect)
+      3. Review Discovered Architecture (Display tech stack & Gold Standard summary)
+      4. What is this for? (Explain context initialization wrap-up)
 
 ---
 
@@ -446,6 +456,14 @@ The agent MUST auto-detect the project ecosystem and execute or present the exac
   - Branch-Switch Onboarding: Compare differences between current branch and `main`/`develop` to brief me on branch-specific tasks.
   - Stale Context Flush: Re-verify package versions and environment configurations to ensure zero outdated assumptions.
   - What is this for? (Explain Fresh Chat Context Primer, its value, and when to use it)
+- Level 4 Post-Resolution Context Menu (Triggered when context primer sync is complete):
+  * Once branch diffs, recent commits, and memory files are synced, invoke `ask_question`:
+    - Question: "Context primer sync completed! How would you like to proceed?"
+    - Options:
+      1. Return to Primary Menu (Select an engineering workflow)
+      2. Start Engineering Task (Launch Feature Builder, Bug Hunter, or Architect)
+      3. Review Diff Summary (Inspect recent commits and uncommitted diffs)
+      4. What is this for? (Explain context primer wrap-up)
 
 ---
 
@@ -531,6 +549,15 @@ The agent MUST auto-detect the project ecosystem and execute or present the exac
   - Keep Edits, Diagnose Only: Do not discard changes yet; write an isolated diagnostic probe to identify which assumption failed.
   - Explain The Failure: Summarize in plain English why the previous 3 attempts failed and propose 2 fresh alternative directions.
   - What is this for? (Explain Circuit Breaker, its value, and when to use it)
+- Level 3 & Level 4 Post-Diagnosis Context Menu (Triggered when halt & autopsy are complete):
+  * Once changes are frozen/discarded and failure autopsy is rendered, invoke `ask_question`:
+    - Question: "Circuit Breaker execution completed. How would you like to proceed?"
+    - Options:
+      1. Return to Primary Menu (Select a fresh workflow)
+      2. Retry with Fresh Strategy (Switch implementation approach)
+      3. Revert changes (Undo all edits and restore pre-interaction baseline)
+      4. Clear Scratch Artifacts (Purge temporary diagnostic scripts)
+      5. What is this for? (Explain Circuit Breaker safety recovery)
 
 ---
 
@@ -540,6 +567,15 @@ The agent MUST auto-detect the project ecosystem and execute or present the exac
   - Comparative Architecture: Present 2 alternative architectural approaches (e.g. Event-driven vs Synchronous Service, or Context vs Zustand) with trade-offs.
   - Database & Schema Impact Only: Deeply analyze migration safety, table locking risks, index performance, and rollback feasibility.
   - What is this for? (Explain Pre-Flight Architecture Review, its value, and when to use it)
+- Level 4 Post-Resolution Context Menu (Triggered when architecture review is complete):
+  * Once the File Impact Matrix, trade-off analysis, or schema impact plan is generated, invoke `ask_question`:
+    - Question: "Pre-Flight Architecture review complete! How would you like to proceed?"
+    - Options:
+      1. Proceed to Implementation with Feature Builder (Execute plan step-by-step)
+      2. Refine Architecture Plan (Adjust trade-offs or file impact matrix)
+      3. Save Architecture to Living Memory (Record rules into .agents/AGENTS.md)
+      4. Return to Primary Menu (Select another workflow)
+      5. What is this for? (Explain architecture review wrap-up)
 
 ---
 
@@ -601,6 +637,13 @@ The agent MUST auto-detect the project ecosystem and execute or present the exac
   - Generate Specialized Skill: Create a dedicated `.agents/skills/<workflow>/SKILL.md` playbook for this complex procedure.
   - Create Repo Rule File: Save a targeted `.agents/rules/<domain>.md` file that automatically attaches to relevant directory paths.
   - What is this for? (Explain Living Memory Extractor, its value, and when to use it)
+- Level 4 Post-Resolution Context Menu (Triggered when memory update is complete):
+  * Once memory, skill, or rule files are updated/created, invoke `ask_question`:
+    - Question: "Living memory update completed! How would you like to proceed?"
+    - Options:
+      1. Return to Primary Menu (Select another workflow)
+      2. View Saved Rules/Skills (Inspect created `.agents/` files)
+      3. What is this for? (Explain memory preservation and guidelines)
 
 ---
 
@@ -610,6 +653,10 @@ The agent MUST auto-detect the project ecosystem and execute or present the exac
   - Create Completely New Category: Add Option 13 to this master catalog.
   - Edit Existing Workflow Instructions: Tweak the step-by-step logic of an existing prompt.
   - What is this for? (Explain Custom Prompt Management, its value, and when to use it)
+- Execution Instructions & Prompt Handlers:
+  * **Option 1 (Add New Sub-Option):** Prompt user for target workflow [1-12], sub-option title, and execution logic. Edit `SKILL.md`, insert the sub-option, bump release version, sync workspace copies, and trigger the git commit hook.
+  * **Option 2 (Create Completely New Category):** Prompt user for Category Name, sub-options, and execution directives. Append Option [13] to `SKILL.md`, update version, sync mirrors, and trigger the git commit hook.
+  * **Option 3 (Edit Existing Workflow Instructions):** Tweak prompt logic in `SKILL.md`, update changelog, bump release version, and trigger the git commit hook.
 
 ---
 
@@ -621,3 +668,17 @@ The agent MUST auto-detect the project ecosystem and execute or present the exac
   - Print Full Master Manual: Output the complete comprehensive developer guide directly to chat.
   - Antigravity IDE Best Practices: Specific guide on leveraging Antigravity slash commands, artifacts, and multi-agent coordination.
   - What is this for? (Explain how this Help Guide works)
+- Level 3 Topic Sub-Menu (Triggered when selecting 'Interactive Topic Browser'):
+  * Invoke `ask_question`:
+    - Question: "Select a Help topic to browse:"
+    - Options:
+      1. Vibe Coding Philosophy (Autonomous pair programming, layered design, zero friction)
+      2. Context Hygiene (Memory management, state.json, git branch sync)
+      3. Workflow Matrix (When to use Options 1 through 12)
+      4. Troubleshooting & FAQ (Handling stuck loops, reverting edits, version updates)
+      5. Return to Help Menu
+      6. What is this for? (Explain topic browser)
+- Execution Directives for Sub-Options:
+  * **Option 4 (Print Full Master Manual):** Output the complete comprehensive developer guide covering installation, invocation modes (`/peng <prompt>` vs `/peng`), versioning hooks, project runner engines, manual verification guides, and end-to-end revert engine.
+  * **Option 5 (Antigravity IDE Best Practices):** Output detailed guide on leveraging Antigravity slash commands (`/goal`, `/schedule`, `/grill-me`, `/learn`), markdown artifacts (`implementation_plan.md`, `walkthrough.md`), and subagent delegation.
+  * **Option 6 (What is this for? - Explain how this Help Guide works):** Output a full, comprehensive, multi-section guide explaining how PENG's Help system operates (update checks, language switching, topic browsing, master manual, and IDE integration) FIRST before re-opening the Level 2 Help menu.
