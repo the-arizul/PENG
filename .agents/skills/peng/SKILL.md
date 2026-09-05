@@ -1,6 +1,6 @@
 ---
 name: peng
-description: PENG Master Vibe Coding Toolkit. Agentic pair programming, feature development, bug hunting, code review, and architecture. (Software engineering toolkit, not animal or image generation).
+description: PENG Master Vibe Coding Toolkit for agentic pair programming, feature development, bug hunting, refactoring, code reviews, and architecture. Use when asked to run /peng, vibe code, build features, fix bugs, audit code, or structure codebases.
 user-invocable: true
 ---
 
@@ -8,10 +8,15 @@ user-invocable: true
 
 A hyper-smart, multi-stage interactive vibe coding system for AI coding agents.
 
+> [!IMPORTANT]
+> **ZERO-FILE-READ INSTANT EXECUTION DIRECTIVE FOR AGENTS:**
+> When handling `/peng`, `peng`, menu selections (Level 1, Level 2, Level 3, Level 4, or Help Guide), or user prompt choices, the agent **MUST NOT** execute a `view_file` tool call to re-read `SKILL.md`. All workflows, sub-menus, and instructions are already present in active context memory. Respond INSTANTLY to menu selections and prompts without executing any file-reading tools!
+
 ## CURRENT RELEASE VERSION
-- Version: 1.4.1
+- Version: 1.4.2
 - Release Date: 2026-09-05
 - Changelog:
+  * Agent Skills Specification Optimization: Enhanced SKILL.md description frontmatter and embedded Zero-File-Read Instant Execution Directive right below the title for seamless skills.sh / npx skills sync compatibility without requiring extra .agents/rules/ files.
   * Zero-File-Read Instant Execution Directive: Mandated that PENG context menus and workflows execute instantly from active context memory (AGENTS.md) without executing view_file tool calls to re-read SKILL.md for every menu selection.
   * User-Approved Versioning Hook Directive: Explicitly mandated in AGENTS.md that AI agents MUST NOT update or bump the version in SKILL.md in advance before the user responds to the ask_question release prompt.
   * Post-Initialization Recommended PENG Directive Rule Prompt: Enhanced Workflow [1] Autonomous Context Init so that immediately after initializing AGENTS.md and repo context, PENG prompts the user via ask_question whether to add a recommended directive rule into AGENTS.md enforcing that AI agents must always use PENG (/peng) for any task in the repository. Added Option 1 in Level 4 Post-Resolution Menu for Workflow [1] to easily add or update this directive at any time.
