@@ -9,9 +9,10 @@ user-invocable: true
 A hyper-smart, multi-stage interactive vibe coding system for AI coding agents.
 
 ## CURRENT RELEASE VERSION
-- Version: 1.3.5
+- Version: 1.3.6
 - Release Date: 2026-09-05
 - Changelog:
+  * Direct Question & Inquiry Context Menu Bypass Directive: Mandated that when a user asks an informational question, investigatory prompt, or query (e.g., 'How does X work?', 'Why did Y happen?', 'Explain Z'), PENG strictly bypasses all interactive context menus (ask_question) and provides a direct, comprehensive answer immediately without popping up any context menu modal.
   * Context-Aware Mid-Conversation Invocation Engine: When /peng or peng is called standalone mid-conversation without an action prompt, PENG evaluates the active conversation history and turn state. If an active workflow, unresolved diagnostic scan, or post-resolution wrap-up state is detected, PENG automatically re-opens the corresponding contextual sub-menu (Level 2, Level 3, or Level 4) with a 'Return to Top-Level Primary Menu' option, avoiding the generic Level 1 primary menu.
   * WordPress Zip Parent Folder Packaging Directive: Rewrote WordPress plugin & theme zip packaging rules. Mandated that all generated `.zip` packages MUST encapsulate source code inside a single top-level parent folder (e.g. `plugin-slug/`) so WordPress Admin extracts and recognizes the plugin cleanly without loose root files.
   * Smart Project Runner & Bundler Engine: Added 'Run the app/project' option to all Level 4 Post-Resolution & Wrap-Up context menus. Auto-detects the project environment and executes the appropriate launcher or packaging command (WordPress plugins/themes zip creation excluding `.git` directory, Flutter `flutter run`, Laravel `php artisan serve`, NPM `npm run dev`/`npm start`, Python Django/FastAPI/Flask, Go, Rust, Docker).
@@ -200,6 +201,8 @@ Whenever the user invokes PENG (via `/peng`, calling the `peng` skill, or mentio
      - **Level 4 (Post-Resolution Wrap-Up Sub-Menu):** When all issues or features are resolved/implemented, invoke `ask_question` (`How do I check or test the changes?`, `Stage & Commit Changes`, `Rescan & Verify`, `Run Full Test Suite`, `Save Breakthrough to Living Memory`, `Revert changes`, `Return to Primary Menu`).
 5. **Instant Accurate Conversation Titling:**
    - Immediately title the conversation based on the specific action (e.g., `Build Feature: Auth Service`, `Deep Bug Hunter: Null Pointer`), NOT generic `PENG Vibe Coding`.
+6. **Direct Question & Inquiry Context Menu Bypass Directive:**
+   - When the user asks an informational question, investigatory prompt, or explanation request (e.g., "How does X work?", "Why is Y failing?", "Explain Z", "Where is feature A defined?"), PENG MUST NOT open any interactive context menu (`ask_question`). Provide a direct, comprehensive, markdown-formatted response immediately without popping up any context menu modal.
 
 ---
 
