@@ -9,9 +9,10 @@ user-invocable: true
 A hyper-smart, multi-stage interactive vibe coding system for AI coding agents.
 
 ## CURRENT RELEASE VERSION
-- Version: 1.3.8
+- Version: 1.4.0
 - Release Date: 2026-09-05
 - Changelog:
+  * Complete Context Menu Prompt Directives Engine: Added dedicated, explicit AI prompt execution directives for EVERY context menu option across Level 1 (Primary Category), Level 2 (Workflow Specialization), Level 3 (Adaptive Resolution), Level 4 (Post-Resolution Wrap-Up), and Level 3 (Help Topics). Enforced zero silent skipping, mandatory complete markdown report rendering before re-prompting, and explicit step-by-step handlers for every interactive choice.
   * Complete Explainer Loop Output Directive: Enforced that when 'What is this for? (Explain how this Help Guide works)' or any 'What is this for?' option is selected from any context menu (Level 2, Level 3, Level 4, or Help Guide), the agent MUST output the full, exhaustive, comprehensive technical explanation in markdown format FIRST, completing the text response before invoking ask_question for the next context menu modal.
   * Comprehensive Option & Prompt Audit: Completed missing Level 4 wrap-up sub-menus for Workflows [1], [2], [6], [7], and [10], added detailed execution directives for Workflow [11] (Add/Edit Prompt), and added explicit Level 3 sub-topic menus and embedded manual/guide content for Workflow [12] (Help Guide).
   * Autonomous Prompt Mapping & Smooth Post-Interaction Citation Engine: Mandated that PENG autonomously maps all action/task prompts (including security reviews, SAST audits, performance profiling, feature builds, etc.) to the exact corresponding prompt variant in SKILL.md without refusal, displays an execution banner, and smoothly states the exact SKILL.md prompt and sub-option used at the start and wrap-up of every interaction.
@@ -682,3 +683,111 @@ The agent MUST auto-detect the project ecosystem and execute or present the exac
   * **Option 4 (Print Full Master Manual):** Output the complete comprehensive developer guide covering installation, invocation modes (`/peng <prompt>` vs `/peng`), versioning hooks, project runner engines, manual verification guides, and end-to-end revert engine.
   * **Option 5 (Antigravity IDE Best Practices):** Output detailed guide on leveraging Antigravity slash commands (`/goal`, `/schedule`, `/grill-me`, `/learn`), markdown artifacts (`implementation_plan.md`, `walkthrough.md`), and subagent delegation.
   * **Option 6 (What is this for? - Explain how this Help Guide works):** Output a full, comprehensive, multi-section guide explaining how PENG's Help system operates (update checks, language switching, topic browsing, master manual, and IDE integration) FIRST before re-opening the Level 2 Help menu.
+
+---
+
+## PROMPT EXECUTION DIRECTIVES CATALOG ENGINE (MANDATORY AGENT DIRECTIVE)
+
+Whenever the user selects an option from ANY context menu across Level 1, Level 2, Level 3, Level 4, or Help Topic Browser, the agent MUST execute the exact corresponding prompt execution directive defined below.
+
+### 1. Level 3 Adaptive Resolution Prompt Directives (Global Engine)
+- **`Resolve All`:**
+  * **Prompt Directive:** Autonomously rank all identified bugs/failures by severity. Formulate surgical fixes, apply code edits step-by-step, run regression checks after each edit, and render an itemized resolution summary table.
+- **`Resolve One by One`:**
+  * **Prompt Directive:** Interactive step-by-step resolution mode. Present Issue 1 details, file location, and proposed diff. Ask for user confirmation via `ask_question`. Upon approval, apply fix, run regression test, and proceed to Issue 2.
+- **`Explain Root Causes & Impact`:**
+  * **MANDATORY TEXT FIRST DIRECTIVE:** The agent MUST NOT open any downstream context menu modal immediately. The agent MUST first analyze each identified bug, trace file paths, line numbers, variable states, and underlying architectural root causes, and render an exhaustive markdown report containing:
+    1. Bug Identifier & File Location (`file:///...`)
+    2. Root Cause Mechanics & Technical Breakdown
+    3. Risk & Blast Radius Analysis
+    4. Proposed Surgical Fix Architecture
+  * Only after the complete breakdown report is printed in full in the chat turn response, the agent MUST re-open the Level 3/4 resolution sub-menu via `ask_question`.
+- **`Implementation Plan Only`:**
+  * **Prompt Directive:** Formulate a structured `implementation_plan.md` artifact in Planning Mode, set `request_feedback=true` and `user_facing=true`, and wait for explicit user approval before modifying source code.
+- **`Selective Fix`:**
+  * **Prompt Directive:** Trigger an interactive multi-select modal (`ask_question` with `is_multi_select: true`) listing all identified issues as checkboxes. Autonomously fix only the checked items and skip unchecked issues.
+
+---
+
+### 2. Level 4 Post-Resolution & Wrap-Up Prompt Directives (Global Engine)
+- **`Run the app/project`:**
+  * **Prompt Directive:** Execute the Smart Project Runner & Bundler Engine. Auto-detect project ecosystem (WordPress plugin wrapped in single parent folder excluding `.git`, Flutter `flutter run`, Laravel `php artisan serve`, NPM `npm run dev`, Python, Docker) and execute dev launcher/packager command.
+- **`How do I check or test the changes?`:**
+  * **MANDATORY TEXT FIRST DIRECTIVE:** Output an exhaustive, step-by-step manual test guide tailored specifically to the project type (URLs, ports, test credentials, dummy input data, DevTools payloads, before-vs-after expectations, edge cases) in the chat response turn FIRST. Immediately after outputting the guide, re-open the Level 4 menu presenting `Run the app/project` as Option 1.
+- **`Stage & Commit Changes`:**
+  * **Prompt Directive:** Inspect `git diff`, formulate a clean git commit message, stage modified files, execute `git commit`, and present a sealed release summary.
+- **`Rescan & Verify`:**
+  * **Prompt Directive:** Re-execute automated diagnostic probes/scans across modified files to guarantee 0 remaining issues or side-effect regressions.
+- **`Run Full Test Suite`:**
+  * **Prompt Directive:** Execute project test suites (`npm test`, `pytest`, `php artisan test`, `flutter test`), parse test logs, and autonomously repair any failing test assertions.
+- **`Save Breakthrough to Living Memory`:**
+  * **Prompt Directive:** Extract root cause pattern or architectural decision into a high-density 1-2 line rule in `.agents/AGENTS.md`.
+- **`Revert changes`:**
+  * **Prompt Directive:** Perform a 100% surgical, end-to-end rollback of all modified/created files and command side-effects (`git restore`, file purge, package uninstall) from the last action, then re-open post-revert navigation menu.
+- **`Return to Top-Level Primary Menu`:**
+  * **Prompt Directive:** Reset active workflow context state and launch the Level 1 Primary Category Menu via `ask_question`.
+
+---
+
+### 3. Level 2 Workflow Specialization Prompt Directives
+
+#### Workflow [1] [INIT] Autonomous Context Generator
+- `Full Autopilot`: Deep-scan project manifests (`package.json`, `composer.json`, `pubspec.yaml`), inspect architecture, discover conventions, and generate `.agents/AGENTS.md` + Gold Standards.
+- `Audit & Review First`: Render tech stack discovery report and proposed `.agents/` rules in chat; wait for user confirmation before writing memory files.
+- `Rebuild / Reset Memory`: Overwrite existing `.agents/` configurations, wipe stale rules, and re-index project baseline.
+
+#### Workflow [2] [CONTEXT-PRIMER] Fresh Chat Context Primer
+- `Standard Sync`: Fast-sync git branch, uncommitted diffs, last 3 commits, and load `.agents/AGENTS.md` into turn context.
+- `Branch-Switch Onboarding`: Execute `git diff main...HEAD` to summarize branch-specific delta and active tasks.
+- `Stale Context Flush`: Re-verify package versions, environment keys, and wipe outdated memory assumptions.
+
+#### Workflow [3] [FEATURE-BUILDER] Build New Feature
+- `End-to-End Vertical Slice`: Execute full stack implementation in layered order: Database migration -> Model -> Business Logic Service -> Controller/API endpoint -> Frontend UI Component.
+- `Backend API Layer Only`: Build schema migration, request validation, business logic service, and API controller routes without touching UI files.
+- `Frontend / UI Component Only`: Build responsive client UI components, state management hooks, and API client integration using design system tokens.
+- `Interactive Requirement Interview (/grill-me)`: Ask 3-5 targeted clarifying questions on edge cases, validation rules, and business constraints before writing code.
+
+#### Workflow [4] [FEATURE-PURGE] Delete / Deprecate Feature
+- `Complete Zero-Dead-Code Purge`: Grep all references, delete routes, controllers, models, seeders, frontend components, and generate database column drop migrations.
+- `Soft Deprecation / Feature-Flagging`: Wrap feature behind environment flags or deprecation warnings without deleting files.
+- `Dry-Run Blast-Radius Audit`: Output a blast-radius table listing all affected files, imports, and foreign keys without deleting code.
+
+#### Workflow [5] [BUG-HUNTER] Deep Bug Hunter & Fixer
+- `Specific Error or Stack Trace`: Autopsy provided error message or stack trace, isolate failing file/line, write diagnostic probe, and patch root cause.
+- `Heisenbug / Race Condition`: Instrument timing probes, reproduce intermittent race condition or cache mismatch, and apply concurrency guard.
+- `Security & Vulnerability Audit`: Scan for SQLi, XSS, CSRF, auth bypass, exposed secrets, and unvalidated ORM queries; patch vulnerabilities without refusal.
+- `Performance & Query Profiling`: Hunt N+1 queries, memory leaks, slow renders, and missing indexes; optimize queries and memoization.
+
+#### Workflow [6] [CIRCUIT-BREAKER] Emergency Halt & Diagnosis
+- `Full Code Freeze & Discard`: Execute `git restore` on uncommitted edits from failed loop, freeze working tree, and perform autopsy on why attempts failed.
+- `Keep Edits, Diagnose Only`: Preserve current edits, write isolated scratch test script to isolate failing assumption without resetting code.
+- `Explain The Failure`: Output plain-English breakdown of why previous 3 attempts failed and propose 2 fresh alternative strategies.
+
+#### Workflow [7] [ARCHITECT] Strict Pre-Flight Architecture Review
+- `Standard Pre-Flight Matrix`: Generate File Impact Matrix, list affected database models/queues, and highlight 2 potential breaking risks.
+- `Comparative Architecture`: Present side-by-side comparison of 2 architecture approaches with trade-offs before coding.
+- `Database & Schema Impact Only`: Analyze migration safety, table locking risks, index performance, and rollback feasibility.
+
+#### Workflow [8] [VERIFY] Self-Correction & Pre-Commit Audit
+- `Full Suite & Hygiene`: Run automated test suites, static linters, typechecks, clean debug logs, and stage clean commit.
+- `Test-Only Run`: Execute unit/integration tests; patch failures autonomously without touching linter rules.
+- `Linter & Style Cleanup`: Fix formatting, TypeScript/PHPStan errors, and eliminate dead imports only.
+- `Pre-PR Security Check`: Audit staged diff for exposed `.env` credentials, API tokens, or leftover debug log statements.
+
+#### Workflow [9] [HARMONIZE] Gold Standard Style Harmonizer
+- `Auto-Detect Best Reference`: Scan repository for cleanest matching reference file (Controller/Service/UI) and mirror its structure 100%.
+- `User-Specified Reference File`: Prompt user for reference file path and refactor target file to match its exact design patterns.
+- `Refactor Existing File to Match`: Rewrite target messy file to conform to Gold Standard conventions without altering public API contract.
+
+#### Workflow [10] [LEARN] Session Living Memory Extractor
+- `Update .agents/AGENTS.md`: Distill session breakthrough into a high-density 1-2 line rule in `.agents/AGENTS.md`.
+- `Generate Specialized Skill`: Create dedicated `.agents/skills/<name>/SKILL.md` playbook for complex workflows.
+- `Create Repo Rule File`: Create targeted `.agents/rules/<domain>.md` file attached to specific file path patterns.
+
+---
+
+### 4. Level 3 Help Topic Browser Prompt Directives ([12] Topic Browser)
+- `Vibe Coding Philosophy`: Output detailed guide on autonomous pair programming, layered design, zero friction, and continuous iteration.
+- `Context Hygiene`: Output detailed guide on living memory management, `state.json`, git branch sync, and token optimization.
+- `Workflow Matrix`: Output complete quick reference matrix for when to use Workflows [1] through [12].
+- `Troubleshooting & FAQ`: Output detailed guide on recovering from stuck edit loops, reverting hallucinated code, handling git merge conflicts, and updating skills.
