@@ -13,9 +13,11 @@ A hyper-smart, multi-stage interactive vibe coding system for AI coding agents.
 > When handling `/peng`, `peng`, menu selections (Level 1, Level 2, Level 3, Level 4, or Help Guide), or user prompt choices, the agent **MUST NOT** execute a `view_file` tool call to re-read `SKILL.md`. All workflows, sub-menus, and instructions are already present in active context memory. Respond INSTANTLY to menu selections and prompts without executing any file-reading tools!
 
 ## CURRENT RELEASE VERSION
-- Version: 1.4.2
-- Release Date: 2026-09-05
+- Version: 1.4.3
+- Release Date: 2026-09-06
 - Changelog:
+  * Bold Executed via PENG Citation Format: Updated post-interaction citation directive across AGENTS.md and SKILL.md to format execution notices as bold **Executed via PENG! [Workflow / Response]** instead of plain text SKILL.md prompt citations.
+  * Stage, Commit Best Practices & Undo Commit Engine: Mandated that Stage & Commit Changes across all context menus writes commit messages using Conventional Commits best practices (Header + Body detailing what & why) and IMMEDIATELY triggers a post-commit follow-up modal via ask_question offering Undo commit (git reset --soft HEAD~1) to safely un-commit changes.
   * Agent Skills Specification Optimization: Enhanced SKILL.md description frontmatter and embedded Zero-File-Read Instant Execution Directive right below the title for seamless skills.sh / npx skills sync compatibility without requiring extra .agents/rules/ files.
   * Zero-File-Read Instant Execution Directive: Mandated that PENG context menus and workflows execute instantly from active context memory (AGENTS.md) without executing view_file tool calls to re-read SKILL.md for every menu selection.
   * User-Approved Versioning Hook Directive: Explicitly mandated in AGENTS.md that AI agents MUST NOT update or bump the version in SKILL.md in advance before the user responds to the ask_question release prompt.
@@ -23,7 +25,7 @@ A hyper-smart, multi-stage interactive vibe coding system for AI coding agents.
   * Complete Context Menu Prompt Directives Engine: Added dedicated, explicit AI prompt execution directives for EVERY context menu option across Level 1 (Primary Category), Level 2 (Workflow Specialization), Level 3 (Adaptive Resolution), Level 4 (Post-Resolution Wrap-Up), and Level 3 (Help Topics). Enforced zero silent skipping, mandatory complete markdown report rendering before re-prompting, and explicit step-by-step handlers for every interactive choice.
   * Complete Explainer Loop Output Directive: Enforced that when 'What is this for? (Explain how this Help Guide works)' or any 'What is this for?' option is selected from any context menu (Level 2, Level 3, Level 4, or Help Guide), the agent MUST output the full, exhaustive, comprehensive technical explanation in markdown format FIRST, completing the text response before invoking ask_question for the next context menu modal.
   * Comprehensive Option & Prompt Audit: Completed missing Level 4 wrap-up sub-menus for Workflows [1], [2], [6], [7], and [10], added detailed execution directives for Workflow [11] (Add/Edit Prompt), and added explicit Level 3 sub-topic menus and embedded manual/guide content for Workflow [12] (Help Guide).
-  * Autonomous Prompt Mapping & Smooth Post-Interaction Citation Engine: Mandated that PENG autonomously maps all action/task prompts (including security reviews, SAST audits, performance profiling, feature builds, etc.) to the exact corresponding prompt variant in SKILL.md without refusal, displays an execution banner, and smoothly states the exact SKILL.md prompt and sub-option used at the start and wrap-up of every interaction.
+  * Autonomous Prompt Mapping & Smooth Post-Interaction Citation Engine: Mandated that PENG autonomously maps all action/task prompts (including security reviews, SAST audits, performance profiling, feature builds, etc.) to the exact corresponding prompt variant in SKILL.md without refusal, displays an execution banner, and smoothly states the citation formatted in bold text (e.g., `**Executed via PENG! Direct Inquiry Response**` or `**Executed via PENG! [Workflow]**`) at the wrap-up of every interaction.
   * Direct Question & Inquiry Context Menu Bypass Directive: Mandated that when a user asks an informational question, investigatory prompt, or query (e.g., 'How does X work?', 'Why did Y happen?', 'Explain Z'), PENG strictly bypasses all interactive context menus (ask_question) and provides a direct, comprehensive answer immediately without popping up any context menu modal.
   * Context-Aware Mid-Conversation Invocation Engine: When /peng or peng is called standalone mid-conversation without an action prompt, PENG evaluates the active conversation history and turn state. If an active workflow, unresolved diagnostic scan, or post-resolution wrap-up state is detected, PENG automatically re-opens the corresponding contextual sub-menu (Level 2, Level 3, or Level 4) with a 'Return to Top-Level Primary Menu' option, avoiding the generic Level 1 primary menu.
   * WordPress Zip Parent Folder Packaging Directive: Rewrote WordPress plugin & theme zip packaging rules. Mandated that all generated `.zip` packages MUST encapsulate source code inside a single top-level parent folder (e.g. `plugin-slug/`) so WordPress Admin extracts and recognizes the plugin cleanly without loose root files.
@@ -213,8 +215,8 @@ Whenever the user invokes PENG (via `/peng`, calling the `peng` skill, or mentio
      - **For Pre-Commit:** Execute test suites, run linters, verify no secrets/credentials are staged, and strip debug logs.
      - **For Feature Purge:** Execute zero-dead-code purge across models, routes, controllers, foreign keys, and UI.
 4. **Mandatory Smooth Post-Interaction Prompt Citation:**
-   - At the conclusion/wrap-up of every interaction (and smoothly integrated into the chat summary), PENG MUST explicitly state which exact prompt and sub-option from `SKILL.md` was executed:
-     `📌 Executed via SKILL.md Prompt: [Workflow Number] Name → Sub-Option`
+   - At the conclusion/wrap-up of every interaction (and smoothly integrated into the chat summary), PENG MUST explicitly state which exact prompt and sub-option was executed formatted in bold text:
+     `**Executed via PENG! [Workflow Number] Name → Sub-Option**`
 5. **Preserve Downstream Resolution & Verification Sub-Menus (Levels 3 & 4):**
    - While Level 1 and 2 menus are bypassed for speed, downstream interactive safety loops remain active:
      - **Level 3 (Adaptive Resolution Context Menu):** If diagnostic scans, audits, or tests discover issues, summarize them and invoke `ask_question` (`Resolve All`, `Resolve One by One`, `Explain Root Causes & Impact`, `Implementation Plan Only`).
@@ -222,7 +224,7 @@ Whenever the user invokes PENG (via `/peng`, calling the `peng` skill, or mentio
 6. **Instant Accurate Conversation Titling:**
    - Immediately title the conversation based on the specific action (e.g., `Build Feature: Auth Service`, `Deep Bug Hunter: Security Audit`), NOT generic `PENG Vibe Coding`.
 7. **Direct Question & Inquiry Context Menu Bypass Directive:**
-   - When the user asks an informational question, investigatory prompt, or explanation request (e.g., "How does X work?", "Why is Y failing?", "Explain Z", "Where is feature A defined?"), PENG MUST NOT open any interactive context menu (`ask_question`). Provide a direct, comprehensive, markdown-formatted response immediately without popping up any context menu modal. Smoothly append `📌 Executed via SKILL.md Prompt: Direct Inquiry Response` at the end.
+   - When the user asks an informational question, investigatory prompt, or explanation request (e.g., "How does X work?", "Why is Y failing?", "Explain Z", "Where is feature A defined?"), PENG MUST NOT open any interactive context menu (`ask_question`). Provide a direct, comprehensive, markdown-formatted response immediately without popping up any context menu modal. Smoothly append `**Executed via PENG! Direct Inquiry Response**` at the end.
 
 ---
 
@@ -422,10 +424,55 @@ The agent MUST auto-detect the project ecosystem and execute or present the exac
      * Question: "Project runner/bundler executed! How would you like to proceed?"
      * Options:
        1. How do I check or test the changes? (Step-by-step verification guide)
-       2. Stage & Commit Changes (Review diff and seal release with clean git commit)
+       2. Stage & Commit Changes (Review diff, write commit message using best practices, seal release, and present undo commit modal)
        3. Save Breakthrough to Living Memory (Record pattern into .agents/AGENTS.md)
        4. Revert changes (Undo all edits, created files, and commands executed in this action)
        5. Return to Primary Menu (Select another workflow)
+
+---
+
+## STAGE, COMMIT & UNDO COMMIT ENGINE (MANDATORY AGENT DIRECTIVE)
+
+Whenever the user selects **`Stage & Commit Changes`** (or chooses to commit changes during session wrap-up or version release) from ANY context menu:
+The agent MUST NOT output lazy, generic, or single-line commit messages (e.g., "update files" or "fix bug").
+The agent MUST follow strict **Conventional Commits & Git Best Practices** when writing commit details, and MUST IMMEDIATELY trigger a post-commit context menu modal offering an **Undo commit** option (`git reset --soft HEAD~1`).
+
+### 1. Git Inspection & Best-Practice Commit Construction:
+1. **Inspect Working Tree & Diff:**
+   - Execute `git status` and `git diff` (and `git diff --staged`) behind the scenes to inspect all modified, created, and deleted files.
+2. **Formulate Conventional Commit Message:**
+   - **Header Line:** `<type>(<scope>): <concise summary>`
+     * **Type:** MUST be one of `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `chore`, `build`, `ci`, `revert`, `release`.
+     * **Scope:** Optional identifier representing module/component (e.g., `auth`, `ui`, `api`, `cli`, `peng`).
+     * **Summary:** Max 72 characters, imperative mood, lowercase type, no trailing period.
+   - **Blank Line**
+   - **Body Section (Mandatory):** Bulleted technical breakdown answering:
+     * **What:** Specific functional & code changes implemented.
+     * **Why:** Underlying technical rationale or problem resolved.
+     * Key architectural, component, or file highlights.
+   - **Footer Section (Optional):** Breaking changes (`BREAKING CHANGE: <desc>`) or issue references (`Refs: #123`).
+
+### 2. Execution & Sealed Commit Summary Output:
+- Stage all modified and created files (`git add -A` or target specific files).
+- Execute `git commit` using a multi-line message format.
+- Display a clean, sealed release summary in the chat turn response showing Commit Hash, Header, Body bullets, and Files Changed summary.
+
+### 3. Mandatory Post-Commit Follow-Up Context Menu (`Undo commit`):
+- **IMMEDIATELY** after outputting the sealed commit summary, trigger an interactive context menu modal via `ask_question`:
+  * **Question:** 🚀 Changes committed successfully! [Commit: <hash>] How would you like to proceed?
+  * **Options:**
+    1. Undo commit (git reset --soft HEAD~1 - revert commit & keep changes staged)
+    2. Push changes to remote repository (git push)
+    3. Run the app/project (Launch dev server or create test package)
+    4. Save Breakthrough to Living Memory (Record pattern into .agents/AGENTS.md)
+    5. Return to Primary Menu (Select another workflow)
+
+### 4. Undo Commit Execution Handler:
+When the user selects **Undo commit (git reset --soft HEAD~1)**:
+1. Execute `git reset --soft HEAD~1`. This surgically undoes the commit while preserving all modified, created, and staged files intact in the staging index.
+2. If a version bump was auto-applied to `SKILL.md` during this commit, prompt/offer to revert the version bump or keep it.
+3. Display a clean confirmation banner: `↩️ Git commit [Hash] undone successfully! All changes have been un-committed and returned to your staging index / working tree.`
+4. Re-open the Level 4 Wrap-Up Context Menu via `ask_question`.
 
 ---
 
@@ -738,7 +785,7 @@ Whenever the user selects an option from ANY context menu across Level 1, Level 
 - **`How do I check or test the changes?`:**
   * **MANDATORY TEXT FIRST DIRECTIVE:** Output an exhaustive, step-by-step manual test guide tailored specifically to the project type (URLs, ports, test credentials, dummy input data, DevTools payloads, before-vs-after expectations, edge cases) in the chat response turn FIRST. Immediately after outputting the guide, re-open the Level 4 menu presenting `Run the app/project` as Option 1.
 - **`Stage & Commit Changes`:**
-  * **Prompt Directive:** Inspect `git diff`, formulate a clean git commit message, stage modified files, execute `git commit`, and present a sealed release summary.
+  * **Prompt Directive:** Execute the Stage, Commit & Undo Commit Engine. Inspect `git status` & `git diff`, formulate a commit message adhering strictly to Conventional Commits & Git Best Practices (`<type>(<scope>): <summary>`, structured body with *what* & *why*), stage files (`git add -A`), execute `git commit`, render the sealed commit summary, and IMMEDIATELY launch an interactive follow-up modal (`ask_question`) offering **Undo commit (`git reset --soft HEAD~1`)** as Option 1.
 - **`Rescan & Verify`:**
   * **Prompt Directive:** Re-execute automated diagnostic probes/scans across modified files to guarantee 0 remaining issues or side-effect regressions.
 - **`Run Full Test Suite`:**

@@ -20,8 +20,15 @@ The agent MUST IMMEDIATELY trigger an interactive context menu using `ask_questi
 ### Execution Handlers when User selects an option:
 1. **Auto-Bump Version (Only if Option 1 or 2 selected):** Update the Version: X.Y.Z in SKILL.md (and release date & changelog summary).
 2. **Sync Mirrors:** Sync the updated SKILL.md to workspace copies.
-3. **Git Commit:** Stage all changes and run git commit -m release: vX.Y.Z.
-4. **Push Signal:** Inform the user that the release is sealed locally and ready to push to remote.
+3. **Git Commit with Best Practices:** Stage modified/created files (`git add -A`) and write a professional commit message following **Conventional Commits & Git Best Practices** (Header: `<type>(<scope>): <summary>`, blank line, structured Body with bullet points answering *what* changed and *why*, and breaking changes/release footer). Run `git commit`.
+4. **Post-Commit Follow-Up & Undo Commit Modal (MANDATORY):** Immediately after commit execution, render the commit summary (Hash, Header, Body snippet) and launch an interactive follow-up menu via `ask_question`:
+   - **Question:** 🚀 Git commit successful! [Commit: <hash>] How would you like to proceed?
+   - **Options:**
+     1. Undo commit (git reset --soft HEAD~1 - revert commit & keep changes staged)
+     2. Push to remote repository (git push)
+     3. Run the app/project
+     4. Return to Primary Menu
+5. **Undo Commit Handler:** If `Undo commit` is selected, run `git reset --soft HEAD~1` (and revert version bump if applicable), display confirmation `↩️ Commit <hash> undone. All changes are preserved in your working tree / staging index.`, and re-open the pre-wrap menu.
 
 ---
 
@@ -57,12 +64,13 @@ When you invoke `/peng <action prompt>` or call `peng` with a prompt for action 
 - **Bypasses Context Menu:** Does NOT open the Level 1 main menu.
 - **Direct Question & Inquiry Response:** When you ask an informational question, investigatory prompt, or explanation request (e.g. "How does X work?", "Why is Y happening?"), PENG strictly bypasses all context menus (`ask_question`) and provides a direct answer immediately.
 - **Autonomous Workflow Selection & Zero Refusal:** Maps your prompt directly to the best matching PENG workflow [1]–[12] without generic AI refusals (e.g. security assessments map to `[5] Deep Bug Hunter → Security & Vulnerability Audit` or `[8] Pre-PR Security Check`).
-- **Smooth Post-Interaction Prompt Citation:** At the end of every interaction or session wrap-up, smoothly states the exact `SKILL.md` prompt and sub-option used (e.g. `📌 Executed via SKILL.md Prompt: [5] Deep Bug Hunter & Fixer → Security & Vulnerability Audit`).
+- **Smooth Post-Interaction Prompt Citation:** At the end of every interaction or session wrap-up, smoothly states the exact prompt and sub-option used formatted in bold text (e.g. `**Executed via PENG! [5] Deep Bug Hunter & Fixer → Security & Vulnerability Audit**` or `**Executed via PENG! Direct Inquiry Response**`).
 - **Elevates Workflow Rigor:** Enforces PENG engineering standards (autopsy probes for bugs, layered architecture for features, impact matrix for architecture, clean test runs for pre-commit).
 - **Interactive Resolution Sub-Menus:** If issues or failures are detected during execution, seamlessly launches the Level 3 (Resolution) and Level 4 (Wrap-Up) menus.
 - **Smart Project Runner & Bundler Engine:** Every Level 4 Post-Resolution and Wrap-Up menu includes `Run the app/project`. Selecting this auto-detects the project type and launches the dev server or generates test packages (creates a clean `.zip` encapsulating all files inside a single parent folder while excluding `.git` for WordPress plugins/themes, `flutter run` for Flutter, `php artisan serve` for Laravel, `npm run dev`/`npm start` for NPM apps).
 - **Interactive Verification & Manual Testing Engine:** Every Level 4 Post-Resolution and Wrap-Up menu includes `How do I check or test the changes?`. Selecting this provides an exhaustive, step-by-step manual test walkthrough tailored to the project (web, mobile, backend API, CLI, or library). Immediately after outputting the test steps, it re-invokes the Level 4 Context Menu with `Run the app/project` as Option 1 so the user can instantly run or package the app.
 - **End-to-End Revert Engine:** Every Level 4 Post-Resolution and Wrap-Up menu includes `Revert changes`. Selecting this surgically undoes all file modifications (`git restore`), deletes created files, rolls back command side-effects (e.g. uninstalls newly added packages, rolls back migrations), and restores the exact pre-interaction state without affecting unrelated work.
+- **Stage, Commit & Undo Commit Engine:** Every Level 4 Post-Resolution and Wrap-Up menu includes `Stage & Commit Changes`. Selecting this writes high-quality commit details formatted with Conventional Commits best practices (Header + Body detailing what & why), stages files, commits changes, and IMMEDIATELY presents a follow-up context menu offering `Undo commit (git reset --soft HEAD~1)`.
 
 ### 2. Standalone & Mid-Conversation Context-Aware Invocation (When no prompt is provided)
 When you type `/peng` or `peng` by itself:
@@ -86,6 +94,51 @@ When you type `/peng` or `peng` by itself:
 | **[10]** | **Living Memory Extractor** | End of a successful session after solving tough bugs or tricks. | Saves breakthroughs permanently into .agents/AGENTS.md so future chats remember. |
 | **[11]** | **Add or Edit a Prompt** | Whenever you want to customize or expand this prompt toolkit. | Updates the master prompt catalog directly in SKILL.md. |
 | **[12]** | **Help & Comprehensive User Guide** | Learning vibe coding, switching languages, or updating. | Interactive master manual, language switcher, and release changelog. |
+
+---
+
+## STAGE, COMMIT & UNDO COMMIT ENGINE (MANDATORY AGENT DIRECTIVE)
+
+Whenever the user selects **`Stage & Commit Changes`** (or chooses to commit changes during session wrap-up or version release) from ANY context menu:
+The agent MUST NOT output lazy, generic, or single-line commit messages (e.g., "update files" or "fix bug").
+The agent MUST follow strict **Conventional Commits & Git Best Practices** when writing commit details, and MUST IMMEDIATELY trigger a post-commit context menu modal offering an **Undo commit** option (`git reset --soft HEAD~1`).
+
+### 1. Git Inspection & Best-Practice Commit Construction:
+1. **Inspect Working Tree & Diff:**
+   - Execute `git status` and `git diff` (and `git diff --staged`) behind the scenes to inspect all modified, created, and deleted files.
+2. **Formulate Conventional Commit Message:**
+   - **Header Line:** `<type>(<scope>): <concise summary>`
+     * **Type:** MUST be one of `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `chore`, `build`, `ci`, `revert`, `release`.
+     * **Scope:** Optional identifier representing module/component (e.g., `auth`, `ui`, `api`, `cli`, `peng`).
+     * **Summary:** Max 72 characters, imperative mood, lowercase type, no trailing period.
+   - **Blank Line**
+   - **Body Section (Mandatory):** Bulleted technical breakdown answering:
+     * **What:** Specific functional & code changes implemented.
+     * **Why:** Underlying technical rationale or problem resolved.
+     * Key architectural, component, or file highlights.
+   - **Footer Section (Optional):** Breaking changes (`BREAKING CHANGE: <desc>`) or issue references (`Refs: #123`).
+
+### 2. Execution & Sealed Commit Summary Output:
+- Stage all modified and created files (`git add -A` or target specific files).
+- Execute `git commit` using a multi-line message format.
+- Display a clean, sealed release summary in the chat turn response showing Commit Hash, Header, Body bullets, and Files Changed summary.
+
+### 3. Mandatory Post-Commit Follow-Up Context Menu (`Undo commit`):
+- **IMMEDIATELY** after outputting the sealed commit summary, trigger an interactive context menu modal via `ask_question`:
+  * **Question:** 🚀 Changes committed successfully! [Commit: <hash>] How would you like to proceed?
+  * **Options:**
+    1. Undo commit (git reset --soft HEAD~1 - revert commit & keep changes staged)
+    2. Push changes to remote repository (git push)
+    3. Run the app/project (Launch dev server or create test package)
+    4. Save Breakthrough to Living Memory (Record pattern into .agents/AGENTS.md)
+    5. Return to Primary Menu (Select another workflow)
+
+### 4. Undo Commit Execution Handler:
+When the user selects **Undo commit (git reset --soft HEAD~1)**:
+1. Execute `git reset --soft HEAD~1`. This surgically undoes the commit while preserving all modified, created, and staged files intact in the staging index.
+2. If a version bump was auto-applied to `SKILL.md` during this commit, prompt/offer to revert the version bump or keep it.
+3. Display a clean confirmation banner: `↩️ Git commit [Hash] undone successfully! All changes have been un-committed and returned to your staging index / working tree.`
+4. Re-open the Level 4 Wrap-Up Context Menu via `ask_question`.
 
 ---
 
