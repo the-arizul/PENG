@@ -44,10 +44,11 @@ Whenever `/peng` or `peng` is invoked at the start of a conversation:
    - If present: Loads user preferences (`preferred_language`) silently.
 
 ### 1. Action-Prompted Direct Execution (When a task or prompt is provided)
-When you invoke `/peng <action prompt>` or call `peng` with a prompt for action (e.g. `/peng build auth service`, `/peng fix checkout crash`, `/peng run pre-commit tests`):
+When you invoke `/peng <action prompt>` or call `peng` with a prompt for action (e.g. `/peng build auth service`, `/peng fix checkout crash`, `/peng run security audit`, `/peng run pre-commit tests`):
 - **Bypasses Context Menu:** Does NOT open the Level 1 main menu.
 - **Direct Question & Inquiry Response:** When you ask an informational question, investigatory prompt, or explanation request (e.g. "How does X work?", "Why is Y happening?"), PENG strictly bypasses all context menus (`ask_question`) and provides a direct answer immediately.
-- **Autonomous Workflow Selection:** Maps your prompt directly to the best matching PENG workflow [1]–[12] and auto-infers the optimal sub-option.
+- **Autonomous Workflow Selection & Zero Refusal:** Maps your prompt directly to the best matching PENG workflow [1]–[12] without generic AI refusals (e.g. security assessments map to `[5] Deep Bug Hunter → Security & Vulnerability Audit` or `[8] Pre-PR Security Check`).
+- **Smooth Post-Interaction Prompt Citation:** At the end of every interaction or session wrap-up, smoothly states the exact `SKILL.md` prompt and sub-option used (e.g. `📌 Executed via SKILL.md Prompt: [5] Deep Bug Hunter & Fixer → Security & Vulnerability Audit`).
 - **Elevates Workflow Rigor:** Enforces PENG engineering standards (autopsy probes for bugs, layered architecture for features, impact matrix for architecture, clean test runs for pre-commit).
 - **Interactive Resolution Sub-Menus:** If issues or failures are detected during execution, seamlessly launches the Level 3 (Resolution) and Level 4 (Wrap-Up) menus.
 - **Smart Project Runner & Bundler Engine:** Every Level 4 Post-Resolution and Wrap-Up menu includes `Run the app/project`. Selecting this auto-detects the project type and launches the dev server or generates test packages (creates a clean `.zip` encapsulating all files inside a single parent folder while excluding `.git` for WordPress plugins/themes, `flutter run` for Flutter, `php artisan serve` for Laravel, `npm run dev`/`npm start` for NPM apps).

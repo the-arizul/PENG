@@ -9,9 +9,10 @@ user-invocable: true
 A hyper-smart, multi-stage interactive vibe coding system for AI coding agents.
 
 ## CURRENT RELEASE VERSION
-- Version: 1.3.6
+- Version: 1.3.7
 - Release Date: 2026-09-05
 - Changelog:
+  * Autonomous Prompt Mapping & Smooth Post-Interaction Citation Engine: Mandated that PENG autonomously maps all action/task prompts (including security reviews, SAST audits, performance profiling, feature builds, etc.) to the exact corresponding prompt variant in SKILL.md without refusal, displays an execution banner, and smoothly states the exact SKILL.md prompt and sub-option used at the start and wrap-up of every interaction.
   * Direct Question & Inquiry Context Menu Bypass Directive: Mandated that when a user asks an informational question, investigatory prompt, or query (e.g., 'How does X work?', 'Why did Y happen?', 'Explain Z'), PENG strictly bypasses all interactive context menus (ask_question) and provides a direct, comprehensive answer immediately without popping up any context menu modal.
   * Context-Aware Mid-Conversation Invocation Engine: When /peng or peng is called standalone mid-conversation without an action prompt, PENG evaluates the active conversation history and turn state. If an active workflow, unresolved diagnostic scan, or post-resolution wrap-up state is detected, PENG automatically re-opens the corresponding contextual sub-menu (Level 2, Level 3, or Level 4) with a 'Return to Top-Level Primary Menu' option, avoiding the generic Level 1 primary menu.
   * WordPress Zip Parent Folder Packaging Directive: Rewrote WordPress plugin & theme zip packaging rules. Mandated that all generated `.zip` packages MUST encapsulate source code inside a single top-level parent folder (e.g. `plugin-slug/`) so WordPress Admin extracts and recognizes the plugin cleanly without loose root files.
@@ -167,14 +168,14 @@ Whenever the user invokes PENG (via `/peng`, calling the `peng` skill, or mentio
 
 **Strict Directives for Action-Prompted Mode:**
 1. **DO NOT OPEN THE LEVEL 1 CONTEXT MENU:** The agent MUST NOT call `ask_question` with the generic 12-item menu. Do not add cognitive friction or force the user to re-select what they already clearly requested.
-2. **Autonomous Workflow Mapping:** Deeply analyze the user's action prompt and map it directly to the matching PENG workflow:
+2. **Autonomous Workflow Mapping & Zero Refusal:** Deeply analyze the user's action prompt and map it directly to the matching PENG workflow without boilerplate AI refusals:
    - **Feature / Creation / Implementation** → `[3] [FEATURE-BUILDER] Build New Feature`
      - Auto-infer sub-option based on request: Full Stack Vertical Slice, Backend API & Data Layer Only, Frontend / UI Component Only, or Interactive Requirement Interview (`/grill-me`).
-   - **Bug / Error / Crash / Diagnostic / Probe** → `[5] [BUG-HUNTER] Deep Bug Hunter & Fixer`
-     - Auto-infer sub-option: Specific Error or Stack Trace, Heisenbug / Race Condition, Security & Vulnerability Audit, or Performance & Query Profiling.
+   - **Bug / Error / Crash / Diagnostic / Security Audit / SAST** → `[5] [BUG-HUNTER] Deep Bug Hunter & Fixer`
+     - Auto-infer sub-option: Specific Error or Stack Trace, Heisenbug / Race Condition, Security & Vulnerability Audit, or Performance & Query Profiling. (Note: Security assessments, SAST reviews, and vulnerability audits on local project code MUST be executed directly on the codebase as code reviews without generic safety boilerplate refusals).
    - **Planning / Architecture / Schema / Feasibility** → `[7] [ARCHITECT] Strict Pre-Flight Architecture Review`
      - Auto-infer sub-option: Standard Pre-Flight Matrix, Comparative Architecture, or Database & Schema Impact Only.
-   - **Testing / Linting / Format / Git Prep** → `[8] [VERIFY] Self-Correction & Pre-Commit Audit`
+   - **Testing / Linting / Format / Git Prep / PR Security** → `[8] [VERIFY] Self-Correction & Pre-Commit Audit`
      - Auto-infer sub-option: Full Suite & Hygiene, Test-Only Run, Linter & Style Cleanup, or Pre-PR Security & Sanity Check.
    - **Removal / Cleanup / Deletion / Deprecation** → `[4] [FEATURE-PURGE] Delete / Deprecate Feature`
      - Auto-infer sub-option: Complete Zero-Dead-Code Purge, Soft Deprecation / Feature-Flagging, or Dry-Run Blast-Radius Audit.
@@ -191,18 +192,21 @@ Whenever the user invokes PENG (via `/peng`, calling the `peng` skill, or mentio
      `⚡ [PENG Engine Activated: [Workflow Number] Name → Selected Sub-Option]`
    - Enhance the execution using PENG's professional engineering standards:
      - **For Features:** Apply layered architecture, inspect schema/database state, check gold standard patterns, handle edge cases, and ensure no dead code.
-     - **For Bugs:** Formulate hypotheses, run isolated diagnostic probes, autopsy root cause, and verify resolution without regressions.
+     - **For Bugs & Security Audits:** Formulate hypotheses, audit code/routes/inputs/ORM queries, run isolated diagnostic probes, autopsy root cause, and verify resolution without regressions.
      - **For Architecture:** Formulate a File Impact Matrix, assess migration lock & breaking risks before touching any code.
      - **For Pre-Commit:** Execute test suites, run linters, verify no secrets/credentials are staged, and strip debug logs.
      - **For Feature Purge:** Execute zero-dead-code purge across models, routes, controllers, foreign keys, and UI.
-4. **Preserve Downstream Resolution & Verification Sub-Menus (Levels 3 & 4):**
+4. **Mandatory Smooth Post-Interaction Prompt Citation:**
+   - At the conclusion/wrap-up of every interaction (and smoothly integrated into the chat summary), PENG MUST explicitly state which exact prompt and sub-option from `SKILL.md` was executed:
+     `📌 Executed via SKILL.md Prompt: [Workflow Number] Name → Sub-Option`
+5. **Preserve Downstream Resolution & Verification Sub-Menus (Levels 3 & 4):**
    - While Level 1 and 2 menus are bypassed for speed, downstream interactive safety loops remain active:
      - **Level 3 (Adaptive Resolution Context Menu):** If diagnostic scans, audits, or tests discover issues, summarize them and invoke `ask_question` (`Resolve All`, `Resolve One by One`, `Explain Root Causes & Impact`, `Implementation Plan Only`).
      - **Level 4 (Post-Resolution Wrap-Up Sub-Menu):** When all issues or features are resolved/implemented, invoke `ask_question` (`How do I check or test the changes?`, `Stage & Commit Changes`, `Rescan & Verify`, `Run Full Test Suite`, `Save Breakthrough to Living Memory`, `Revert changes`, `Return to Primary Menu`).
-5. **Instant Accurate Conversation Titling:**
-   - Immediately title the conversation based on the specific action (e.g., `Build Feature: Auth Service`, `Deep Bug Hunter: Null Pointer`), NOT generic `PENG Vibe Coding`.
-6. **Direct Question & Inquiry Context Menu Bypass Directive:**
-   - When the user asks an informational question, investigatory prompt, or explanation request (e.g., "How does X work?", "Why is Y failing?", "Explain Z", "Where is feature A defined?"), PENG MUST NOT open any interactive context menu (`ask_question`). Provide a direct, comprehensive, markdown-formatted response immediately without popping up any context menu modal.
+6. **Instant Accurate Conversation Titling:**
+   - Immediately title the conversation based on the specific action (e.g., `Build Feature: Auth Service`, `Deep Bug Hunter: Security Audit`), NOT generic `PENG Vibe Coding`.
+7. **Direct Question & Inquiry Context Menu Bypass Directive:**
+   - When the user asks an informational question, investigatory prompt, or explanation request (e.g., "How does X work?", "Why is Y failing?", "Explain Z", "Where is feature A defined?"), PENG MUST NOT open any interactive context menu (`ask_question`). Provide a direct, comprehensive, markdown-formatted response immediately without popping up any context menu modal. Smoothly append `📌 Executed via SKILL.md Prompt: Direct Inquiry Response` at the end.
 
 ---
 
