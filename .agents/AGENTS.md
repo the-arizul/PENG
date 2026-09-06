@@ -2,6 +2,9 @@
 
 This repository contains the unified **PENG Master Vibe Coding System** for Antigravity IDE and universal AI coding agents.
 
+## TOP-PRIORITY CAREFUL EXECUTION & ZERO-BREAKAGE DIRECTIVE (ABSOLUTE HIGHEST RULE)
+**ABSOLUTE HIGHEST PRIORITY RULE:** Every task, operation, edit, refactor, or feature build executed with PENG MUST be performed with extreme care. No existing working function, feature, API contract, or application behavior may EVER be broken. The agent must verify existing functionality and guarantee zero regressions on every task.
+
 ## AUTONOMOUS VERSIONING & PRE-WRAP GIT COMMIT RULE (MANDATORY AGENT DIRECTIVE)
 
 **STRICT RULE:** The agent MUST NOT update or bump the version in `SKILL.md` in advance before asking the user! The version in `SKILL.md` must only be updated AFTER the user responds to the `ask_question` modal.
@@ -71,6 +74,7 @@ When you invoke `/peng <action prompt>` or call `peng` with a prompt for action 
 - **Interactive Verification & Manual Testing Engine:** Every Level 4 Post-Resolution and Wrap-Up menu includes `How do I check or test the changes?`. Selecting this provides an exhaustive, step-by-step manual test walkthrough tailored to the project (web, mobile, backend API, CLI, or library). Immediately after outputting the test steps, it re-invokes the Level 4 Context Menu with `Run the app/project` as Option 1 so the user can instantly run or package the app.
 - **End-to-End Revert Engine:** Every Level 4 Post-Resolution and Wrap-Up menu includes `Revert changes`. Selecting this surgically undoes all file modifications (`git restore`), deletes created files, rolls back command side-effects (e.g. uninstalls newly added packages, rolls back migrations), and restores the exact pre-interaction state without affecting unrelated work.
 - **Stage, Commit & Undo Commit Engine:** Every Level 4 Post-Resolution and Wrap-Up menu includes `Stage & Commit Changes`. Selecting this writes high-quality commit details formatted with Conventional Commits best practices (Header + Body detailing what & why), stages files, commits changes, and IMMEDIATELY presents a follow-up context menu offering `Undo commit (git reset --soft HEAD~1)`.
+- **Rescan Engine Directive:** Every Level 4 Post-Resolution and Wrap-Up menu always includes `Rescan - if there's any leftover` (or `Rescan & Verify`). Selecting this re-executes automated diagnostic probes, linters, and checks across modified files to guarantee zero remaining issues, syntax errors, or leftover debug artifacts.
 
 ### 2. Standalone & Mid-Conversation Context-Aware Invocation (When no prompt is provided)
 When you type `/peng` or `peng` by itself:

@@ -8,14 +8,20 @@ user-invocable: true
 
 A hyper-smart, multi-stage interactive vibe coding system for AI coding agents.
 
+> [!CAUTION]
+> **TOP-PRIORITY CAREFUL EXECUTION & ZERO-BREAKAGE DIRECTIVE (ABSOLUTE HIGHEST RULE):**
+> Every task, operation, edit, refactor, or feature build executed with PENG MUST be performed with extreme care. No existing working function, feature, API contract, or application behavior may EVER be broken. The agent must verify existing functionality and guarantee zero regressions on every task.
+
 > [!IMPORTANT]
 > **ZERO-FILE-READ INSTANT EXECUTION DIRECTIVE FOR AGENTS:**
 > When handling `/peng`, `peng`, menu selections (Level 1, Level 2, Level 3, Level 4, or Help Guide), or user prompt choices, the agent **MUST NOT** execute a `view_file` tool call to re-read `SKILL.md`. All workflows, sub-menus, and instructions are already present in active context memory. Respond INSTANTLY to menu selections and prompts without executing any file-reading tools!
 
 ## CURRENT RELEASE VERSION
-- Version: 1.4.3
+- Version: 1.4.4
 - Release Date: 2026-09-06
 - Changelog:
+  * Standardized Level 4 Rescan Directive: Mandated that every Level 4 Post-Resolution Context Menu across all workflows always includes Option 'Rescan - if there's any leftover' (or Rescan & Verify) to re-run diagnostic probes, linters, and checks to confirm zero remaining issues or leftover debug code.
+  * Top-Priority Careful Execution & Zero-Breakage Directive: Added absolute highest priority rule in AGENTS.md and SKILL.md enforcing that all operations executed via PENG must be performed with extreme care, guaranteeing zero breaking changes or regressions to existing working features.
   * Bold Executed via PENG Citation Format: Updated post-interaction citation directive across AGENTS.md and SKILL.md to format execution notices as bold **Executed via PENG! [Workflow / Response]** instead of plain text SKILL.md prompt citations.
   * Stage, Commit Best Practices & Undo Commit Engine: Mandated that Stage & Commit Changes across all context menus writes commit messages using Conventional Commits best practices (Header + Body detailing what & why) and IMMEDIATELY triggers a post-commit follow-up modal via ask_question offering Undo commit (git reset --soft HEAD~1) to safely un-commit changes.
   * Agent Skills Specification Optimization: Enhanced SKILL.md description frontmatter and embedded Zero-File-Read Instant Execution Directive right below the title for seamless skills.sh / npx skills sync compatibility without requiring extra .agents/rules/ files.
@@ -38,7 +44,7 @@ A hyper-smart, multi-stage interactive vibe coding system for AI coding agents.
   * Action-Prompted Direct Execution Engine: Calling /peng <prompt> or invoking peng with a specific action/task bypasses the Level 1 context menu, autonomously selects the matching workflow (Options 1–12), infers the optimal sub-option, and elevates the workflow with PENG engineering rigor.
   * Preserved Dual-Mode Flexibility: Standalone /peng continues to launch the instant interactive menu.
   * First-Time User Detection: Checks state.json existence. New users get a welcome + language setup; returning users go straight to the primary menu.
-  * Level 4 Post-Resolution Sub-Menu: When all issues are resolved, prompts with Run the app/project, How do I check or test the changes?, Stage & Commit, Rescan & Verify, Run Test Suite, Save to Memory, Revert changes, and Return to Menu.
+  * Level 4 Post-Resolution Sub-Menu: When all issues are resolved, prompts with Run the app/project, How do I check or test the changes?, Stage & Commit, Rescan - if there's any leftover, Run Test Suite, Save to Memory, Revert changes, and Return to Menu.
   * Level 3 Adaptive Resolution Context Menu: When scans/diagnostics detect issues, dynamically prompts with 'Resolve All', 'Resolve One by One', 'Explain Root Causes', 'Plan Only', etc.
   * Conversation Titling Fix: Explicit engineering identity prevents erroneous 'Penguin Image Generation' title.
   * Instant Interactive Menu: Direct ask_question launch without visual noise or unnecessary prompts.
@@ -220,7 +226,7 @@ Whenever the user invokes PENG (via `/peng`, calling the `peng` skill, or mentio
 5. **Preserve Downstream Resolution & Verification Sub-Menus (Levels 3 & 4):**
    - While Level 1 and 2 menus are bypassed for speed, downstream interactive safety loops remain active:
      - **Level 3 (Adaptive Resolution Context Menu):** If diagnostic scans, audits, or tests discover issues, summarize them and invoke `ask_question` (`Resolve All`, `Resolve One by One`, `Explain Root Causes & Impact`, `Implementation Plan Only`).
-     - **Level 4 (Post-Resolution Wrap-Up Sub-Menu):** When all issues or features are resolved/implemented, invoke `ask_question` (`How do I check or test the changes?`, `Stage & Commit Changes`, `Rescan & Verify`, `Run Full Test Suite`, `Save Breakthrough to Living Memory`, `Revert changes`, `Return to Primary Menu`).
+     - **Level 4 (Post-Resolution Wrap-Up Sub-Menu):** When all issues or features are resolved/implemented, invoke `ask_question` (`How do I check or test the changes?`, `Stage & Commit Changes`, `Rescan - if there's any leftover`, `Run Full Test Suite`, `Save Breakthrough to Living Memory`, `Revert changes`, `Return to Primary Menu`).
 6. **Instant Accurate Conversation Titling:**
    - Immediately title the conversation based on the specific action (e.g., `Build Feature: Auth Service`, `Deep Bug Hunter: Security Audit`), NOT generic `PENG Vibe Coding`.
 7. **Direct Question & Inquiry Context Menu Bypass Directive:**
@@ -236,7 +242,7 @@ Whenever the user invokes PENG (via `/peng`, calling the `peng` skill, or mentio
 2. **Mid-Conversation Context Detection:**
    - **State A (Active In-Flight Workflow Context):** If the user is currently working on or recently initiated an engineering workflow in this conversation (e.g. Feature Builder [3], Bug Hunter [5], Pre-Commit [8], Architect [7], Harmonizer [9], Feature Purge [4]), IMMEDIATELY open that specific workflow's **Level 2 Sub-Menu** via `ask_question`. Always append `Return to Top-Level Primary Menu` so the user can switch categories easily.
    - **State B (Unresolved Diagnostics / Pending Issues Context):** If diagnostic scans or tests recently identified issues that have not been resolved yet, IMMEDIATELY open the **Level 3 Adaptive Resolution Sub-Menu** (`Resolve All`, `Resolve One by One`, `Explain Root Causes`, `Implementation Plan Only`, `Return to Top-Level Primary Menu`).
-   - **State C (Completed Action / Wrap-Up Context):** If an engineering task or resolution was recently completed in this conversation, IMMEDIATELY open the **Level 4 Post-Resolution Wrap-Up Sub-Menu** (`Run the app/project`, `How do I check or test the changes?`, `Stage & Commit Changes`, `Rescan & Verify`, `Run Full Test Suite`, `Save Breakthrough to Living Memory`, `Revert changes`, `Return to Top-Level Primary Menu`).
+   - **State C (Completed Action / Wrap-Up Context):** If an engineering task or resolution was recently completed in this conversation, IMMEDIATELY open the **Level 4 Post-Resolution Wrap-Up Sub-Menu** (`Run the app/project`, `How do I check or test the changes?`, `Stage & Commit Changes`, `Rescan - if there's any leftover`, `Run Full Test Suite`, `Save Breakthrough to Living Memory`, `Revert changes`, `Return to Top-Level Primary Menu`).
    - **State D (Fresh Conversation / Clean State):** Present the **Level 1 Primary Category Menu** IMMEDIATELY using `ask_question`.
 3. **Level 1 (Primary Category):** When State D applies or when the user selects `Return to Top-Level Primary Menu`, present the 12 primary workflows using `ask_question`.
 3. **Level 2 (Intelligent Sub-Menu Specialization):** Upon the user selecting an option, **DO NOT jump into blind execution**. Immediately present the contextual follow-up menu using `ask_question` (or clean numbered choices) to pinpoint user intent, scope, and technical nuances. Always append the explainer option (`What is this for?`).
@@ -253,7 +259,7 @@ Whenever the user invokes PENG (via `/peng`, calling the `peng` skill, or mentio
    - Run the app/project (Launch dev server or create test package excluding .git for WP/themes)
    - How do I check or test the changes? (Step-by-step verification guide with URLs, test data, and instructions)
    - Stage & Commit Changes (Review diff, generate clean git commit, and seal release)
-   - Rescan & Verify (Run a fresh regression check to guarantee 0 remaining issues)
+   - Rescan - if there's any leftover (Run a fresh regression check to guarantee 0 remaining issues)
    - Run Full Test Suite (Execute automated test suites to ensure zero side-effect regressions)
    - Save Breakthrough to Living Memory (Extract resolution pattern into `.agents/AGENTS.md`)
    - Revert changes (Undo all edits, created files, and commands executed in the last action)
@@ -515,9 +521,10 @@ When the user selects **Undo commit (git reset --soft HEAD~1)**:
     - Options:
       1. Add rule to AGENTS.md to always use PENG for any task (Recommended)
       2. Start Engineering Task (Launch Feature Builder, Bug Hunter, or Architect)
-      3. Review Discovered Architecture (Display tech stack & Gold Standard summary)
-      4. Return to Primary Menu (Select an engineering workflow)
-      5. What is this for? (Explain context initialization wrap-up)
+      3. Rescan - if there's any leftover (Re-verify context setup and living rules)
+      4. Review Discovered Architecture (Display tech stack & Gold Standard summary)
+      5. Return to Primary Menu (Select an engineering workflow)
+      6. What is this for? (Explain context initialization wrap-up)
 
 ---
 
@@ -533,8 +540,9 @@ When the user selects **Undo commit (git reset --soft HEAD~1)**:
     - Options:
       1. Return to Primary Menu (Select an engineering workflow)
       2. Start Engineering Task (Launch Feature Builder, Bug Hunter, or Architect)
-      3. Review Diff Summary (Inspect recent commits and uncommitted diffs)
-      4. What is this for? (Explain context primer wrap-up)
+      3. Rescan - if there's any leftover (Check for uncommitted diffs or leftover branch issues)
+      4. Review Diff Summary (Inspect recent commits and uncommitted diffs)
+      5. What is this for? (Explain context primer wrap-up)
 
 ---
 
@@ -552,7 +560,7 @@ When the user selects **Undo commit (git reset --soft HEAD~1)**:
       1. Run the app/project (Launch dev server or create test package)
       2. How do I check or test the changes? (Step-by-step verification guide with URLs, test data, and instructions)
       3. Stage & Commit Changes (Review diff and seal release with clean git commit)
-      4. Run Verification & Tests (Execute tests and linters on the new feature)
+      4. Rescan - if there's any leftover (Run verification check for leftover issues or edge cases)
       5. Save Architecture Pattern to Memory (Record patterns into .agents/AGENTS.md)
       6. Revert changes (Undo all edits, created files, and commands executed in this feature build)
       7. Return to Primary Menu (Select another workflow)
@@ -573,7 +581,7 @@ When the user selects **Undo commit (git reset --soft HEAD~1)**:
       1. Run the app/project (Launch dev server or create test package)
       2. How do I check or test the changes? (Verification steps to confirm feature is purged without breaking remaining app)
       3. Stage & Commit Changes (Review diff and seal purge with clean commit)
-      4. Rescan & Verify (Run blast-radius regression check to guarantee 0 broken imports)
+      4. Rescan - if there's any leftover (Run blast-radius regression check for leftover references or broken imports)
       5. Run Full Test Suite (Execute automated test suites)
       6. Revert changes (Undo all deletions and restore pre-interaction baseline)
       7. Return to Primary Menu (Select another workflow)
@@ -605,7 +613,7 @@ When the user selects **Undo commit (git reset --soft HEAD~1)**:
       1. Run the app/project (Launch dev server or create test package)
       2. How do I check or test the changes? (Step-by-step verification guide with URLs, test data, and instructions)
       3. Stage & Commit Changes (Review diff and commit fix to Git)
-      4. Rescan & Verify (Run diagnostic probes again to confirm zero remaining issues)
+      4. Rescan - if there's any leftover (Run diagnostic probes again to check for leftover issues or bugs)
       5. Run Full Test Suite (Execute automated test suites to ensure zero regressions)
       6. Save Breakthrough to Living Memory (Record root cause & fix pattern into .agents/AGENTS.md)
       7. Revert changes (Undo all edits, created files, and commands executed in the last action)
@@ -626,9 +634,10 @@ When the user selects **Undo commit (git reset --soft HEAD~1)**:
     - Options:
       1. Return to Primary Menu (Select a fresh workflow)
       2. Retry with Fresh Strategy (Switch implementation approach)
-      3. Revert changes (Undo all edits and restore pre-interaction baseline)
-      4. Clear Scratch Artifacts (Purge temporary diagnostic scripts)
-      5. What is this for? (Explain Circuit Breaker safety recovery)
+      3. Rescan - if there's any leftover (Run diagnostic scan to check state of remaining files)
+      4. Revert changes (Undo all edits and restore pre-interaction baseline)
+      5. Clear Scratch Artifacts (Purge temporary diagnostic scripts)
+      6. What is this for? (Explain Circuit Breaker safety recovery)
 
 ---
 
@@ -644,9 +653,10 @@ When the user selects **Undo commit (git reset --soft HEAD~1)**:
     - Options:
       1. Proceed to Implementation with Feature Builder (Execute plan step-by-step)
       2. Refine Architecture Plan (Adjust trade-offs or file impact matrix)
-      3. Save Architecture to Living Memory (Record rules into .agents/AGENTS.md)
-      4. Return to Primary Menu (Select another workflow)
-      5. What is this for? (Explain architecture review wrap-up)
+      3. Rescan - if there's any leftover (Check codebase for additional affected files or dependencies)
+      4. Save Architecture to Living Memory (Record rules into .agents/AGENTS.md)
+      5. Return to Primary Menu (Select another workflow)
+      6. What is this for? (Explain architecture review wrap-up)
 
 ---
 
@@ -674,7 +684,7 @@ When the user selects **Undo commit (git reset --soft HEAD~1)**:
       1. Run the app/project (Launch dev server or create test package)
       2. How do I check or test the changes? (Step-by-step verification guide with URLs, test data, and instructions)
       3. Stage & Commit to Git (Review diff and seal release with clean commit)
-      4. Rescan & Final Pre-Commit Pass (Run full verify suite again to ensure 100% clean check)
+      4. Rescan - if there's any leftover (Run final pre-commit scan to verify 100% clean check and no leftover debug code)
       5. Save Breakthrough to Living Memory (Record learnings into .agents/AGENTS.md)
       6. Revert changes (Undo all edits, created files, and commands executed in the last action)
       7. Return to Primary Menu (Select another workflow)
@@ -695,7 +705,7 @@ When the user selects **Undo commit (git reset --soft HEAD~1)**:
       1. Run the app/project (Launch dev server or create test package)
       2. How do I check or test the changes? (Step-by-step verification guide with URLs, test data, and instructions)
       3. Stage & Commit Changes (Review diff and seal clean commit)
-      4. Rescan & Verify (Run linters and tests to verify architectural conformance)
+      4. Rescan - if there's any leftover (Check for leftover unharmonized methods or style mismatches)
       5. Revert changes (Undo all edits and restore pre-interaction baseline)
       6. Return to Primary Menu (Select another workflow)
       7. What is this for? (Explain harmonization verification and next steps)
@@ -714,7 +724,8 @@ When the user selects **Undo commit (git reset --soft HEAD~1)**:
     - Options:
       1. Return to Primary Menu (Select another workflow)
       2. View Saved Rules/Skills (Inspect created `.agents/` files)
-      3. What is this for? (Explain memory preservation and guidelines)
+      3. Rescan - if there's any leftover (Verify saved memory rules against active workspace codebase)
+      4. What is this for? (Explain memory preservation and guidelines)
 
 ---
 
@@ -786,8 +797,8 @@ Whenever the user selects an option from ANY context menu across Level 1, Level 
   * **MANDATORY TEXT FIRST DIRECTIVE:** Output an exhaustive, step-by-step manual test guide tailored specifically to the project type (URLs, ports, test credentials, dummy input data, DevTools payloads, before-vs-after expectations, edge cases) in the chat response turn FIRST. Immediately after outputting the guide, re-open the Level 4 menu presenting `Run the app/project` as Option 1.
 - **`Stage & Commit Changes`:**
   * **Prompt Directive:** Execute the Stage, Commit & Undo Commit Engine. Inspect `git status` & `git diff`, formulate a commit message adhering strictly to Conventional Commits & Git Best Practices (`<type>(<scope>): <summary>`, structured body with *what* & *why*), stage files (`git add -A`), execute `git commit`, render the sealed commit summary, and IMMEDIATELY launch an interactive follow-up modal (`ask_question`) offering **Undo commit (`git reset --soft HEAD~1`)** as Option 1.
-- **`Rescan & Verify`:**
-  * **Prompt Directive:** Re-execute automated diagnostic probes/scans across modified files to guarantee 0 remaining issues or side-effect regressions.
+- **`Rescan - if there's any leftover`:**
+  * **Prompt Directive:** Re-execute automated diagnostic probes, linters, and scans across modified files and codebase to guarantee zero remaining issues, syntax errors, or leftover debug code.
 - **`Run Full Test Suite`:**
   * **Prompt Directive:** Execute project test suites (`npm test`, `pytest`, `php artisan test`, `flutter test`), parse test logs, and autonomously repair any failing test assertions.
 - **`Save Breakthrough to Living Memory`:**
