@@ -12,14 +12,23 @@ A hyper-smart, multi-stage interactive vibe coding system for AI coding agents.
 > **TOP-PRIORITY CAREFUL EXECUTION & ZERO-BREAKAGE DIRECTIVE (ABSOLUTE HIGHEST RULE):**
 > Every task, operation, edit, refactor, or feature build executed with PENG MUST be performed with extreme care. No existing working function, feature, API contract, or application behavior may EVER be broken. The agent must verify existing functionality and guarantee zero regressions on every task.
 
+> [!WARNING]
+> **MANDATORY DEEP SCAN & COMPLETE FEATURE REMOVAL DIRECTIVE:**
+> Whenever removing any feature, component, or code artifact:
+> 1. **Deep Scan First:** Thoroughly scan all routes, controllers, models, services, migrations, UI components, imports, and event listeners.
+> 2. **List Associated Files:** Clearly list all identified files and references associated with the feature before or during removal.
+> 3. **Complete Purge:** Completely remove all associated files, references, dead imports, and database artifacts with zero dead code leftover.
+> 4. **Mandatory Rescan Prompt:** Prompt the user to run a rescan via the Level 4 Menu (`Rescan - if there's any leftover (that can cause issues in future)`) to verify that no orphaned references or broken dependencies remain.
+
 > [!IMPORTANT]
 > **ZERO-FILE-READ INSTANT EXECUTION DIRECTIVE FOR AGENTS:**
 > When handling `/peng`, `peng`, menu selections (Level 1, Level 2, Level 3, Level 4, or Help Guide), or user prompt choices, the agent **MUST NOT** execute a `view_file` tool call to re-read `SKILL.md`. All workflows, sub-menus, and instructions are already present in active context memory. Respond INSTANTLY to menu selections and prompts without executing any file-reading tools!
 
 ## CURRENT RELEASE VERSION
-- Version: 1.4.4
-- Release Date: 2026-09-06
+- Version: 1.4.5
+- Release Date: 2026-09-08
 - Changelog:
+  * Mandatory Deep Scan & Complete Feature Removal Directive: Mandated across AGENTS.md and SKILL.md that whenever removing any feature or component, PENG must execute an exhaustive deep scan across all layers, list all associated files/references, completely purge them with zero dead code or broken imports, and immediately prompt the user to rescan to detect any leftovers that could cause future issues.
   * Standardized Level 4 Rescan Directive: Mandated that every Level 4 Post-Resolution Context Menu across all workflows always includes Option 'Rescan - if there's any leftover' (or Rescan & Verify) to re-run diagnostic probes, linters, and checks to confirm zero remaining issues or leftover debug code.
   * Top-Priority Careful Execution & Zero-Breakage Directive: Added absolute highest priority rule in AGENTS.md and SKILL.md enforcing that all operations executed via PENG must be performed with extreme care, guaranteeing zero breaking changes or regressions to existing working features.
   * Bold Executed via PENG Citation Format: Updated post-interaction citation directive across AGENTS.md and SKILL.md to format execution notices as bold **Executed via PENG! [Workflow / Response]** instead of plain text SKILL.md prompt citations.
@@ -219,7 +228,7 @@ Whenever the user invokes PENG (via `/peng`, calling the `peng` skill, or mentio
      - **For Bugs & Security Audits:** Formulate hypotheses, audit code/routes/inputs/ORM queries, run isolated diagnostic probes, autopsy root cause, and verify resolution without regressions.
      - **For Architecture:** Formulate a File Impact Matrix, assess migration lock & breaking risks before touching any code.
      - **For Pre-Commit:** Execute test suites, run linters, verify no secrets/credentials are staged, and strip debug logs.
-     - **For Feature Purge:** Execute zero-dead-code purge across models, routes, controllers, foreign keys, and UI.
+     - **For Feature Purge:** Deep scan across all routes, controllers, models, seeders, UI, migrations, and references; list all associated files discovered; completely remove them; and prompt the user to rescan to detect any leftovers that could cause future issues.
 4. **Mandatory Smooth Post-Interaction Prompt Citation:**
    - At the conclusion/wrap-up of every interaction (and smoothly integrated into the chat summary), PENG MUST explicitly state which exact prompt and sub-option was executed formatted in bold text:
      `**Executed via PENG! [Workflow Number] Name → Sub-Option**`
@@ -829,9 +838,11 @@ Whenever the user selects an option from ANY context menu across Level 1, Level 
 - `Interactive Requirement Interview (/grill-me)`: Ask 3-5 targeted clarifying questions on edge cases, validation rules, and business constraints before writing code.
 
 #### Workflow [4] [FEATURE-PURGE] Delete / Deprecate Feature
-- `Complete Zero-Dead-Code Purge`: Grep all references, delete routes, controllers, models, seeders, frontend components, and generate database column drop migrations.
+- **Mandatory Deep Scan & Associated Files Listing:** Before deleting, run an exhaustive deep scan across the codebase (routes, controllers, models, seeders, components, configs, styles, imports, tests). Explicitly list every associated file and reference discovered in a structured summary table before or during the purge.
+- `Complete Zero-Dead-Code Purge`: Completely remove all associated files, delete routes/controllers/models/seeders/UI components, generate database column drop migrations where applicable, and surgically eliminate all dead imports so zero broken references remain.
 - `Soft Deprecation / Feature-Flagging`: Wrap feature behind environment flags or deprecation warnings without deleting files.
 - `Dry-Run Blast-Radius Audit`: Output a blast-radius table listing all affected files, imports, and foreign keys without deleting code.
+- **Mandatory Post-Purge Rescan Prompt:** After purging, immediately present the Level 4 Context Menu highlighting `Rescan - if there's any leftover (that can cause issues in future)` to verify zero leftover dead code or broken links.
 
 #### Workflow [5] [BUG-HUNTER] Deep Bug Hunter & Fixer
 - `Specific Error or Stack Trace`: Autopsy provided error message or stack trace, isolate failing file/line, write diagnostic probe, and patch root cause.
