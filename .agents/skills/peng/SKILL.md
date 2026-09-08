@@ -27,10 +27,18 @@ A hyper-smart, multi-stage interactive vibe coding system for AI coding agents.
 > **ZERO-FILE-READ INSTANT EXECUTION DIRECTIVE FOR AGENTS:**
 > When handling `/peng`, `peng`, menu selections (Level 1, Level 2, Level 3, Level 4, or Help Guide), or user prompt choices, the agent **MUST NOT** execute a `view_file` tool call to re-read `SKILL.md`. All workflows, sub-menus, and instructions are already present in active context memory. Respond INSTANTLY to menu selections and prompts without executing any file-reading tools!
 
+> [!IMPORTANT]
+> **MANDATORY CONTENT TEXT RENDERING BEFORE CONTEXT MENU MODAL DIRECTIVE (ZERO-GHOSTING / NO-FALSE-CLAIM RULE):**
+> Whenever ANY context menu option is selected that generates a verification guide, explanation, autopsy report, impact matrix, rescan summary, or commit breakdown (e.g., *How do I check or test the changes?*, *What is this for?*, *Rescan - if there's any leftover*):
+> 1. **Render Full Text First:** The agent MUST write and render the complete, detailed markdown text of the guide/report directly inside the chat response body FIRST.
+> 2. **No Unprinted Summaries:** NEVER launch `ask_question` with a summary prompt (like *"Verification guide generated! How would you like to proceed?"*) without printing the actual full step-by-step content text on screen!
+> 3. **Sequence:** The user MUST be able to read the complete guide/report on screen before responding to the follow-up `ask_question` context menu modal.
+
 ## CURRENT RELEASE VERSION
-- Version: 1.4.6
+- Version: 1.4.7
 - Release Date: 2026-09-08
 - Changelog:
+  * Mandatory Content Text Rendering Directive (Zero-Ghosting / No-False-Claim Rule): Added strict top-priority rule across AGENTS.md, SKILL.md, and README.md mandating that whenever any option generating text output (such as manual verification guides, explanations, autopsy reports, rescan summaries, or commit breakdowns) is selected, the agent MUST write and render the full markdown content text on screen FIRST before invoking the ask_question context menu modal, eliminating false claims and unprinted outputs.
   * Mandatory Careful Code Execution & Syntax Recheck Directive: Added absolute highest priority rule across AGENTS.md, SKILL.md, and README.md mandating extreme diligence on all code changes and requiring a mandatory syntax error and diagnostics recheck (using automated language-specific syntax probes like php -l, node --check, python -m py_compile, etc.) before ending ANY task.
   * Mandatory Deep Scan & Complete Feature Removal Directive: Mandated across AGENTS.md and SKILL.md that whenever removing any feature or component, PENG must execute an exhaustive deep scan across all layers, list all associated files/references, completely purge them with zero dead code or broken imports, and immediately prompt the user to rescan to detect any leftovers that could cause future issues.
   * Standardized Level 4 Rescan Directive: Mandated that every Level 4 Post-Resolution Context Menu across all workflows always includes Option 'Rescan - if there's any leftover' (or Rescan & Verify) to re-run diagnostic probes, linters, and checks to confirm zero remaining issues or leftover debug code.
@@ -372,8 +380,10 @@ The agent is STRICTLY REQUIRED to deliver an exhaustive, crystal-clear, step-by-
    - **CLI Tools & Scripts:** Exact terminal command invocations with test arguments, flags, and expected terminal output.
    - **Libraries / Packages:** Example import snippet or runner script (`node test.js` or `pytest tests/test_feature.py`).
 
-9. **Seamless Follow-Up Loop (Mandatory Re-Prompting Directive):**
-   - Immediately after outputting the verification guide for "How do I check or test the changes?", the agent MUST IMMEDIATELY re-invoke the Level 4 Wrap-Up Context Menu via `ask_question`, presenting **`Run the app/project`** as Option 1. This allows the user to transition directly from reading the test steps to executing or bundling the project with zero friction.
+9. **Mandatory Text Output First & Seamless Follow-Up Loop (Zero-Ghosting Directive):**
+   - **MUST Render Guide Text First:** The agent MUST write and render the complete, step-by-step verification guide (sections 1 through 8 above: URLs, ports, prerequisite test data, click-by-click instructions, DevTools checks, expected outcomes) in full markdown text directly inside the chat response body FIRST.
+   - **NO False Claims or Skipped Output:** The agent MUST NEVER invoke `ask_question` with a message like *"Verification guide generated! How would you like to proceed?"* without printing the actual full verification guide text on screen in the chat response turn!
+   - **Follow-Up Menu Launch:** Immediately after outputting the verification guide text in the response body, the agent re-invokes the Level 4 Wrap-Up Context Menu via `ask_question`, presenting **`Run the app/project`** as Option 1 so the user can transition directly from reading the displayed test steps to executing or bundling the project.
      * Question: "Ready after reviewing the test guide? How would you like to proceed?"
      * Options:
        1. Run the app/project (Launch dev server or create test package)
