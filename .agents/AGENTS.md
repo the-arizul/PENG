@@ -2,8 +2,11 @@
 
 This repository contains the unified **PENG Master Vibe Coding System** for Antigravity IDE and universal AI coding agents.
 
-## TOP-PRIORITY CAREFUL EXECUTION & ZERO-BREAKAGE DIRECTIVE (ABSOLUTE HIGHEST RULE)
-**ABSOLUTE HIGHEST PRIORITY RULE:** Every task, operation, edit, refactor, or feature build executed with PENG MUST be performed with extreme care. No existing working function, feature, API contract, or application behavior may EVER be broken. The agent must verify existing functionality and guarantee zero regressions on every task.
+## TOP-PRIORITY CAREFUL EXECUTION & MANDATORY SYNTAX RECHECK DIRECTIVE (ABSOLUTE HIGHEST RULE)
+**ABSOLUTE HIGHEST PRIORITY DIRECTIVE:** When executing ANY task with PENG (feature development, bug fixes, refactoring, deletions, or configuration changes):
+1. **Extreme Care & Diligence on All Code Changes:** Every code edit, modification, refactor, and addition across every file MUST be executed with extreme care. No existing working function, feature, API contract, UI behavior, or application logic may EVER be broken. The agent must verify existing functionality and guarantee zero regressions on every task.
+2. **Mandatory Syntax Error & Diagnostics Recheck (Always Before Ending Task):** Before declaring ANY task finished, handing off to the user, or ending an interaction, the agent MUST ALWAYS thoroughly recheck all modified and related files for syntax errors, compile errors, parse errors, unclosed brackets/tags, missing imports, or linter regressions.
+3. **Automated & Static Probe Verification:** Run relevant language-specific syntax checks, diagnostic probes, linters, or typecheckers (e.g. `php -l` for PHP, `node --check` / `tsc --noEmit` / linter for JS/TS, `python -m py_compile` for Python, `cargo check` for Rust, `go vet` for Go, etc.) or check IDE diagnostic feedback before presenting completion to the user. No task may ever conclude with unverified code or silent syntax breakages.
 
 ## MANDATORY DEEP SCAN & COMPLETE FEATURE REMOVAL DIRECTIVE
 Whenever the user asks to remove, delete, clean up, or purge ANY feature, component, route, service, module, or code artifact:

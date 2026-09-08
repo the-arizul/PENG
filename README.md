@@ -42,6 +42,7 @@ PENG supports two seamless invocation modes in any supported agent chat (Antigra
 - **End-to-End Revert Engine:** Every Level-4 Post-Resolution and Wrap-Up context menu features `Revert changes` to surgically undo all edits, delete created files, and roll back command side-effects (e.g. newly installed dependencies) from the last action.
 - **Deep Scan Feature Purge & Rescan Protocol:** Deeply scans all codebase layers when removing any feature, lists all associated files/references, purges them completely, and immediately prompts with `Rescan - if there's any leftover (that can cause issues in future)` to guarantee zero orphaned code or broken imports.
 - **Rescan Engine Directive:** Every Level-4 Post-Resolution context menu includes `Rescan - if there's any leftover` to re-execute diagnostic probes, linters, and checks to confirm zero remaining issues or leftover debug code.
+- **Mandatory Careful Execution & Syntax Recheck Directive:** Mandates extreme care on all code modifications with zero regressions, requiring the agent to always recheck syntax errors, parse errors, and run diagnostic probes (e.g. `php -l`, `node --check`, `python -m py_compile`, typechecks) on all modified files before ending any task.
 
 ### Mode 1: Action-Prompted Direct Execution (Fast-Track)
 Provide your goal or task directly when invoking PENG. The agent will autonomously match the optimal workflow from the skill catalog, elevate the workflow with PENG engineering standards, and execute without opening the Level-1 menu:

@@ -9,8 +9,11 @@ user-invocable: true
 A hyper-smart, multi-stage interactive vibe coding system for AI coding agents.
 
 > [!CAUTION]
-> **TOP-PRIORITY CAREFUL EXECUTION & ZERO-BREAKAGE DIRECTIVE (ABSOLUTE HIGHEST RULE):**
-> Every task, operation, edit, refactor, or feature build executed with PENG MUST be performed with extreme care. No existing working function, feature, API contract, or application behavior may EVER be broken. The agent must verify existing functionality and guarantee zero regressions on every task.
+> **TOP-PRIORITY CAREFUL EXECUTION & MANDATORY SYNTAX RECHECK DIRECTIVE (ABSOLUTE HIGHEST RULE):**
+> When executing ANY task with PENG (feature development, bug fixes, refactoring, deletions, or configuration changes):
+> 1. **Extreme Care & Diligence on All Code Changes:** Every code edit, modification, refactor, and addition across every file MUST be executed with extreme care. No existing working function, feature, API contract, UI behavior, or application logic may EVER be broken. The agent must verify existing functionality and guarantee zero regressions on every task.
+> 2. **Mandatory Syntax Error & Diagnostics Recheck (Always Before Ending Task):** Before declaring ANY task finished, handing off to the user, or ending an interaction, the agent MUST ALWAYS thoroughly recheck all modified and related files for syntax errors, compile errors, parse errors, unclosed brackets/tags, missing imports, or linter regressions.
+> 3. **Automated & Static Probe Verification:** Run relevant language-specific syntax checks, diagnostic probes, linters, or typecheckers (e.g. `php -l` for PHP, `node --check` / `tsc --noEmit` / linter for JS/TS, `python -m py_compile` for Python, `cargo check` for Rust, `go vet` for Go, etc.) or check IDE diagnostic feedback before presenting completion to the user. No task may ever conclude with unverified code or silent syntax breakages.
 
 > [!WARNING]
 > **MANDATORY DEEP SCAN & COMPLETE FEATURE REMOVAL DIRECTIVE:**
@@ -25,9 +28,10 @@ A hyper-smart, multi-stage interactive vibe coding system for AI coding agents.
 > When handling `/peng`, `peng`, menu selections (Level 1, Level 2, Level 3, Level 4, or Help Guide), or user prompt choices, the agent **MUST NOT** execute a `view_file` tool call to re-read `SKILL.md`. All workflows, sub-menus, and instructions are already present in active context memory. Respond INSTANTLY to menu selections and prompts without executing any file-reading tools!
 
 ## CURRENT RELEASE VERSION
-- Version: 1.4.5
+- Version: 1.4.6
 - Release Date: 2026-09-08
 - Changelog:
+  * Mandatory Careful Code Execution & Syntax Recheck Directive: Added absolute highest priority rule across AGENTS.md, SKILL.md, and README.md mandating extreme diligence on all code changes and requiring a mandatory syntax error and diagnostics recheck (using automated language-specific syntax probes like php -l, node --check, python -m py_compile, etc.) before ending ANY task.
   * Mandatory Deep Scan & Complete Feature Removal Directive: Mandated across AGENTS.md and SKILL.md that whenever removing any feature or component, PENG must execute an exhaustive deep scan across all layers, list all associated files/references, completely purge them with zero dead code or broken imports, and immediately prompt the user to rescan to detect any leftovers that could cause future issues.
   * Standardized Level 4 Rescan Directive: Mandated that every Level 4 Post-Resolution Context Menu across all workflows always includes Option 'Rescan - if there's any leftover' (or Rescan & Verify) to re-run diagnostic probes, linters, and checks to confirm zero remaining issues or leftover debug code.
   * Top-Priority Careful Execution & Zero-Breakage Directive: Added absolute highest priority rule in AGENTS.md and SKILL.md enforcing that all operations executed via PENG must be performed with extreme care, guaranteeing zero breaking changes or regressions to existing working features.
@@ -229,6 +233,7 @@ Whenever the user invokes PENG (via `/peng`, calling the `peng` skill, or mentio
      - **For Architecture:** Formulate a File Impact Matrix, assess migration lock & breaking risks before touching any code.
      - **For Pre-Commit:** Execute test suites, run linters, verify no secrets/credentials are staged, and strip debug logs.
      - **For Feature Purge:** Deep scan across all routes, controllers, models, seeders, UI, migrations, and references; list all associated files discovered; completely remove them; and prompt the user to rescan to detect any leftovers that could cause future issues.
+     - **Mandatory Pre-Completion Syntax & Diagnostics Verification (All Tasks):** Before concluding any task or handing off to the user, the agent MUST carefully inspect all code changes and run language syntax validation probes (e.g. `php -l`, `node --check`, `python -m py_compile`, typechecks, or linters) to guarantee 100% error-free syntax with zero regressions.
 4. **Mandatory Smooth Post-Interaction Prompt Citation:**
    - At the conclusion/wrap-up of every interaction (and smoothly integrated into the chat summary), PENG MUST explicitly state which exact prompt and sub-option was executed formatted in bold text:
      `**Executed via PENG! [Workflow Number] Name → Sub-Option**`
