@@ -35,9 +35,10 @@ A hyper-smart, multi-stage interactive vibe coding system for AI coding agents.
 > 3. **Sequence:** The user MUST be able to read the complete guide/report on screen before responding to the follow-up `ask_question` context menu modal.
 
 ## CURRENT RELEASE VERSION
-- Version: 1.4.7
-- Release Date: 2026-09-08
+- Version: 1.4.8
+- Release Date: 2026-09-11
 - Changelog:
+  * UI & Feature Completeness Auditor and Design System Standardizer Workflows: Added Workflows [11] and [12] to the PENG Primary Top Menu and master catalog, expanding total workflows to 14. [11] [UI-AUDITOR] delivers a deep-scan audit-only protocol to discover broken, disconnected, or half-implemented UI features, dead-end buttons, stubbed event handlers, and unbound forms with itemized reporting before any code changes. [12] [STANDARDIZE] delivers an architectural overhaul engine that standardizes UI/UX on shared shadcn/ui components, eradicates hardcoding ("hardcoding is a crime"), and extracts clean reusable abstractions across the entire project. Renumbered Custom Prompt Management to [13] and Help Guide to [14].
   * Mandatory Content Text Rendering Directive (Zero-Ghosting / No-False-Claim Rule): Added strict top-priority rule across AGENTS.md, SKILL.md, and README.md mandating that whenever any option generating text output (such as manual verification guides, explanations, autopsy reports, rescan summaries, or commit breakdowns) is selected, the agent MUST write and render the full markdown content text on screen FIRST before invoking the ask_question context menu modal, eliminating false claims and unprinted outputs.
   * Mandatory Careful Code Execution & Syntax Recheck Directive: Added absolute highest priority rule across AGENTS.md, SKILL.md, and README.md mandating extreme diligence on all code changes and requiring a mandatory syntax error and diagnostics recheck (using automated language-specific syntax probes like php -l, node --check, python -m py_compile, etc.) before ending ANY task.
   * Mandatory Deep Scan & Complete Feature Removal Directive: Mandated across AGENTS.md and SKILL.md that whenever removing any feature or component, PENG must execute an exhaustive deep scan across all layers, list all associated files/references, completely purge them with zero dead code or broken imports, and immediately prompt the user to rescan to detect any leftovers that could cause future issues.
@@ -62,16 +63,16 @@ A hyper-smart, multi-stage interactive vibe coding system for AI coding agents.
   * End-to-End Revert Engine: Added 'Revert changes' option to all Level 4 Post-Resolution & Wrap-Up menus. Allows instant, surgical rollback of all file edits, newly created files, and executed commands (package installs, migrations) from the last action, restoring the pre-interaction baseline without touching unrelated work.
   * Push-Based Update Detection via npx skills: No GitHub releases or tags required. The skill directly tracks git commits pushed to the-arizul/PENG on GitHub via git ls-remote. Consumer projects automatically detect newly pushed commits and prompt the user to update the skill safely via npx skills update peng (-y or -g -y).
   * Session Git Remote Sync & state.json Verification: On any new conversation when peng is invoked, automatically checks if new git updates were pushed to remote to pull, and verifies if state.json exists. Prompts to git pull if remote is ahead, and initializes language setup if state.json is absent.
-  * Action-Prompted Direct Execution Engine: Calling /peng <prompt> or invoking peng with a specific action/task bypasses the Level 1 context menu, autonomously selects the matching workflow (Options 1–12), infers the optimal sub-option, and elevates the workflow with PENG engineering rigor.
+  * Action-Prompted Direct Execution Engine: Calling /peng <prompt> or invoking peng with a specific action/task bypasses the Level 1 context menu, autonomously selects the matching workflow (Options 1–14), infers the optimal sub-option, and elevates the workflow with PENG engineering rigor.
   * Preserved Dual-Mode Flexibility: Standalone /peng continues to launch the instant interactive menu.
   * First-Time User Detection: Checks state.json existence. New users get a welcome + language setup; returning users go straight to the primary menu.
   * Level 4 Post-Resolution Sub-Menu: When all issues are resolved, prompts with Run the app/project, How do I check or test the changes?, Stage & Commit, Rescan - if there's any leftover, Run Test Suite, Save to Memory, Revert changes, and Return to Menu.
   * Level 3 Adaptive Resolution Context Menu: When scans/diagnostics detect issues, dynamically prompts with 'Resolve All', 'Resolve One by One', 'Explain Root Causes', 'Plan Only', etc.
   * Conversation Titling Fix: Explicit engineering identity prevents erroneous 'Penguin Image Generation' title.
   * Instant Interactive Menu: Direct ask_question launch without visual noise or unnecessary prompts.
-  * Multi-stage contextual sub-menus across all 12 options.
+  * Multi-stage contextual sub-menus across all 14 options.
   * Mandatory What is this for? interactive explainer loop.
-  * In-chat language switcher & update checker under [12] Help.
+  * In-chat language switcher & update checker under [14] Help.
   * Autonomous git commit & versioning hook with 'All good? Ensure it first' pre-commit sanity check.
 
 ---
@@ -212,7 +213,7 @@ Whenever the user invokes PENG (via `/peng`, calling the `peng` skill, or mentio
 **Trigger Condition:** The user invokes `peng` or `/peng` accompanied by a prompt for action, task, bug report, feature request, or engineering command (e.g., `/peng build auth service with jwt`, `peng: fix the checkout null pointer error`, `/peng review security on api routes`, `/peng run pre-commit suite`, `@peng deprecate old billing tables`).
 
 **Strict Directives for Action-Prompted Mode:**
-1. **DO NOT OPEN THE LEVEL 1 CONTEXT MENU:** The agent MUST NOT call `ask_question` with the generic 12-item menu. Do not add cognitive friction or force the user to re-select what they already clearly requested.
+1. **DO NOT OPEN THE LEVEL 1 CONTEXT MENU:** The agent MUST NOT call `ask_question` with the generic 14-item menu. Do not add cognitive friction or force the user to re-select what they already clearly requested.
 2. **Autonomous Workflow Mapping & Zero Refusal:** Deeply analyze the user's action prompt and map it directly to the matching PENG workflow without boilerplate AI refusals:
    - **Feature / Creation / Implementation** → `[3] [FEATURE-BUILDER] Build New Feature`
      - Auto-infer sub-option based on request: Full Stack Vertical Slice, Backend API & Data Layer Only, Frontend / UI Component Only, or Interactive Requirement Interview (`/grill-me`).
@@ -226,12 +227,16 @@ Whenever the user invokes PENG (via `/peng`, calling the `peng` skill, or mentio
      - Auto-infer sub-option: Complete Zero-Dead-Code Purge, Soft Deprecation / Feature-Flagging, or Dry-Run Blast-Radius Audit.
    - **Style Uniformity / Harmonization / Matching Clean File** → `[9] [HARMONIZE] Gold Standard Style Harmonizer`
      - Auto-infer sub-option: Auto-Detect Best Reference, User-Specified Reference File, or Refactor Existing File to Match.
+   - **UI Logic Audit / Broken Buttons / Missing Form Logic / Ghost Features** → `[11] [UI-AUDITOR] UI & Feature Completeness Auditor`
+     - Auto-infer sub-option: Full Project Completeness Audit, Forms & Data Mutation Wiring Audit, or Ghost Features & Disconnected Routes Hunter.
+   - **Design System / Shadcn Standardization / Hardcoding Elimination / Reusable Abstractions** → `[12] [STANDARDIZE] Design System & Anti-Hardcode Architect`
+     - Auto-infer sub-option: Full Project Standardization, Shadcn/UI Component Migration, Anti-Hardcoding & Magic Value Extraction, or Duplicated Logic & Helper Abstraction.
    - **Repository Initialization / Living Memory Setup** → `[1] [INIT] Autonomous Context Generator`
    - **Branch / Session Catchup** → `[2] [CONTEXT-PRIMER] Fresh Chat Context Primer`
    - **Halting Stuck Edit Loops / Hallucinations** → `[6] [CIRCUIT-BREAKER] Emergency Halt & Diagnosis`
    - **Extracting Permanent Session Learnings** → `[10] [LEARN] Session Living Memory Extractor`
-   - **Customizing Prompts / Catalog** → `[11] [CUSTOM] Add or Edit a Prompt`
-   - **Help / Manual / Settings / Language** → `[12] [HELP] Help & Comprehensive User Guide`
+   - **Customizing Prompts / Catalog** → `[13] [CUSTOM] Add or Edit a Prompt`
+   - **Help / Manual / Settings / Language** → `[14] [HELP] Help & Comprehensive User Guide`
 3. **Elevate & Improve the Workflow (PENG Master Rigor):**
    - Display a clean execution banner at the start of the response:
      `⚡ [PENG Engine Activated: [Workflow Number] Name → Selected Sub-Option]`
@@ -266,7 +271,7 @@ Whenever the user invokes PENG (via `/peng`, calling the `peng` skill, or mentio
    - **State B (Unresolved Diagnostics / Pending Issues Context):** If diagnostic scans or tests recently identified issues that have not been resolved yet, IMMEDIATELY open the **Level 3 Adaptive Resolution Sub-Menu** (`Resolve All`, `Resolve One by One`, `Explain Root Causes`, `Implementation Plan Only`, `Return to Top-Level Primary Menu`).
    - **State C (Completed Action / Wrap-Up Context):** If an engineering task or resolution was recently completed in this conversation, IMMEDIATELY open the **Level 4 Post-Resolution Wrap-Up Sub-Menu** (`Run the app/project`, `How do I check or test the changes?`, `Stage & Commit Changes`, `Rescan - if there's any leftover`, `Run Full Test Suite`, `Save Breakthrough to Living Memory`, `Revert changes`, `Return to Top-Level Primary Menu`).
    - **State D (Fresh Conversation / Clean State):** Present the **Level 1 Primary Category Menu** IMMEDIATELY using `ask_question`.
-3. **Level 1 (Primary Category):** When State D applies or when the user selects `Return to Top-Level Primary Menu`, present the 12 primary workflows using `ask_question`.
+3. **Level 1 (Primary Category):** When State D applies or when the user selects `Return to Top-Level Primary Menu`, present the 14 primary workflows using `ask_question`.
 3. **Level 2 (Intelligent Sub-Menu Specialization):** Upon the user selecting an option, **DO NOT jump into blind execution**. Immediately present the contextual follow-up menu using `ask_question` (or clean numbered choices) to pinpoint user intent, scope, and technical nuances. Always append the explainer option (`What is this for?`).
 4. **Level 3 (Adaptive Resolution Sub-Menu):** Whenever an issue scan or diagnosis discovers one or more issues/bugs/failures (e.g. in Bug Hunter, Security Audit, Performance Profiler, or Pre-Commit Verify):
    **DO NOT blindly edit code or patch everything unprompted.**
@@ -517,8 +522,10 @@ When the user selects **Undo commit (git reset --soft HEAD~1)**:
 8. [8] Pre-Commit Verify (Automated test suites, linter fixes, and clean git commit)
 9. [9] Gold Standard Harmonizer (Mirror existing cleanest reference conventions)
 10. [10] Living Memory / Learn (Save session breakthrough to permanent project memory)
-11. [11] Add or Edit a Prompt (Extend or customize this prompt catalog)
-12. [12] Help & Comprehensive User Guide (Interactive master manual, language switcher, and steering tips)
+11. [11] UI & Feature Completeness Auditor (Deep-scan for disconnected, broken, or non-functional UI logic)
+12. [12] Design System & Anti-Hardcode Architect (Shadcn/UI standardization & reusable abstraction overhaul)
+13. [13] Add or Edit a Prompt (Extend or customize this prompt catalog)
+14. [14] Help & Comprehensive User Guide (Interactive master manual, language switcher, and steering tips)
 
 ---
 
@@ -753,20 +760,96 @@ When the user selects **Undo commit (git reset --soft HEAD~1)**:
 
 ---
 
-### 11. [CUSTOM] Add or Edit a Prompt
+### 11. [UI-AUDITOR] UI & Feature Completeness Auditor
+- Level 2 Context Menu:
+  - Full Project Completeness Audit: Deep-scan all pages, components, buttons, forms, handlers, and user journeys for missing logic, dummy stubs, and non-functional features.
+  - Forms & Data Mutation Wiring Audit: Audit all form submissions, dialogs, mutation triggers, validation schemas, and inputs across the app to verify full end-to-end wiring.
+  - Ghost Features & Disconnected Routes Hunter: Scan for unreachable pages, orphan components, placeholder cards/tabs with no backing data, and UI elements missing API contracts.
+  - What is this for? (Explain UI & Feature Completeness Auditor, its value, and when to use it)
+- Master Execution Directives (Audit & Report Findings Only - Zero Code Edits):
+  * **Strict Audit-Only Directive:** The agent MUST NOT modify, edit, or patch any code during this audit. Only audit and report the findings.
+  * **Deep Scan Protocol:** Deep-scan the entire project across all UI elements, pages, components, buttons, forms, navigation links, and interactive features.
+  * **Issue Classification:** Specifically identify:
+    1. Stubbed or dummy event handlers (`onClick`, `onSubmit`, `onChange` containing `console.log`, `alert()`, `TODO`, `// implement later`, empty callbacks, or `event.preventDefault()` only).
+    2. Disconnected forms (inputs lacking state binding, missing validation schemas, or lacking active API submission endpoints).
+    3. Dead-end buttons & navigation links (`href="#"`, `href=""`, unhandled click actions, or permanently disabled buttons with no activation logic).
+    4. Data-fetching gaps (components with mocked/static dummy data where live data is required, missing loading/error/empty states, unhandled API error paths).
+    5. Disconnected or orphan UI views (pages missing from router manifests, non-functional tabs, or features rendered without backing services).
+  * **Mandatory Markdown Report Output:** The agent MUST write and render an exhaustive audit report directly inside the chat response body FIRST:
+    | Element / Feature | File Location | Issue Classification | Missing or Broken Logic Details | Severity |
+  * **Safety & Verification:** Execute with extreme care without breaking any existing features or code. Always double-check diagnostic probes for syntax errors before finishing.
+- Level 3 Resolution Context Menu (Triggered immediately when issues are identified):
+  * Once the itemized audit report is rendered on screen, invoke `ask_question`:
+    - Question: "UI Completeness Audit identified [N] broken or missing logic item(s). How would you like to proceed?"
+    - Options:
+      1. Resolve All (Autonomously implement missing logic for all identified items with regression checks)
+      2. Resolve One by One (Step through each missing feature interactively; review & approve each implementation)
+      3. Explain Root Causes & Missing Specifications (Deep-dive technical breakdown of missing logic & contracts)
+      4. Implementation Plan Only (Draft structured architecture plan before touching code)
+      5. Selective Implementation (Choose specific UI features to wire up and leave others for later)
+      6. What is this for? (Explain completeness resolution strategies)
+- Level 4 Post-Resolution Context Menu (Triggered when all identified missing/broken logic is implemented and resolved):
+  * Once the features/logic are implemented and verified, invoke `ask_question`:
+    - Question: "All UI completeness issues resolved! How would you like to proceed?"
+    - Options:
+      1. Run the app/project (Launch dev server or create test package)
+      2. How do I check or test the changes? (Step-by-step verification guide with URLs, test data, and instructions)
+      3. Stage & Commit Changes (Review diff and commit implemented logic to Git)
+      4. Rescan - if there's any leftover (Run fresh scan to verify 100% of UI elements and forms are fully wired)
+      5. Run Full Test Suite (Execute automated test suites to ensure zero side-effect regressions)
+      6. Save Breakthrough to Living Memory (Record pattern into .agents/AGENTS.md)
+      7. Revert changes (Undo all edits, created files, and commands executed in the last action)
+      8. Return to Primary Menu (Select another workflow)
+      9. What is this for? (Explain post-resolution verification and next steps)
+
+---
+
+### 12. [STANDARDIZE] Design System & Anti-Hardcode Architect
+- Level 2 Context Menu:
+  - Full Project Standardization (Shadcn/UI & Anti-Hardcoding Overhaul): Deep-scan all components, styles, functions, and patterns. Formulate structured plan to standardize on shadcn/ui and clean abstractions, then execute systematically.
+  - Shadcn/UI Component Migration: Audit raw HTML and bespoke UI elements (buttons, inputs, dialogs, dropdowns, tables, cards, forms) and migrate them to shared, accessible shadcn/ui components.
+  - Anti-Hardcoding & Magic Value Extraction: Eradicate hardcoded magic strings, numbers, inline styles, arbitrary Tailwind classes, and API URLs; centralize into design tokens, theme variables, constants, and typed configs.
+  - Duplicated Logic & Helper Abstraction: Consolidate copy-pasted handlers, hooks, utility functions, and component wrappers into shared, reusable abstractions.
+  - What is this for? (Explain Design System & Anti-Hardcode Architect, its value, and when to use it)
+- Master Execution Directives (Hardcoding is a Crime - Zero Regressions):
+  * **Phase 1: Deep Scan & Full Codebase Analysis:** Deep-scan the entire project first. Analyze all files, components, logic, UI/UX, styles, functions, and patterns. Identify all bespoke UI elements, inline styles, arbitrary Tailwind classes, copy-pasted utility functions, and hardcoded values.
+  * **Phase 2: Structured Standardization Plan Formulation:** Formulate a complete, structured plan to make the project fully consistent, reusable, and maintainable.
+    - Standardize UI/UX around shared shadcn/ui components (`Button`, `Input`, `Dialog`, `DropdownMenu`, `Card`, `Select`, `Badge`, `Form`, etc.) and reusable patterns.
+    - Replace duplicated or hardcoded elements, logic, styles, and functions with clean, reusable abstractions wherever appropriate. Hardcoding is a crime.
+    - Keep the architecture 100% consistent across the entire project.
+    - Present the complete structured plan directly in the chat response first.
+  * **Phase 3: Systematic Implementation (Never Skip Files):** After presenting the plan, proceed with the implementation systematically file by file. Do not skip files or leave inconsistent legacy patterns behind.
+  * **Phase 4: Mandatory Diligence & Syntax Diagnostics Recheck:** Execute with extreme care without breaking any existing features, API contracts, or working application code. Always double-check every modified file for syntax errors, compile errors, and linter regressions before finishing.
+- Level 4 Post-Resolution Context Menu (Triggered when standardization is complete):
+  * Once the standardization and refactoring are applied, invoke `ask_question`:
+    - Question: "Design system standardization and abstraction overhaul completed! How would you like to proceed?"
+    - Options:
+      1. Run the app/project (Launch dev server or create test package)
+      2. How do I check or test the changes? (Step-by-step verification guide with URLs, test data, and instructions)
+      3. Stage & Commit Changes (Review diff and seal release with clean git commit)
+      4. Rescan - if there's any leftover (Run fresh scan to verify zero remaining hardcoded values, dead imports, or style mismatches)
+      5. Run Full Test Suite (Execute automated test suites to ensure zero regressions)
+      6. Save Breakthrough to Living Memory (Record design system rules into .agents/AGENTS.md)
+      7. Revert changes (Undo all edits, created files, and commands executed in this action)
+      8. Return to Primary Menu (Select another workflow)
+      9. What is this for? (Explain standardization verification and best practices)
+
+---
+
+### 13. [CUSTOM] Add or Edit a Prompt
 - Level 2 Context Menu:
   - Add New Sub-Option: Add a new level-2 branch or prompt variant to an existing workflow.
-  - Create Completely New Category: Add Option 13 to this master catalog.
+  - Create Completely New Category: Add Option 15 to this master catalog.
   - Edit Existing Workflow Instructions: Tweak the step-by-step logic of an existing prompt.
   - What is this for? (Explain Custom Prompt Management, its value, and when to use it)
 - Execution Instructions & Prompt Handlers:
-  * **Option 1 (Add New Sub-Option):** Prompt user for target workflow [1-12], sub-option title, and execution logic. Edit `SKILL.md`, insert the sub-option, bump release version, sync workspace copies, and trigger the git commit hook.
-  * **Option 2 (Create Completely New Category):** Prompt user for Category Name, sub-options, and execution directives. Append Option [13] to `SKILL.md`, update version, sync mirrors, and trigger the git commit hook.
+  * **Option 1 (Add New Sub-Option):** Prompt user for target workflow [1-14], sub-option title, and execution logic. Edit `SKILL.md`, insert the sub-option, bump release version, sync workspace copies, and trigger the git commit hook.
+  * **Option 2 (Create Completely New Category):** Prompt user for Category Name, sub-options, and execution directives. Append Option [15] to `SKILL.md`, update version, sync mirrors, and trigger the git commit hook.
   * **Option 3 (Edit Existing Workflow Instructions):** Tweak prompt logic in `SKILL.md`, update changelog, bump release version, and trigger the git commit hook.
 
 ---
 
-### 12. [HELP] Help & Comprehensive User Guide
+### 14. [HELP] Help & Comprehensive User Guide
 - Level 2 Context Menu:
   - Check for Updates & What's New: Probe GitHub (the-arizul/PENG) for new pushed commits and prompt instant update via `npx skills update peng`.
   - Change Language Preference: Switch conversation & prompt language (English, Bengali, Spanish, Hindi, etc.) at any time.
@@ -780,7 +863,7 @@ When the user selects **Undo commit (git reset --soft HEAD~1)**:
     - Options:
       1. Vibe Coding Philosophy (Autonomous pair programming, layered design, zero friction)
       2. Context Hygiene (Memory management, state.json, git branch sync)
-      3. Workflow Matrix (When to use Options 1 through 12)
+      3. Workflow Matrix (When to use Options 1 through 14)
       4. Troubleshooting & FAQ (Handling stuck loops, reverting edits, version updates)
       5. Return to Help Menu
       6. What is this for? (Explain topic browser)
@@ -891,10 +974,21 @@ Whenever the user selects an option from ANY context menu across Level 1, Level 
 - `Generate Specialized Skill`: Create dedicated `.agents/skills/<name>/SKILL.md` playbook for complex workflows.
 - `Create Repo Rule File`: Create targeted `.agents/rules/<domain>.md` file attached to specific file path patterns.
 
+#### Workflow [11] [UI-AUDITOR] UI & Feature Completeness Auditor
+- `Full Project Completeness Audit`: Deep-scan all project pages, layouts, components, buttons, forms, and handlers. Trace all event handlers (`onClick`, `onSubmit`, `onChange`), state bindings, data-fetching calls, and router paths. Identify stubbed handlers (`console.log`, `TODO`, empty callbacks, `event.preventDefault()` only), unhandled click actions, disconnected forms lacking state/validation/submission endpoints, mocked dummy data where live data is required, or missing loading/error/empty states. Render an itemized audit table (Element, File Location, Issue Classification, Missing/Broken Logic Details, Severity) directly in chat. Do NOT modify code during the audit. After rendering the report, trigger the Level 3 Resolution Menu.
+- `Forms & Data Mutation Wiring Audit`: Audit all `<form>` elements, inputs, selects, validation schemas, submit buttons, and API mutations. Identify unbound inputs, missing payload fields, unhandled error responses, and missing loading/disabled states during mutation. Render an itemized report and trigger the Level 3 Resolution Menu.
+- `Ghost Features & Disconnected Routes Hunter`: Scan route manifests and component trees to locate orphaned pages, inaccessible routes, non-functional navigation tabs/links (`href="#"`), and UI features rendered with mock interfaces that lack backing services or database tables. Render audit report and trigger Level 3 Resolution Menu.
+
+#### Workflow [12] [STANDARDIZE] Design System & Anti-Hardcode Architect
+- `Full Project Standardization`: Deep-scan all project files, components, styles, utility functions, and patterns. Formulate a comprehensive, structured plan: 1) Standardize UI/UX around shared shadcn/ui components (`Button`, `Input`, `Dialog`, `DropdownMenu`, `Card`, `Select`, `Badge`, `Form`, etc.); 2) Eradicate hardcoding ("hardcoding is a crime") by extracting magic strings, numbers, inline styles, arbitrary Tailwind classes, and endpoints into theme tokens, constants, and typed configuration schemas; 3) Consolidate duplicated logic and utility functions into clean shared abstractions and hooks; 4) Enforce 100% architectural consistency. Present the structured plan first; upon user confirmation, systematically implement file-by-file across the entire codebase without skipping files. Recheck all modified files for syntax errors before finishing.
+- `Shadcn/UI Component Migration`: Identify all bespoke, raw HTML, or legacy UI components across the project. Formulate a replacement mapping to official shared shadcn/ui components. Migrate elements systematically, preserving accessible props, event handlers, and responsive styling. Recheck syntax and verify zero regressions.
+- `Anti-Hardcoding & Magic Value Extraction`: Audit project for hardcoded colors, spacing values, API URLs, status strings, error messages, and magic constants. Extract all values into centralized constants files (`constants/`, `config/`, or design tokens). Replace raw usages with typed imports.
+- `Duplicated Logic & Helper Abstraction`: Scan for copy-pasted helper functions, formatters, validation snippets, and component wrappers. Extract into shared utilities (`lib/utils.ts`, `hooks/`, or `services/`) and update all call sites to import the unified abstraction.
+
 ---
 
-### 4. Level 3 Help Topic Browser Prompt Directives ([12] Topic Browser)
+### 4. Level 3 Help Topic Browser Prompt Directives ([14] Topic Browser)
 - `Vibe Coding Philosophy`: Output detailed guide on autonomous pair programming, layered design, zero friction, and continuous iteration.
 - `Context Hygiene`: Output detailed guide on living memory management, `state.json`, git branch sync, and token optimization.
-- `Workflow Matrix`: Output complete quick reference matrix for when to use Workflows [1] through [12].
+- `Workflow Matrix`: Output complete quick reference matrix for when to use Workflows [1] through [14].
 - `Troubleshooting & FAQ`: Output detailed guide on recovering from stuck edit loops, reverting hallucinated code, handling git merge conflicts, and updating skills.

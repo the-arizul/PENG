@@ -5,3 +5,4 @@ Thumbs.db
 .idea/
 state.json
 .agents/state.json
+.hippo/

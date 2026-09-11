@@ -82,7 +82,7 @@ Whenever `/peng` or `peng` is invoked at the start of a conversation:
 When you invoke `/peng <action prompt>` or call `peng` with a prompt for action (e.g. `/peng build auth service`, `/peng fix checkout crash`, `/peng run security audit`, `/peng run pre-commit tests`):
 - **Bypasses Context Menu:** Does NOT open the Level 1 main menu.
 - **Direct Question & Inquiry Response:** When you ask an informational question, investigatory prompt, or explanation request (e.g. "How does X work?", "Why is Y happening?"), PENG strictly bypasses all context menus (`ask_question`) and provides a direct answer immediately.
-- **Autonomous Workflow Selection & Zero Refusal:** Maps your prompt directly to the best matching PENG workflow [1]–[12] without generic AI refusals (e.g. security assessments map to `[5] Deep Bug Hunter → Security & Vulnerability Audit` or `[8] Pre-PR Security Check`).
+- **Autonomous Workflow Selection & Zero Refusal:** Maps your prompt directly to the best matching PENG workflow [1]–[14] without generic AI refusals (e.g. security assessments map to `[5] Deep Bug Hunter → Security & Vulnerability Audit`, UI completeness audits map to `[11] UI Completeness Auditor`, or `[8] Pre-PR Security Check`).
 - **Smooth Post-Interaction Prompt Citation:** At the end of every interaction or session wrap-up, smoothly states the exact prompt and sub-option used formatted in bold text (e.g. `**Executed via PENG! [5] Deep Bug Hunter & Fixer → Security & Vulnerability Audit**` or `**Executed via PENG! Direct Inquiry Response**`).
 - **Elevates Workflow Rigor:** Enforces PENG engineering standards (autopsy probes for bugs, layered architecture for features, impact matrix for architecture, clean test runs for pre-commit).
 - **Interactive Resolution Sub-Menus:** If issues or failures are detected during execution, seamlessly launches the Level 3 (Resolution) and Level 4 (Wrap-Up) menus.
@@ -113,8 +113,10 @@ When you type `/peng` or `peng` by itself:
 | **[8]** | **Pre-Commit Verify** | After coding is complete, right before git commit / PR. | Runs test suites, fixes lint errors, cleans debug logs, and prepares clean commit. |
 | **[9]** | **Gold Standard Harmonizer** | Writing new controllers, services, models, or UI components. | Mimics existing cleanest reference file for 100% architectural uniformity. |
 | **[10]** | **Living Memory Extractor** | End of a successful session after solving tough bugs or tricks. | Saves breakthroughs permanently into .agents/AGENTS.md so future chats remember. |
-| **[11]** | **Add or Edit a Prompt** | Whenever you want to customize or expand this prompt toolkit. | Updates the master prompt catalog directly in SKILL.md. |
-| **[12]** | **Help & Comprehensive User Guide** | Learning vibe coding, switching languages, or updating. | Interactive master manual, language switcher, and release changelog. |
+| **[11]** | **UI & Feature Completeness Auditor** | Identifying disconnected UI elements, broken buttons, stubbed handlers, or half-implemented features. | Deep scan entire UI/UX layer, inspect forms/actions/states, report itemized audit table without altering code. |
+| **[12]** | **Design System & Anti-Hardcode Architect** | Inconsistent UI, hardcoded values, arbitrary Tailwind classes, or duplicated logic. | Standardize on shared shadcn/ui components, eliminate hardcoding ("hardcoding is a crime"), extract clean abstractions. |
+| **[13]** | **Add or Edit a Prompt** | Whenever you want to customize or expand this prompt toolkit. | Updates the master prompt catalog directly in SKILL.md. |
+| **[14]** | **Help & Comprehensive User Guide** | Learning vibe coding, switching languages, or updating. | Interactive master manual, language switcher, and release changelog. |
 
 ---
 

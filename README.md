@@ -24,9 +24,13 @@ Type `/peng` in your agent chat. You will be greeted by a master menu, followed 
    - *Sub-options:* Auto-Detect Best Reference | User-Specified Reference File | Refactor Messy File to Match
 10. **[10] Living Memory / Learn** - Permanently extracts session tricks and bug fixes into project memory.
     - *Sub-options:* Update .agents/AGENTS.md | Generate Dedicated Skill | Create Repo Domain Rule
-11. **[11] Add or Edit a Prompt** - Extends or customizes this prompt catalog on the fly.
+11. **[11] UI & Feature Completeness Auditor** - Deep-scan for disconnected, broken, or non-functional UI logic.
+    - *Sub-options:* Full Project Completeness Audit | Forms & Data Mutation Wiring Audit | Ghost Features & Disconnected Routes Hunter
+12. **[12] Design System & Anti-Hardcode Architect** - Shadcn/UI standardization & reusable abstraction overhaul.
+    - *Sub-options:* Full Project Standardization | Shadcn/UI Component Migration | Anti-Hardcoding & Magic Value Extraction | Duplicated Logic & Helper Abstraction
+13. **[13] Add or Edit a Prompt** - Extends or customizes this prompt catalog on the fly.
     - *Sub-options:* Add New Sub-Option | Create New Category | Edit Existing Workflow
-12. **[12] Help & Comprehensive User Guide** - Detailed usage guidelines, context lifecycle tips, and best practices.
+14. **[14] Help & Comprehensive User Guide** - Detailed usage guidelines, context lifecycle tips, and best practices.
     - *Sub-options:* Change Language Preference | Interactive Topic Browser | Print Full Manual | Antigravity IDE Mastery Guide
 
 ---
@@ -54,6 +58,8 @@ Provide your goal or task directly when invoking PENG. The agent will autonomous
 /peng review security and SQL injection vectors on API routes
 /peng run pre-commit verification and lint cleanup
 /peng purge legacy stripe v1 endpoints and unused tables
+/peng audit ui completeness across all pages, forms, and buttons
+/peng standardize ui on shadcn components and eliminate hardcoding
 ```
 
 ### Mode 2: Interactive Context-Aware Menu Mode
