@@ -103,7 +103,7 @@ When you type `/peng` or `peng` by itself:
 
 | Option | Workflow | When to Use (Usage Time) | Goal & Impact |
 | :--- | :--- | :--- | :--- |
-| **[1]** | **Autonomous Context Init** | First chat in a new codebase or restructuring agent context. | Deep scan manifests, architectures, quirks, generate living .agents/ setup, and prompt to add recommended PENG directive rule. |
+| **[1]** | **Autonomous Context Init** | First chat in a new codebase or restructuring agent context. | Deep scan manifests, visual tokens & contracts; generate progressive .agents/ AI Knowledge System (AGENTS.md + targeted .agents/rules/). |
 | **[2]** | **Fresh Chat Context Primer** | Starting a new chat session on an active branch. | Fast-sync active branch, uncommitted diffs, recent commits, and living memory. |
 | **[3]** | **Build New Feature** | Developing new capabilities or components. | End-to-end vertical slices, API data layer, UI components, or requirement interview. |
 | **[4]** | **Delete / Deprecate Feature** | Cleaning up legacy or unused code. | Complete zero-dead-code purge: models, routes, migrations, UI. |

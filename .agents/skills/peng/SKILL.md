@@ -35,9 +35,10 @@ A hyper-smart, multi-stage interactive vibe coding system for AI coding agents.
 > 3. **Sequence:** The user MUST be able to read the complete guide/report on screen before responding to the follow-up `ask_question` context menu modal.
 
 ## CURRENT RELEASE VERSION
-- Version: 1.4.8
-- Release Date: 2026-09-11
+- Version: 1.4.9
+- Release Date: 2026-09-20
 - Changelog:
+  * Persistent AI Knowledge System & Progressive Context Loading Upgrade: Enhanced Workflow [1] [INIT] Autonomous Context Generator to initialize projects with a persistent, context-efficient AI Knowledge System built natively on `.agents/` (`AGENTS.md` entry point + targeted `.agents/rules/`). Enforces 6-layer progressive context loading (never read everything by default), single sources of truth for visual architecture / design tokens, logic boundaries, backend API contracts, ADRs, and current project state. Adds core agent directives for searching before creating, prohibiting blind refactoring, design system token verification, and architecture drift prevention.
   * UI & Feature Completeness Auditor and Design System Standardizer Workflows: Added Workflows [11] and [12] to the PENG Primary Top Menu and master catalog, expanding total workflows to 14. [11] [UI-AUDITOR] delivers a deep-scan audit-only protocol to discover broken, disconnected, or half-implemented UI features, dead-end buttons, stubbed event handlers, and unbound forms with itemized reporting before any code changes. [12] [STANDARDIZE] delivers an architectural overhaul engine that standardizes UI/UX on shared shadcn/ui components, eradicates hardcoding ("hardcoding is a crime"), and extracts clean reusable abstractions across the entire project. Renumbered Custom Prompt Management to [13] and Help Guide to [14].
   * Mandatory Content Text Rendering Directive (Zero-Ghosting / No-False-Claim Rule): Added strict top-priority rule across AGENTS.md, SKILL.md, and README.md mandating that whenever any option generating text output (such as manual verification guides, explanations, autopsy reports, rescan summaries, or commit breakdowns) is selected, the agent MUST write and render the full markdown content text on screen FIRST before invoking the ask_question context menu modal, eliminating false claims and unprinted outputs.
   * Mandatory Careful Code Execution & Syntax Recheck Directive: Added absolute highest priority rule across AGENTS.md, SKILL.md, and README.md mandating extreme diligence on all code changes and requiring a mandatory syntax error and diagnostics recheck (using automated language-specific syntax probes like php -l, node --check, python -m py_compile, etc.) before ending ANY task.
@@ -533,10 +534,32 @@ When the user selects **Undo commit (git reset --soft HEAD~1)**:
 
 ### 1. [INIT] Autonomous Context Generator
 - Level 2 Context Menu:
-  - Full Autopilot: Deep scan manifests, architectures, quirks, and generate `.agents/AGENTS.md` + Gold Standards.
-  - Audit & Review First: Present discovered tech stack and proposed Gold Standard files for my manual confirmation before writing any memory files.
-  - Rebuild / Reset Memory: Overwrite existing `.agents/` configurations and wipe stale rules.
+  - Full Autopilot: Deep scan codebase manifests, visual tokens, API contracts, and database models to generate a progressive `.agents/` AI Knowledge System (`AGENTS.md` entry point + targeted `.agents/rules/`).
+  - Audit & Review First: Present discovered tech stack, visual architecture, logic boundaries, and proposed `.agents/` rules in chat for manual confirmation before writing any files.
+  - Rebuild / Reset Memory: Overwrite existing `.agents/` configurations, wipe stale rules, re-index codebase baseline, and regenerate progressive loading rules.
   - What is this for? (Explain Autonomous Context Init, its value, and when to use it)
+- Persistent Project Knowledge & Progressive Loading Architecture (MANDATORY AGENT DIRECTIVE):
+  * **Zero Parallel Directory Architecture**: Never create `AI/`, `.ai/`, `docs/ai/`, or external documentation roots. Use `.agents/` exclusively (`AGENTS.md`, `rules/`, `skills/`).
+  * **Concise Operational Entry Point (`.agents/AGENTS.md`)**: `AGENTS.md` acts as the primary AI navigation map. It MUST NOT contain a monolithic dump of the entire repository architecture. It instructs agents to use **6-Layer Progressive Context Loading**:
+    1. Layer 1: `.agents/AGENTS.md` (Operational entry point & context map)
+    2. Layer 2: Targeted `.agents/rules/` (Project rules: architecture, design system, backend/API, coding conventions)
+    3. Layer 3: Relevant `.agents/skills/` & domain context (`.agents/rules/domain-*.md`)
+    4. Layer 4: Architectural Decision Records (`.agents/rules/adr-*.md`)
+    5. Layer 5: Relevant source/project files
+    6. Layer 6: Deep repository investigation (only when necessary)
+  * **Structured Durable Rules Engine (`.agents/rules/`)**:
+    - `architecture.md`: Visual, logic, component, and backend boundaries & dependency flows (e.g. Pages → Feature Components → Shared Components → UI Primitives → Design Tokens; UI → API Client → Services → Models → DB). Generated strictly from codebase evidence.
+    - `design-system.md`: Single source of truth for visual tokens (colors, typography, radius, borders, shadows, spacing, variants, global theme variables, UI primitives). Prevents hardcoded style overrides and verifies token propagation.
+    - `backend-api.md`: API structure, service/repository boundaries, auth & authorization flows, data access patterns (preventing logic bypass).
+    - `domain-<name>.md`: Domain-specific context for key business domains (e.g. products, checkout, orders, auth).
+    - `adr-<topic>.md`: Architectural Decision Records detailing decision rationale, trade-offs, constraints, and prohibited casual changes.
+    - `project-state.md`: Current project snapshot (Completed, In Progress, Known Issues, Next).
+  * **Core Agent Directives in Generated `AGENTS.md`**:
+    - *Progressive Context Loading*: Do NOT load the entire project context for every task. Load only relevant rules and files.
+    - *Search Before Creating*: Search existing components, utilities, API hooks, and primitives before creating new abstractions.
+    - *No Blind Refactoring*: Prohibit broad search/replace refactors; enforce `Inspect → Identify → Change → Validate`.
+    - *Design System Token Verification*: Verify token propagation when central themes change; flag hardcoded overrides as architectural defects.
+    - *Architecture Drift Prevention*: If a change modifies architecture, component ownership, data flow, API contracts, design-system rules, or dependency boundaries, update the relevant architecture documentation. Do not update documentation for minor code changes.
 - Post-Initialization Recommended Rule Prompt (MANDATORY AGENT DIRECTIVE):
   * Immediately after `.agents/AGENTS.md` and repo context are generated or updated, PENG MUST prompt the user via `ask_question`:
     - Question: "AGENTS.md initialized! Would you like to add a recommended rule to AGENTS.md enforcing that AI agents must ALWAYS use PENG (/peng) to proceed with any task in this codebase?"
@@ -920,9 +943,9 @@ Whenever the user selects an option from ANY context menu across Level 1, Level 
 ### 3. Level 2 Workflow Specialization Prompt Directives
 
 #### Workflow [1] [INIT] Autonomous Context Generator
-- `Full Autopilot`: Deep-scan project manifests (`package.json`, `composer.json`, `pubspec.yaml`), inspect architecture, discover conventions, and generate `.agents/AGENTS.md` + Gold Standards. Immediately after creating `AGENTS.md`, ask the user via `ask_question` whether to add the recommended rule enforcing mandatory PENG (`/peng`) usage for all repository tasks. If approved, append the directive section to `.agents/AGENTS.md`.
-- `Audit & Review First`: Render tech stack discovery report and proposed `.agents/` rules in chat; wait for user confirmation before writing memory files. Include the recommended PENG directive rule option in the confirmation prompt.
-- `Rebuild / Reset Memory`: Overwrite existing `.agents/` configurations, wipe stale rules, re-index project baseline, and prompt user via `ask_question` whether to add the recommended PENG directive rule to `.agents/AGENTS.md`.
+- `Full Autopilot`: Deep-scan codebase manifests (`package.json`, `composer.json`, `pubspec.yaml`, `Cargo.toml`, `go.mod`, `requirements.txt`), inspect directory structure, UI framework, ORM models, API routes, and design system tokens. Generate concise `.agents/AGENTS.md` (6-layer progressive context loading navigation map + core agent directives) and targeted durable rules in `.agents/rules/` (`architecture.md`, `design-system.md`, `backend-api.md`, `domain-*.md`, `adr-*.md`, `project-state.md`) based strictly on evidence from the codebase. Execute self-audit to verify accuracy, efficiency, and zero duplicate docs. Immediately after generating `.agents/`, ask the user via `ask_question` whether to add the recommended rule enforcing mandatory PENG (`/peng`) usage for all repository tasks. If approved, append the directive section to `.agents/AGENTS.md`.
+- `Audit & Review First`: Render discovered tech stack, visual architecture, logic boundaries, and proposed `.agents/` rules in chat; wait for user confirmation before writing memory files. Include the recommended PENG directive rule option in the confirmation prompt.
+- `Rebuild / Reset Memory`: Overwrite existing `.agents/` configurations, wipe stale rules, re-index project baseline, regenerate progressive loading rules in `.agents/AGENTS.md` and `.agents/rules/`, and prompt user via `ask_question` whether to add the recommended PENG directive rule to `.agents/AGENTS.md`.
 
 #### Workflow [2] [CONTEXT-PRIMER] Fresh Chat Context Primer
 - `Standard Sync`: Fast-sync git branch, uncommitted diffs, last 3 commits, and load `.agents/AGENTS.md` into turn context.
