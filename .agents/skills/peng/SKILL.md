@@ -44,10 +44,15 @@ A hyper-smart, multi-stage interactive vibe coding system for AI coding agents.
 > **DETERMINISTIC VERIFICATION RECEIPT DIRECTIVE (PROOF OF INTEGRITY):**
 > Whenever concluding ANY feature implementation, bug fix, refactoring, or pre-commit verification (prior to triggering the Level 4 Wrap-Up Context Menu), the agent MUST output a structured **Verification Receipt** markdown table/block in the chat response text covering Scope Authorization, Automated & Static Probes, Functional & Contract Proof, Zero-Regression Status, and Discovered Observations.
 
+> [!TIP]
+> **3-TIER HYPER-MEMORY & DUAL-LAYER STORAGE DIRECTIVE:**
+> Organizes memory across 3 hyperdimensional tiers: Tier 1 Episodic (`[FIX/TRICK]` & session histories), Tier 2 Semantic (`[DECISION]`, `[CONTRACT]`, `[CONVENTION]` living rules in `.agents/rules/`), and Tier 3 Procedural (`[PREFERENCE]` behavioral style in `state.json` / `preferences.md`). Tracks superseded architectural choices (`[SUPERSEDES: ADR-XXX]`) to prevent hallucinations. Works natively via Git-synced `.agents/` files with optional automatic bridging to local MCP memory engines (`iai-memory`, etc.) when present.
+
 ## CURRENT RELEASE VERSION
-- Version: 1.4.11
+- Version: 1.4.12
 - Release Date: 2026-10-06
 - Changelog:
+  * 3-Tier Hyper-Memory & Self-Contained Engine: Integrated 3-Tier Hyperdimensional Memory (Episodic, Semantic, Procedural), Contradiction & Superseded Architecture Tracking ([SUPERSEDES]), and Dual-Layer Storage (Self-contained Git-synced .agents/ + optional MCP memory daemon bridging).
   * Deterministic Vibe Coding Directives & Structured Taxonomy: Added Scope Bounding & Zero Silent Expansion directive (ODD principle), Deterministic Verification Receipt standard (RDD inspired), Test-Driven RED-GREEN-REFACTOR slice to Feature Builder [3], and structured Living Memory taxonomy ([DECISION], [FIX/TRICK], [CONTRACT], [CONVENTION]) to Workflow [10].
   * Short Commit Title & Point-by-Point Description Directives: Updated Stage & Commit Engine in AGENTS.md and SKILL.md to enforce short, concise commit titles (under 50-72 chars) and easy-to-understand, point-by-point bulleted descriptions detailing what changed and why.
   * Persistent AI Knowledge System & Progressive Context Loading Upgrade: Enhanced Workflow [1] [INIT] Autonomous Context Generator to initialize projects with a persistent, context-efficient AI Knowledge System built natively on `.agents/` (`AGENTS.md` entry point + targeted `.agents/rules/`). Enforces 6-layer progressive context loading (never read everything by default), single sources of truth for visual architecture / design tokens, logic boundaries, backend API contracts, ADRs, and current project state. Adds core agent directives for searching before creating, prohibiting blind refactoring, design system token verification, and architecture drift prevention.
@@ -565,8 +570,11 @@ When the user selects **Undo commit (git reset --soft HEAD~1)**:
     - `design-system.md`: Single source of truth for visual tokens (colors, typography, radius, borders, shadows, spacing, variants, global theme variables, UI primitives). Prevents hardcoded style overrides and verifies token propagation.
     - `backend-api.md`: API structure, service/repository boundaries, auth & authorization flows, data access patterns (preventing logic bypass).
     - `domain-<name>.md`: Domain-specific context for key business domains (e.g. products, checkout, orders, auth).
-    - `adr-<topic>.md`: Architectural Decision Records detailing decision rationale, trade-offs, constraints, and prohibited casual changes.
+    - `adr-<topic>.md`: Architectural Decision Records detailing decision rationale, trade-offs, constraints, and superseded history (`[SUPERSEDES]`).
+    - `preferences.md`: Developer behavioral preferences, commit formatting, review rigor, and coding conventions (Tier 3 Procedural Memory).
     - `project-state.md`: Current project snapshot (Completed, In Progress, Known Issues, Next).
+  * **Dual-Layer Storage & MCP Memory Bridge:**
+    - Detects whether local MCP memory servers (e.g., `iai-memory`) are active in the environment. If active, registers dual memory sync capability.
   * **Core Agent Directives in Generated `AGENTS.md`**:
     - *Progressive Context Loading*: Do NOT load the entire project context for every task. Load only relevant rules and files.
     - *Search Before Creating*: Search existing components, utilities, API hooks, and primitives before creating new abstractions.
@@ -714,6 +722,7 @@ When the user selects **Undo commit (git reset --soft HEAD~1)**:
   - Standard Pre-Flight Matrix: List exact files to touch, affected database models, queues, and 2 potential breaking changes.
   - Comparative Architecture: Present 2 alternative architectural approaches (e.g. Event-driven vs Synchronous Service, or Context vs Zustand) with trade-offs.
   - Database & Schema Impact Only: Deeply analyze migration safety, table locking risks, index performance, and rollback feasibility.
+  - Contradiction & Superseded Architecture Probe: Cross-check proposed changes against `.agents/rules/adr-*.md` and historical decisions to verify no deprecated or superseded patterns (`[SUPERSEDES]`) are re-introduced.
   - What is this for? (Explain Pre-Flight Architecture Review, its value, and when to use it)
 - Level 4 Post-Resolution Context Menu (Triggered when architecture review is complete):
   * Once the File Impact Matrix, trade-off analysis, or schema impact plan is generated, invoke `ask_question`:
@@ -785,13 +794,16 @@ When the user selects **Undo commit (git reset --soft HEAD~1)**:
   - Update .agents/AGENTS.md: Distill today's breakthrough into a high-density 1-2 line rule in `AGENTS.md`.
   - Generate Specialized Skill: Create a dedicated `.agents/skills/<workflow>/SKILL.md` playbook for this complex procedure.
   - Create Repo Rule File: Save a targeted `.agents/rules/<domain>.md` file that automatically attaches to relevant directory paths.
+  - Record Superseded Architecture (`[SUPERSEDES]`): Mark an outdated or replaced architectural decision/ADR as superseded by a new standard.
   - What is this for? (Explain Living Memory Extractor, its value, and when to use it)
-- Structured Living Memory Taxonomy (MANDATORY AGENT DIRECTIVE):
+- 3-Tier Hyper-Memory Taxonomy & Dual-Layer Storage (MANDATORY AGENT DIRECTIVE):
   * When writing rules or decisions into `.agents/AGENTS.md` or `.agents/rules/`, format entries using standardized prefix tags:
-    - `[DECISION]`: Architectural tradeoffs, technology choices, or state boundaries.
-    - `[FIX/TRICK]`: Root-cause cures, non-obvious framework quirks, or edge case fixes.
-    - `[CONTRACT]`: Critical API, schema, or UI data rules that must never be bypassed.
-    - `[CONVENTION]`: Naming schemes, directory patterns, and team design token rules.
+    - `[DECISION]`: Architectural tradeoffs, technology choices, or state boundaries (Tier 2 Semantic).
+    - `[FIX/TRICK]`: Root-cause cures, non-obvious framework quirks, or edge case fixes (Tier 1 Episodic).
+    - `[SUPERSEDES: ADR-XXX]`: Superseded architectural pattern link indicating replaced decisions to prevent hallucinated rollbacks.
+    - `[CONTRACT]`: Critical API, schema, or UI data rules that must never be bypassed (Tier 2 Semantic).
+    - `[PREFERENCE]`: Developer behavioral preferences, commit formatting, and review styles in `preferences.md` (Tier 3 Procedural).
+  * **Dual-Layer Sync:** If an MCP memory server (e.g. `iai-memory`) is active in the environment, invoke `memory_capture` to mirror the memory entry into the local hyperdimensional store.
 - Level 4 Post-Resolution Context Menu (Triggered when memory update is complete):
   * Once memory, skill, or rule files are updated/created, invoke `ask_question`:
     - Question: "Living memory update completed! How would you like to proceed?"
@@ -1001,6 +1013,7 @@ Whenever the user selects an option from ANY context menu across Level 1, Level 
 - `Standard Pre-Flight Matrix`: Generate File Impact Matrix, list affected database models/queues, and highlight 2 potential breaking risks.
 - `Comparative Architecture`: Present side-by-side comparison of 2 architecture approaches with trade-offs before coding.
 - `Database & Schema Impact Only`: Analyze migration safety, table locking risks, index performance, and rollback feasibility.
+- `Contradiction & Superseded Architecture Probe`: Cross-check proposed changes against `.agents/rules/adr-*.md` and historical decisions to verify no deprecated or superseded patterns (`[SUPERSEDES]`) are re-introduced.
 
 #### Workflow [8] [VERIFY] Self-Correction & Pre-Commit Audit
 - `Full Suite & Hygiene`: Run automated test suites, static linters, typechecks, clean debug logs, and stage clean commit.
@@ -1014,9 +1027,10 @@ Whenever the user selects an option from ANY context menu across Level 1, Level 
 - `Refactor Existing File to Match`: Rewrite target messy file to conform to Gold Standard conventions without altering public API contract.
 
 #### Workflow [10] [LEARN] Session Living Memory Extractor
-- `Update .agents/AGENTS.md`: Distill session breakthrough into a high-density 1-2 line rule in `.agents/AGENTS.md` tagged with taxonomy prefixes (`[DECISION]`, `[FIX/TRICK]`, `[CONTRACT]`, `[CONVENTION]`).
+- `Update .agents/AGENTS.md`: Distill session breakthrough into a high-density 1-2 line rule in `.agents/AGENTS.md` tagged with 3-tier taxonomy prefixes (`[DECISION]`, `[FIX/TRICK]`, `[CONTRACT]`, `[PREFERENCE]`).
 - `Generate Specialized Skill`: Create dedicated `.agents/skills/<name>/SKILL.md` playbook for complex workflows.
 - `Create Repo Rule File`: Create targeted `.agents/rules/<domain>.md` file attached to specific file path patterns.
+- `Record Superseded Architecture`: Explicitly record superseded architectural patterns linked to prior ADRs (`[SUPERSEDES: ADR-XXX]`) to prevent regression loops. If MCP memory daemon is active, mirror capture via `memory_capture`.
 
 #### Workflow [11] [UI-AUDITOR] UI & Feature Completeness Auditor
 - `Full Project Completeness Audit`: Deep-scan all project pages, layouts, components, buttons, forms, and handlers. Trace all event handlers (`onClick`, `onSubmit`, `onChange`), state bindings, data-fetching calls, and router paths. Identify stubbed handlers (`console.log`, `TODO`, empty callbacks, `event.preventDefault()` only), unhandled click actions, disconnected forms lacking state/validation/submission endpoints, mocked dummy data where live data is required, or missing loading/error/empty states. Render an itemized audit table (Element, File Location, Issue Classification, Missing/Broken Logic Details, Severity) directly in chat. Do NOT modify code during the audit. After rendering the report, trigger the Level 3 Resolution Menu.

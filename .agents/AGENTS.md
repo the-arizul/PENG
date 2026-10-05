@@ -35,6 +35,14 @@ Whenever the user asks to remove, delete, clean up, or purge ANY feature, compon
 4. **Zero-Regression & Blast-Radius Status:** Verified that untouched code/features have zero side-effect breakages.
 5. **Discovered Observations / Future Items:** Non-blocking findings recorded for later consideration.
 
+## 3-TIER HYPER-MEMORY & DUAL-LAYER STORAGE DIRECTIVE
+**MANDATORY DIRECTIVE:** Project and session memory MUST be organized across a 3-tier hyperdimensional taxonomy:
+1. **Tier 1 — Episodic Memory (Session Fixes & Autopsies):** Captured in session histories, autopsy records, and memory entries detailing specific bug fixes, quirks, and gotchas (`[FIX/TRICK]`).
+2. **Tier 2 — Semantic Memory (Active Project Truth):** Structured living rules in `.agents/rules/` (`architecture.md`, `design-system.md`, `backend-api.md`, `adr-*.md`) detailing visual tokens, API schemas, and architectural boundaries (`[DECISION]`, `[CONTRACT]`, `[CONVENTION]`).
+3. **Tier 3 — Procedural Memory (Behavioral Preferences & Style):** Developer preferences, commit styles, testing modes, and review rigor captured in `state.json` or `.agents/rules/preferences.md` (`[PREFERENCE]`).
+4. **Contradiction & Superseded Tracking (`[SUPERSEDES]`):** When an architectural decision evolves, the new record MUST explicitly link to the superseded pattern (`[SUPERSEDES: ADR-XXX]`) so the agent never resurrects abandoned patterns.
+5. **Dual-Layer Sync Engine:** Git-synced `.agents/` files are the primary, portable single source of truth. When an MCP memory daemon (such as `iai-memory`) is detected in the environment, the agent automatically mirrors memory captures and recalls cross-session context via MCP stdio.
+
 ## AUTONOMOUS VERSIONING & PRE-WRAP GIT COMMIT RULE (MANDATORY AGENT DIRECTIVE)
 
 **STRICT RULE:** The agent MUST NOT update or bump the version in `SKILL.md` in advance before asking the user! The version in `SKILL.md` must only be updated AFTER the user responds to the `ask_question` modal.
