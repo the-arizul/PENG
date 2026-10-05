@@ -21,6 +21,20 @@ Whenever the user asks to remove, delete, clean up, or purge ANY feature, compon
 2. **Never Skip or Suppress Text Output:** Under NO circumstances may the agent launch `ask_question` with a generic claim (such as *"Verification guide generated! How would you like to proceed?"* or *"Report ready!"*) without displaying the actual full step-by-step content text on screen in the exact same response!
 3. **Execution Sequence:** Always write out the detailed text content in the chat turn response FIRST, and THEN launch the follow-up context menu (`ask_question`). Ghosting content or claiming something was generated without printing it in the chat response is strictly FORBIDDEN as a false-output violation.
 
+## SCOPE BOUNDING & ZERO-SILENT-EXPANSION DIRECTIVE (ORGANIC DEVELOPMENT PRINCIPLE)
+**MANDATORY DIRECTIVE:** The agent MUST strictly bound its execution to the requested and authorized scope:
+1. **Read-Only Inquiries & Explorations:** Explanations, architectural reviews, investigations, and questions are strictly READ-ONLY. The agent MUST NOT alter code during an investigation unless explicit implementation authorization is provided.
+2. **Zero Silent Expansion:** When unexpected bugs, latent defects, edge cases, or refactoring opportunities are discovered during an authorized task, the agent MUST NEVER silently expand scope or perform unprompted rewrites.
+3. **Observation Logging & Controlled Follow-Up:** Log all discovered side-items in the **Discovered Observations / Future Items** section of the wrap-up summary and offer them as follow-up choices via the interactive context menu.
+
+## DETERMINISTIC VERIFICATION RECEIPT DIRECTIVE (PROOF OF INTEGRITY)
+**MANDATORY DIRECTIVE:** Whenever concluding ANY feature implementation, bug fix, refactoring, or pre-commit verification (prior to triggering the Level 4 Wrap-Up Context Menu), the agent MUST output a structured **Verification Receipt** markdown table/block in the chat response text:
+1. **Scope Authorization:** Stated bounds of what was requested and authorized.
+2. **Automated & Static Probes:** Explicit record of syntax checks (`php -l`, `node --check`, `python -m py_compile`, etc.), linters, type checks, or test suites executed with passing status.
+3. **Functional & Contract Proof:** Evidence that existing APIs, routes, UI components, and contracts remain intact.
+4. **Zero-Regression & Blast-Radius Status:** Verified that untouched code/features have zero side-effect breakages.
+5. **Discovered Observations / Future Items:** Non-blocking findings recorded for later consideration.
+
 ## AUTONOMOUS VERSIONING & PRE-WRAP GIT COMMIT RULE (MANDATORY AGENT DIRECTIVE)
 
 **STRICT RULE:** The agent MUST NOT update or bump the version in `SKILL.md` in advance before asking the user! The version in `SKILL.md` must only be updated AFTER the user responds to the `ask_question` modal.

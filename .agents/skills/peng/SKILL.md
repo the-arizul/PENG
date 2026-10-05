@@ -34,10 +34,21 @@ A hyper-smart, multi-stage interactive vibe coding system for AI coding agents.
 > 2. **No Unprinted Summaries:** NEVER launch `ask_question` with a summary prompt (like *"Verification guide generated! How would you like to proceed?"*) without printing the actual full step-by-step content text on screen!
 > 3. **Sequence:** The user MUST be able to read the complete guide/report on screen before responding to the follow-up `ask_question` context menu modal.
 
+> [!IMPORTANT]
+> **SCOPE BOUNDING & ZERO-SILENT-EXPANSION DIRECTIVE (ORGANIC DEVELOPMENT PRINCIPLE):**
+> 1. **Read-Only Explorations:** Explanations, architectural reviews, investigations, and questions are strictly READ-ONLY. The agent MUST NOT alter code during an investigation unless explicit implementation authorization is provided.
+> 2. **Zero Silent Expansion:** When unexpected bugs, latent defects, edge cases, or refactoring opportunities are discovered during an authorized task, the agent MUST NEVER silently expand scope or perform unprompted rewrites.
+> 3. **Observation Logging & Controlled Follow-Up:** Log all discovered side-items in the **Discovered Observations / Future Items** section of the wrap-up summary and offer them as follow-up choices via the interactive context menu.
+
+> [!NOTE]
+> **DETERMINISTIC VERIFICATION RECEIPT DIRECTIVE (PROOF OF INTEGRITY):**
+> Whenever concluding ANY feature implementation, bug fix, refactoring, or pre-commit verification (prior to triggering the Level 4 Wrap-Up Context Menu), the agent MUST output a structured **Verification Receipt** markdown table/block in the chat response text covering Scope Authorization, Automated & Static Probes, Functional & Contract Proof, Zero-Regression Status, and Discovered Observations.
+
 ## CURRENT RELEASE VERSION
-- Version: 1.4.10
-- Release Date: 2026-10-05
+- Version: 1.4.11
+- Release Date: 2026-10-06
 - Changelog:
+  * Deterministic Vibe Coding Directives & Structured Taxonomy: Added Scope Bounding & Zero Silent Expansion directive (ODD principle), Deterministic Verification Receipt standard (RDD inspired), Test-Driven RED-GREEN-REFACTOR slice to Feature Builder [3], and structured Living Memory taxonomy ([DECISION], [FIX/TRICK], [CONTRACT], [CONVENTION]) to Workflow [10].
   * Short Commit Title & Point-by-Point Description Directives: Updated Stage & Commit Engine in AGENTS.md and SKILL.md to enforce short, concise commit titles (under 50-72 chars) and easy-to-understand, point-by-point bulleted descriptions detailing what changed and why.
   * Persistent AI Knowledge System & Progressive Context Loading Upgrade: Enhanced Workflow [1] [INIT] Autonomous Context Generator to initialize projects with a persistent, context-efficient AI Knowledge System built natively on `.agents/` (`AGENTS.md` entry point + targeted `.agents/rules/`). Enforces 6-layer progressive context loading (never read everything by default), single sources of truth for visual architecture / design tokens, logic boundaries, backend API contracts, ADRs, and current project state. Adds core agent directives for searching before creating, prohibiting blind refactoring, design system token verification, and architecture drift prevention.
   * UI & Feature Completeness Auditor and Design System Standardizer Workflows: Added Workflows [11] and [12] to the PENG Primary Top Menu and master catalog, expanding total workflows to 14. [11] [UI-AUDITOR] delivers a deep-scan audit-only protocol to discover broken, disconnected, or half-implemented UI features, dead-end buttons, stubbed event handlers, and unbound forms with itemized reporting before any code changes. [12] [STANDARDIZE] delivers an architectural overhaul engine that standardizes UI/UX on shared shadcn/ui components, eradicates hardcoding ("hardcoding is a crime"), and extracts clean reusable abstractions across the entire project. Renumbered Custom Prompt Management to [13] and Help Guide to [14].
@@ -605,6 +616,7 @@ When the user selects **Undo commit (git reset --soft HEAD~1)**:
 ### 3. [FEATURE-BUILDER] Build New Feature
 - Level 2 Context Menu:
   - End-to-End Vertical Slice: Full stack (Database migration -> Model -> Business Logic Service -> Controller/API -> Frontend/UI).
+  - Test-Driven RED-GREEN-REFACTOR Slice: Write minimal failing test/assertion for feature (RED), implement clean code to satisfy requirement (GREEN), and refactor for architectural harmony (REFACTOR).
   - Backend API & Data Layer Only: Schema migration, validation requests, business logic, and API endpoints without UI.
   - Frontend / UI Component Only: Client-side components, state management, and API client integration using design system tokens.
   - Interactive Requirement Interview (`/grill-me` mode): Ask me 3-5 clarifying questions on edge cases, validation rules, and business constraints before writing any code.
@@ -774,6 +786,12 @@ When the user selects **Undo commit (git reset --soft HEAD~1)**:
   - Generate Specialized Skill: Create a dedicated `.agents/skills/<workflow>/SKILL.md` playbook for this complex procedure.
   - Create Repo Rule File: Save a targeted `.agents/rules/<domain>.md` file that automatically attaches to relevant directory paths.
   - What is this for? (Explain Living Memory Extractor, its value, and when to use it)
+- Structured Living Memory Taxonomy (MANDATORY AGENT DIRECTIVE):
+  * When writing rules or decisions into `.agents/AGENTS.md` or `.agents/rules/`, format entries using standardized prefix tags:
+    - `[DECISION]`: Architectural tradeoffs, technology choices, or state boundaries.
+    - `[FIX/TRICK]`: Root-cause cures, non-obvious framework quirks, or edge case fixes.
+    - `[CONTRACT]`: Critical API, schema, or UI data rules that must never be bypassed.
+    - `[CONVENTION]`: Naming schemes, directory patterns, and team design token rules.
 - Level 4 Post-Resolution Context Menu (Triggered when memory update is complete):
   * Once memory, skill, or rule files are updated/created, invoke `ask_question`:
     - Question: "Living memory update completed! How would you like to proceed?"
@@ -956,6 +974,7 @@ Whenever the user selects an option from ANY context menu across Level 1, Level 
 
 #### Workflow [3] [FEATURE-BUILDER] Build New Feature
 - `End-to-End Vertical Slice`: Execute full stack implementation in layered order: Database migration -> Model -> Business Logic Service -> Controller/API endpoint -> Frontend UI Component.
+- `Test-Driven RED-GREEN-REFACTOR Slice`: Execute strict deterministic TDD: 1) Write minimal runnable test asserting the new requirement / rule, run it to observe RED; 2) Implement minimal clean code to satisfy requirement and achieve GREEN; 3) REFACTOR for architecture, readability, and design system harmony while preserving green status.
 - `Backend API Layer Only`: Build schema migration, request validation, business logic service, and API controller routes without touching UI files.
 - `Frontend / UI Component Only`: Build responsive client UI components, state management hooks, and API client integration using design system tokens.
 - `Interactive Requirement Interview (/grill-me)`: Ask 3-5 targeted clarifying questions on edge cases, validation rules, and business constraints before writing code.
@@ -995,7 +1014,7 @@ Whenever the user selects an option from ANY context menu across Level 1, Level 
 - `Refactor Existing File to Match`: Rewrite target messy file to conform to Gold Standard conventions without altering public API contract.
 
 #### Workflow [10] [LEARN] Session Living Memory Extractor
-- `Update .agents/AGENTS.md`: Distill session breakthrough into a high-density 1-2 line rule in `.agents/AGENTS.md`.
+- `Update .agents/AGENTS.md`: Distill session breakthrough into a high-density 1-2 line rule in `.agents/AGENTS.md` tagged with taxonomy prefixes (`[DECISION]`, `[FIX/TRICK]`, `[CONTRACT]`, `[CONVENTION]`).
 - `Generate Specialized Skill`: Create dedicated `.agents/skills/<name>/SKILL.md` playbook for complex workflows.
 - `Create Repo Rule File`: Create targeted `.agents/rules/<domain>.md` file attached to specific file path patterns.
 
