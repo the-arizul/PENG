@@ -39,7 +39,7 @@ The agent MUST IMMEDIATELY trigger an interactive context menu using `ask_questi
 ### Execution Handlers when User selects an option:
 1. **Auto-Bump Version (Only if Option 1 or 2 selected):** Update the Version: X.Y.Z in SKILL.md (and release date & changelog summary).
 2. **Sync Mirrors:** Sync the updated SKILL.md to workspace copies.
-3. **Git Commit with Best Practices:** Stage modified/created files (`git add -A`) and write a professional commit message following **Conventional Commits & Git Best Practices** (Header: `<type>(<scope>): <summary>`, blank line, structured Body with bullet points answering *what* changed and *why*, and breaking changes/release footer). Run `git commit`.
+3. **Git Commit with Best Practices:** Stage modified/created files (`git add -A`) and write a clean, professional commit message following **Conventional Commits & Git Best Practices** (Short Header: `<type>(<scope>): <short summary>`, blank line, structured Body with easy-to-understand point-by-point bullet points answering *what* changed and *why*, and breaking changes/release footer). Run `git commit`.
 4. **Post-Commit Follow-Up & Undo Commit Modal (MANDATORY):** Immediately after commit execution, render the commit summary (Hash, Header, Body snippet) and launch an interactive follow-up menu via `ask_question`:
    - **Question:** 🚀 Git commit successful! [Commit: <hash>] How would you like to proceed?
    - **Options:**
@@ -130,15 +130,16 @@ The agent MUST follow strict **Conventional Commits & Git Best Practices** when 
 1. **Inspect Working Tree & Diff:**
    - Execute `git status` and `git diff` (and `git diff --staged`) behind the scenes to inspect all modified, created, and deleted files.
 2. **Formulate Conventional Commit Message:**
-   - **Header Line:** `<type>(<scope>): <concise summary>`
+   - **Header Line (Title):** `<type>(<scope>): <short concise summary>`
      * **Type:** MUST be one of `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `chore`, `build`, `ci`, `revert`, `release`.
      * **Scope:** Optional identifier representing module/component (e.g., `auth`, `ui`, `api`, `cli`, `peng`).
-     * **Summary:** Max 72 characters, imperative mood, lowercase type, no trailing period.
+     * **Title:** Must be short, concise, and punchy (under 50-72 characters), imperative mood, lowercase type, no trailing period.
    - **Blank Line**
-   - **Body Section (Mandatory):** Bulleted technical breakdown answering:
-     * **What:** Specific functional & code changes implemented.
-     * **Why:** Underlying technical rationale or problem resolved.
-     * Key architectural, component, or file highlights.
+   - **Body Section (Description - Point by Point & Easy to Understand):**
+     * Clear, easy-to-read bullet points breaking down changes simply:
+       - *What changed:* Specific functional & code changes implemented.
+       - *Why:* Underlying technical rationale or problem resolved in simple terms.
+       - Key architectural, component, or file highlights.
    - **Footer Section (Optional):** Breaking changes (`BREAKING CHANGE: <desc>`) or issue references (`Refs: #123`).
 
 ### 2. Execution & Sealed Commit Summary Output:

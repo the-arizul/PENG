@@ -35,9 +35,10 @@ A hyper-smart, multi-stage interactive vibe coding system for AI coding agents.
 > 3. **Sequence:** The user MUST be able to read the complete guide/report on screen before responding to the follow-up `ask_question` context menu modal.
 
 ## CURRENT RELEASE VERSION
-- Version: 1.4.9
-- Release Date: 2026-09-20
+- Version: 1.4.10
+- Release Date: 2026-10-05
 - Changelog:
+  * Short Commit Title & Point-by-Point Description Directives: Updated Stage & Commit Engine in AGENTS.md and SKILL.md to enforce short, concise commit titles (under 50-72 chars) and easy-to-understand, point-by-point bulleted descriptions detailing what changed and why.
   * Persistent AI Knowledge System & Progressive Context Loading Upgrade: Enhanced Workflow [1] [INIT] Autonomous Context Generator to initialize projects with a persistent, context-efficient AI Knowledge System built natively on `.agents/` (`AGENTS.md` entry point + targeted `.agents/rules/`). Enforces 6-layer progressive context loading (never read everything by default), single sources of truth for visual architecture / design tokens, logic boundaries, backend API contracts, ADRs, and current project state. Adds core agent directives for searching before creating, prohibiting blind refactoring, design system token verification, and architecture drift prevention.
   * UI & Feature Completeness Auditor and Design System Standardizer Workflows: Added Workflows [11] and [12] to the PENG Primary Top Menu and master catalog, expanding total workflows to 14. [11] [UI-AUDITOR] delivers a deep-scan audit-only protocol to discover broken, disconnected, or half-implemented UI features, dead-end buttons, stubbed event handlers, and unbound forms with itemized reporting before any code changes. [12] [STANDARDIZE] delivers an architectural overhaul engine that standardizes UI/UX on shared shadcn/ui components, eradicates hardcoding ("hardcoding is a crime"), and extracts clean reusable abstractions across the entire project. Renumbered Custom Prompt Management to [13] and Help Guide to [14].
   * Mandatory Content Text Rendering Directive (Zero-Ghosting / No-False-Claim Rule): Added strict top-priority rule across AGENTS.md, SKILL.md, and README.md mandating that whenever any option generating text output (such as manual verification guides, explanations, autopsy reports, rescan summaries, or commit breakdowns) is selected, the agent MUST write and render the full markdown content text on screen FIRST before invoking the ask_question context menu modal, eliminating false claims and unprinted outputs.
@@ -477,15 +478,16 @@ The agent MUST follow strict **Conventional Commits & Git Best Practices** when 
 1. **Inspect Working Tree & Diff:**
    - Execute `git status` and `git diff` (and `git diff --staged`) behind the scenes to inspect all modified, created, and deleted files.
 2. **Formulate Conventional Commit Message:**
-   - **Header Line:** `<type>(<scope>): <concise summary>`
+   - **Header Line (Title):** `<type>(<scope>): <short concise summary>`
      * **Type:** MUST be one of `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `chore`, `build`, `ci`, `revert`, `release`.
      * **Scope:** Optional identifier representing module/component (e.g., `auth`, `ui`, `api`, `cli`, `peng`).
-     * **Summary:** Max 72 characters, imperative mood, lowercase type, no trailing period.
+     * **Title:** Must be short, concise, and punchy (under 50-72 characters), imperative mood, lowercase type, no trailing period.
    - **Blank Line**
-   - **Body Section (Mandatory):** Bulleted technical breakdown answering:
-     * **What:** Specific functional & code changes implemented.
-     * **Why:** Underlying technical rationale or problem resolved.
-     * Key architectural, component, or file highlights.
+   - **Body Section (Description - Point by Point & Easy to Understand):**
+     * Clear, easy-to-read bullet points breaking down changes simply:
+       - *What changed:* Specific functional & code changes implemented.
+       - *Why:* Underlying technical rationale or problem resolved in simple terms.
+       - Key architectural, component, or file highlights.
    - **Footer Section (Optional):** Breaking changes (`BREAKING CHANGE: <desc>`) or issue references (`Refs: #123`).
 
 ### 2. Execution & Sealed Commit Summary Output:
