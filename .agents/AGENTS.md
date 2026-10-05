@@ -162,6 +162,9 @@ The agent MUST follow strict **Conventional Commits & Git Best Practices** when 
        - *What changed:* Specific functional & code changes implemented.
        - *Why:* Underlying technical rationale or problem resolved in simple terms.
        - Key architectural, component, or file highlights.
+   - **Work-Unit Commit Discipline (Mandatory):**
+     * **Atomic Delivery:** NEVER commit by file type alone (e.g. `models`, then `services`, then `tests`). A commit MUST represent a complete, functional behavior unit with its code, tests, and documentation bundled together.
+     * **400-Line Slicing Guard:** If a planned task or feature forecasts >400 authored lines, slice the work into reviewable, sequential work-unit commits before executing.
    - **Footer Section (Optional):** Breaking changes (`BREAKING CHANGE: <desc>`) or issue references (`Refs: #123`).
 
 ### 2. Execution & Sealed Commit Summary Output:

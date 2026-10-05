@@ -49,9 +49,10 @@ A hyper-smart, multi-stage interactive vibe coding system for AI coding agents.
 > Organizes memory across 3 hyperdimensional tiers: Tier 1 Episodic (`[FIX/TRICK]` & session histories), Tier 2 Semantic (`[DECISION]`, `[CONTRACT]`, `[CONVENTION]` living rules in `.agents/rules/`), and Tier 3 Procedural (`[PREFERENCE]` behavioral style in `state.json` / `preferences.md`). Tracks superseded architectural choices (`[SUPERSEDES: ADR-XXX]`) to prevent hallucinations. Works natively via Git-synced `.agents/` files with optional automatic bridging to local MCP memory engines (`iai-memory`, etc.) when present.
 
 ## CURRENT RELEASE VERSION
-- Version: 1.4.12
+- Version: 1.4.13
 - Release Date: 2026-10-06
 - Changelog:
+  * Work-Unit Commit Discipline & 400-Line Cognitive Load Guard: Codified atomic work-unit commit rules (bundling code, tests, and docs together without splitting by file type) and 400-line slicing guardrails in AGENTS.md and SKILL.md.
   * 3-Tier Hyper-Memory & Self-Contained Engine: Integrated 3-Tier Hyperdimensional Memory (Episodic, Semantic, Procedural), Contradiction & Superseded Architecture Tracking ([SUPERSEDES]), and Dual-Layer Storage (Self-contained Git-synced .agents/ + optional MCP memory daemon bridging).
   * Deterministic Vibe Coding Directives & Structured Taxonomy: Added Scope Bounding & Zero Silent Expansion directive (ODD principle), Deterministic Verification Receipt standard (RDD inspired), Test-Driven RED-GREEN-REFACTOR slice to Feature Builder [3], and structured Living Memory taxonomy ([DECISION], [FIX/TRICK], [CONTRACT], [CONVENTION]) to Workflow [10].
   * Short Commit Title & Point-by-Point Description Directives: Updated Stage & Commit Engine in AGENTS.md and SKILL.md to enforce short, concise commit titles (under 50-72 chars) and easy-to-understand, point-by-point bulleted descriptions detailing what changed and why.
@@ -504,6 +505,9 @@ The agent MUST follow strict **Conventional Commits & Git Best Practices** when 
        - *What changed:* Specific functional & code changes implemented.
        - *Why:* Underlying technical rationale or problem resolved in simple terms.
        - Key architectural, component, or file highlights.
+   - **Work-Unit Commit Discipline (Mandatory):**
+     * **Atomic Delivery:** NEVER commit by file type alone (e.g. `models`, then `services`, then `tests`). A commit MUST represent a complete, functional behavior unit with its code, tests, and documentation bundled together.
+     * **400-Line Slicing Guard:** If a planned task or feature forecasts >400 authored lines, slice the work into reviewable, sequential work-unit commits before executing.
    - **Footer Section (Optional):** Breaking changes (`BREAKING CHANGE: <desc>`) or issue references (`Refs: #123`).
 
 ### 2. Execution & Sealed Commit Summary Output:

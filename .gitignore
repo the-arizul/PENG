@@ -6,3 +6,5 @@ Thumbs.db
 state.json
 .agents/state.json
 .hippo/
+gentle-ai/
+iai-personal-memory-engine/
