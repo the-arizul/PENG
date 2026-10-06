@@ -5,7 +5,7 @@ A hyper-smart, zero-memory interactive vibe coding system featuring **multi-stag
 Type `/peng` in your agent chat. You will be greeted by a master menu, followed by an **intelligent contextual sub-menu** tailored to your exact goal:
 
 1. **[1] Autonomous Context Init** - Deep codebase scan, Gold Standard discovery, and .agents/ setup.
-   - *Sub-options:* Full Autopilot | Audit & Review First | Rebuild & Reset Memory
+   - *Sub-options:* Full Autopilot | Audit & Review First | Recreate AGENTS.md & Rules (Rescan Project End-to-End)
 2. **[2] Fresh Chat Context Primer** - Quick-sync memory, active branch, and recent project posture.
    - *Sub-options:* Standard Sync | Branch-Switch Onboarding | Stale Context Flush
 3. **[3] Build New Feature** - Layered architecture, schema safety, and surgical execution.

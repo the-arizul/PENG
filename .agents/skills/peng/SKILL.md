@@ -49,9 +49,10 @@ A hyper-smart, multi-stage interactive vibe coding system for AI coding agents.
 > Organizes memory across 3 hyperdimensional tiers: Tier 1 Episodic (`[FIX/TRICK]` & session histories), Tier 2 Semantic (`[DECISION]`, `[CONTRACT]`, `[CONVENTION]` living rules in `.agents/rules/`), and Tier 3 Procedural (`[PREFERENCE]` behavioral style in `state.json` / `preferences.md`). Tracks superseded architectural choices (`[SUPERSEDES: ADR-XXX]`) to prevent hallucinations. Works natively via Git-synced `.agents/` files with optional automatic bridging to local MCP memory engines (`iai-memory`, etc.) when present.
 
 ## CURRENT RELEASE VERSION
-- Version: 1.4.13
-- Release Date: 2026-10-06
+- Version: 1.4.14
+- Release Date: 2026-10-07
 - Changelog:
+  * Autonomous Context Init Level 2 Sub-Menu Update: Updated Option 3 in Workflow [1] Autonomous Context Init secondary menu to explicitly show 'Recreate AGENTS.md & Rules (Rescan Project End-to-End)', enabling users to rescan the entire project end to end and regenerate AGENTS.md and rules.
   * Work-Unit Commit Discipline & 400-Line Cognitive Load Guard: Codified atomic work-unit commit rules (bundling code, tests, and docs together without splitting by file type) and 400-line slicing guardrails in AGENTS.md and SKILL.md.
   * 3-Tier Hyper-Memory & Self-Contained Engine: Integrated 3-Tier Hyperdimensional Memory (Episodic, Semantic, Procedural), Contradiction & Superseded Architecture Tracking ([SUPERSEDES]), and Dual-Layer Storage (Self-contained Git-synced .agents/ + optional MCP memory daemon bridging).
   * Deterministic Vibe Coding Directives & Structured Taxonomy: Added Scope Bounding & Zero Silent Expansion directive (ODD principle), Deterministic Verification Receipt standard (RDD inspired), Test-Driven RED-GREEN-REFACTOR slice to Feature Builder [3], and structured Living Memory taxonomy ([DECISION], [FIX/TRICK], [CONTRACT], [CONVENTION]) to Workflow [10].
@@ -558,7 +559,7 @@ When the user selects **Undo commit (git reset --soft HEAD~1)**:
 - Level 2 Context Menu:
   - Full Autopilot: Deep scan codebase manifests, visual tokens, API contracts, and database models to generate a progressive `.agents/` AI Knowledge System (`AGENTS.md` entry point + targeted `.agents/rules/`).
   - Audit & Review First: Present discovered tech stack, visual architecture, logic boundaries, and proposed `.agents/` rules in chat for manual confirmation before writing any files.
-  - Rebuild / Reset Memory: Overwrite existing `.agents/` configurations, wipe stale rules, re-index codebase baseline, and regenerate progressive loading rules.
+  - Recreate AGENTS.md & Rules (Rescan Project End-to-End): Overwrite existing `.agents/` configurations, wipe stale rules, rescan the entire project end to end, re-index codebase baseline, and regenerate progressive loading rules in `AGENTS.md` and `.agents/rules/`.
   - What is this for? (Explain Autonomous Context Init, its value, and when to use it)
 - Persistent Project Knowledge & Progressive Loading Architecture (MANDATORY AGENT DIRECTIVE):
   * **Zero Parallel Directory Architecture**: Never create `AI/`, `.ai/`, `docs/ai/`, or external documentation roots. Use `.agents/` exclusively (`AGENTS.md`, `rules/`, `skills/`).
@@ -981,7 +982,7 @@ Whenever the user selects an option from ANY context menu across Level 1, Level 
 #### Workflow [1] [INIT] Autonomous Context Generator
 - `Full Autopilot`: Deep-scan codebase manifests (`package.json`, `composer.json`, `pubspec.yaml`, `Cargo.toml`, `go.mod`, `requirements.txt`), inspect directory structure, UI framework, ORM models, API routes, and design system tokens. Generate concise `.agents/AGENTS.md` (6-layer progressive context loading navigation map + core agent directives) and targeted durable rules in `.agents/rules/` (`architecture.md`, `design-system.md`, `backend-api.md`, `domain-*.md`, `adr-*.md`, `project-state.md`) based strictly on evidence from the codebase. Execute self-audit to verify accuracy, efficiency, and zero duplicate docs. Immediately after generating `.agents/`, ask the user via `ask_question` whether to add the recommended rule enforcing mandatory PENG (`/peng`) usage for all repository tasks. If approved, append the directive section to `.agents/AGENTS.md`.
 - `Audit & Review First`: Render discovered tech stack, visual architecture, logic boundaries, and proposed `.agents/` rules in chat; wait for user confirmation before writing memory files. Include the recommended PENG directive rule option in the confirmation prompt.
-- `Rebuild / Reset Memory`: Overwrite existing `.agents/` configurations, wipe stale rules, re-index project baseline, regenerate progressive loading rules in `.agents/AGENTS.md` and `.agents/rules/`, and prompt user via `ask_question` whether to add the recommended PENG directive rule to `.agents/AGENTS.md`.
+- `Recreate AGENTS.md & Rules (Rescan Project End-to-End)`: Overwrite existing `.agents/` configurations, wipe stale rules, rescan the entire project end to end, re-index project baseline, regenerate progressive loading rules in `.agents/AGENTS.md` and `.agents/rules/`, and prompt user via `ask_question` whether to add the recommended PENG directive rule to `.agents/AGENTS.md`.
 
 #### Workflow [2] [CONTEXT-PRIMER] Fresh Chat Context Primer
 - `Standard Sync`: Fast-sync git branch, uncommitted diffs, last 3 commits, and load `.agents/AGENTS.md` into turn context.
