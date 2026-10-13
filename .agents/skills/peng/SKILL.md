@@ -48,10 +48,15 @@ A hyper-smart, multi-stage interactive vibe coding system for AI coding agents.
 > **3-TIER HYPER-MEMORY & DUAL-LAYER STORAGE DIRECTIVE:**
 > Organizes memory across 3 hyperdimensional tiers: Tier 1 Episodic (`[FIX/TRICK]` & session histories), Tier 2 Semantic (`[DECISION]`, `[CONTRACT]`, `[CONVENTION]` living rules in `.agents/rules/`), and Tier 3 Procedural (`[PREFERENCE]` behavioral style in `state.json` / `preferences.md`). Tracks superseded architectural choices (`[SUPERSEDES: ADR-XXX]`) to prevent hallucinations. Works natively via Git-synced `.agents/` files with optional automatic bridging to local MCP memory engines (`iai-memory`, etc.) when present.
 
+> [!TIP]
+> **AUTOMATED COMMIT MEMORY & EPISODIC LEDGER DIRECTIVE (PURE MARKDOWN, ZERO-DB):**
+> Automatically records every git commit as an individual, structured episodic memory file in `.agents/memory/commits/YYYY-MM-DD_<hash>_<slug>.md` and maintains a master chronological ledger in `.agents/memory/COMMITS.md`. Captures full commit metadata (hash, author, date, workflow, taxonomy tag, point-by-point what/why, file diff stats, verification receipts, and living rules) natively in Git-tracked Markdown without requiring SQLite, background daemons, or local databases. Fully synchronized with the Stage, Commit & Undo Commit Engine (`git reset --soft HEAD~1` surgically rolls back the commit memory file as well). Includes an automated Git History Harvester to backfill past commit lessons, and integrates commit history into Layer 4 of Progressive Context Loading.
+
 ## CURRENT RELEASE VERSION
-- Version: 1.4.14
-- Release Date: 2026-10-07
+- Version: 1.5.0
+- Release Date: 2026-10-13
 - Changelog:
+  * Automated Commit Memory & Episodic Ledger Engine (Pure Markdown, Zero DB): Integrated an automated, database-free commit memory system inspired by Hippo but built natively on Git-tracked Markdown. Automatically records all commit details (metadata, point-by-point what/why, file diff stats, verification receipts, and living rules) into dedicated separate files under .agents/memory/commits/ and maintains a master chronological ledger in .agents/memory/COMMITS.md. Automatically generates commit memory files upon Stage & Commit, surgically cleans them up on Undo Commit, provides an automated Git History Harvester to backfill past commit lessons, and registers commit history into Layer 4 of Progressive Context Loading.
   * Autonomous Context Init Level 2 Sub-Menu Update: Updated Option 3 in Workflow [1] Autonomous Context Init secondary menu to explicitly show 'Recreate AGENTS.md & Rules (Rescan Project End-to-End)', enabling users to rescan the entire project end to end and regenerate AGENTS.md and rules.
   * Work-Unit Commit Discipline & 400-Line Cognitive Load Guard: Codified atomic work-unit commit rules (bundling code, tests, and docs together without splitting by file type) and 400-line slicing guardrails in AGENTS.md and SKILL.md.
   * 3-Tier Hyper-Memory & Self-Contained Engine: Integrated 3-Tier Hyperdimensional Memory (Episodic, Semantic, Procedural), Contradiction & Superseded Architecture Tracking ([SUPERSEDES]), and Dual-Layer Storage (Self-contained Git-synced .agents/ + optional MCP memory daemon bridging).
@@ -511,10 +516,29 @@ The agent MUST follow strict **Conventional Commits & Git Best Practices** when 
      * **400-Line Slicing Guard:** If a planned task or feature forecasts >400 authored lines, slice the work into reviewable, sequential work-unit commits before executing.
    - **Footer Section (Optional):** Breaking changes (`BREAKING CHANGE: <desc>`) or issue references (`Refs: #123`).
 
-### 2. Execution & Sealed Commit Summary Output:
-- Stage all modified and created files (`git add -A` or target specific files).
-- Execute `git commit` using a multi-line message format.
-- Display a clean, sealed release summary in the chat turn response showing Commit Hash, Header, Body bullets, and Files Changed summary.
+### 2. Execution, Automated Commit Memory Recording & Sealed Commit Summary Output:
+1. **Automated Commit Memory Generation (Pure Markdown, Zero DB):**
+   - Ensure the directory `.agents/memory/commits/` exists (create if missing).
+   - Generate a dedicated commit memory markdown file:
+     `.agents/memory/commits/YYYY-MM-DD_<short-hash-or-slug>.md` (e.g., `.agents/memory/commits/2026-10-13_7f8a1b_feat-auth.md`).
+   - The file MUST capture:
+     * **Header Metadata:** Full commit hash, short hash, date/time, author, active workflow (e.g., `[3] Feature Builder`), taxonomy tag (`[FEAT]`, `[FIX/TRICK]`, `[DECISION]`, `[CONTRACT]`, `[REFACTOR]`, `[PERF]`, `[DOCS]`).
+     * **Executive Summary:** Short concise summary of the work unit.
+     * **Point-by-Point Changes:** Structured bullets explaining *what* changed, *why*, and key architecture/file highlights.
+     * **Impacted Files & Diff Stats:** List of modified, created, and deleted files with diff statistics (+/- lines).
+     * **Deterministic Verification Receipt:** Syntax probes run (`php -l`, `node --check`, etc.), automated tests executed, zero-regression status.
+     * **Living Rules / Extracted Learnings:** Any architectural decisions (`[DECISION]`), non-obvious fixes (`[FIX/TRICK]`), or data contracts (`[CONTRACT]`) discovered during this change.
+2. **Master Chronological Ledger Update (`.agents/memory/COMMITS.md`):**
+   - If `.agents/memory/COMMITS.md` does not exist, initialize it with a markdown table:
+     `| Date | Commit | Tag | Workflow | Title | Memory Record |`
+   - Prepend the new commit record row to the top of the ledger table linking to the dedicated file:
+     `| YYYY-MM-DD | \`<hash>\` | \`[TAG]\` | \`[Workflow]\` | <title> | [View Record](commits/<filename>.md) |`
+3. **Atomic Work-Unit Staging & Commit:**
+   - Stage all code changes AND the generated `.agents/memory/` files together: `git add -A`.
+   - Execute `git commit` using the multi-line Conventional Commit message format.
+   - Update the exact Git commit hash in the memory file (via `git rev-parse --short HEAD`) so the recorded hash matches HEAD perfectly.
+4. **Display Sealed Release Summary:**
+   - Output the clean, sealed release summary in the chat response showing Commit Hash, Header, Body bullets, Files Changed summary, and the clickable file link: `**Commit Memory Recorded:** [.agents/memory/commits/<filename>.md](file:///<absolute-path-to-file>)`.
 
 ### 3. Mandatory Post-Commit Follow-Up Context Menu (`Undo commit`):
 - **IMMEDIATELY** after outputting the sealed commit summary, trigger an interactive context menu modal via `ask_question`:
@@ -529,9 +553,10 @@ The agent MUST follow strict **Conventional Commits & Git Best Practices** when 
 ### 4. Undo Commit Execution Handler:
 When the user selects **Undo commit (git reset --soft HEAD~1)**:
 1. Execute `git reset --soft HEAD~1`. This surgically undoes the commit while preserving all modified, created, and staged files intact in the staging index.
-2. If a version bump was auto-applied to `SKILL.md` during this commit, prompt/offer to revert the version bump or keep it.
-3. Display a clean confirmation banner: `↩️ Git commit [Hash] undone successfully! All changes have been un-committed and returned to your staging index / working tree.`
-4. Re-open the Level 4 Wrap-Up Context Menu via `ask_question`.
+2. **Automated Commit Memory Rollback:** Surgically delete the generated commit memory file in `.agents/memory/commits/` and remove its corresponding row from `.agents/memory/COMMITS.md`, guaranteeing that no orphan or desynced memory records remain.
+3. If a version bump was auto-applied to `SKILL.md` during this commit, prompt/offer to revert the version bump or keep it.
+4. Display a clean confirmation banner: `↩️ Git commit [Hash] undone successfully! All changes have been un-committed and returned to your staging index / working tree. Associated commit memory record cleaned up.`
+5. Re-open the Level 4 Wrap-Up Context Menu via `ask_question`.
 
 ---
 
@@ -560,6 +585,7 @@ When the user selects **Undo commit (git reset --soft HEAD~1)**:
   - Full Autopilot: Deep scan codebase manifests, visual tokens, API contracts, and database models to generate a progressive `.agents/` AI Knowledge System (`AGENTS.md` entry point + targeted `.agents/rules/`).
   - Audit & Review First: Present discovered tech stack, visual architecture, logic boundaries, and proposed `.agents/` rules in chat for manual confirmation before writing any files.
   - Recreate AGENTS.md & Rules (Rescan Project End-to-End): Overwrite existing `.agents/` configurations, wipe stale rules, rescan the entire project end to end, re-index codebase baseline, and regenerate progressive loading rules in `AGENTS.md` and `.agents/rules/`.
+  - Harvest Git Commit History into Living Memory: Scan historical git commits (last 30 days of commits), generate individual commit memory files in `.agents/memory/commits/`, and compile `.agents/memory/COMMITS.md`.
   - What is this for? (Explain Autonomous Context Init, its value, and when to use it)
 - Persistent Project Knowledge & Progressive Loading Architecture (MANDATORY AGENT DIRECTIVE):
   * **Zero Parallel Directory Architecture**: Never create `AI/`, `.ai/`, `docs/ai/`, or external documentation roots. Use `.agents/` exclusively (`AGENTS.md`, `rules/`, `skills/`).
@@ -567,8 +593,8 @@ When the user selects **Undo commit (git reset --soft HEAD~1)**:
     1. Layer 1: `.agents/AGENTS.md` (Operational entry point & context map)
     2. Layer 2: Targeted `.agents/rules/` (Project rules: architecture, design system, backend/API, coding conventions)
     3. Layer 3: Relevant `.agents/skills/` & domain context (`.agents/rules/domain-*.md`)
-    4. Layer 4: Architectural Decision Records (`.agents/rules/adr-*.md`)
-    5. Layer 5: Relevant source/project files
+    4. Layer 4: Architectural Decision Records (`.agents/rules/adr-*.md`) & Commit Memory Ledger (`.agents/memory/COMMITS.md`)
+    5. Layer 5: Relevant source/project files (and dedicated commit records in `.agents/memory/commits/`)
     6. Layer 6: Deep repository investigation (only when necessary)
   * **Structured Durable Rules Engine (`.agents/rules/`)**:
     - `architecture.md`: Visual, logic, component, and backend boundaries & dependency flows (e.g. Pages → Feature Components → Shared Components → UI Primitives → Design Tokens; UI → API Client → Services → Models → DB). Generated strictly from codebase evidence.
@@ -613,6 +639,7 @@ When the user selects **Undo commit (git reset --soft HEAD~1)**:
   - Standard Sync: Fast-sync current git branch, uncommitted diffs, recent 3 commits, and `.agents/AGENTS.md`.
   - Branch-Switch Onboarding: Compare differences between current branch and `main`/`develop` to brief me on branch-specific tasks.
   - Stale Context Flush: Re-verify package versions and environment configurations to ensure zero outdated assumptions.
+  - Inspect Commit Memory Ledger: Fast-read `.agents/memory/COMMITS.md` and recent commit memory records to catch up on recent work unit rationale and diffs.
   - What is this for? (Explain Fresh Chat Context Primer, its value, and when to use it)
 - Level 4 Post-Resolution Context Menu (Triggered when context primer sync is complete):
   * Once branch diffs, recent commits, and memory files are synced, invoke `ask_question`:
@@ -800,6 +827,8 @@ When the user selects **Undo commit (git reset --soft HEAD~1)**:
   - Generate Specialized Skill: Create a dedicated `.agents/skills/<workflow>/SKILL.md` playbook for this complex procedure.
   - Create Repo Rule File: Save a targeted `.agents/rules/<domain>.md` file that automatically attaches to relevant directory paths.
   - Record Superseded Architecture (`[SUPERSEDES]`): Mark an outdated or replaced architectural decision/ADR as superseded by a new standard.
+  - Harvest Git Commit History into Living Memory: Backfill and convert past git commits into standalone `.agents/memory/commits/` markdown files and rebuild `COMMITS.md`.
+  - Inspect / Search Commit Memory Ledger: Search and browse saved commit memory records by keyword, date, or taxonomy tag.
   - What is this for? (Explain Living Memory Extractor, its value, and when to use it)
 - 3-Tier Hyper-Memory Taxonomy & Dual-Layer Storage (MANDATORY AGENT DIRECTIVE):
   * When writing rules or decisions into `.agents/AGENTS.md` or `.agents/rules/`, format entries using standardized prefix tags:
@@ -808,13 +837,14 @@ When the user selects **Undo commit (git reset --soft HEAD~1)**:
     - `[SUPERSEDES: ADR-XXX]`: Superseded architectural pattern link indicating replaced decisions to prevent hallucinated rollbacks.
     - `[CONTRACT]`: Critical API, schema, or UI data rules that must never be bypassed (Tier 2 Semantic).
     - `[PREFERENCE]`: Developer behavioral preferences, commit formatting, and review styles in `preferences.md` (Tier 3 Procedural).
+  * **Automated Commit Memory Storage (`.agents/memory/commits/`):** Each commit is stored as a dedicated file named `YYYY-MM-DD_<short-hash>_<slug>.md` containing complete metadata, point-by-point changes, diff stats, verification receipts, and living rules. The chronological index `.agents/memory/COMMITS.md` provides an instant overview and link to every record.
   * **Dual-Layer Sync:** If an MCP memory server (e.g. `iai-memory`) is active in the environment, invoke `memory_capture` to mirror the memory entry into the local hyperdimensional store.
 - Level 4 Post-Resolution Context Menu (Triggered when memory update is complete):
-  * Once memory, skill, or rule files are updated/created, invoke `ask_question`:
+  * Once memory, skill, rule, or commit files are updated/created, invoke `ask_question`:
     - Question: "Living memory update completed! How would you like to proceed?"
     - Options:
       1. Return to Primary Menu (Select another workflow)
-      2. View Saved Rules/Skills (Inspect created `.agents/` files)
+      2. View Saved Rules/Skills/Commit Records (Inspect created .agents/ files)
       3. Rescan - if there's any leftover (Verify saved memory rules against active workspace codebase)
       4. What is this for? (Explain memory preservation and guidelines)
 
@@ -963,7 +993,7 @@ Whenever the user selects an option from ANY context menu across Level 1, Level 
 - **`How do I check or test the changes?`:**
   * **MANDATORY TEXT FIRST DIRECTIVE:** Output an exhaustive, step-by-step manual test guide tailored specifically to the project type (URLs, ports, test credentials, dummy input data, DevTools payloads, before-vs-after expectations, edge cases) in the chat response turn FIRST. Immediately after outputting the guide, re-open the Level 4 menu presenting `Run the app/project` as Option 1.
 - **`Stage & Commit Changes`:**
-  * **Prompt Directive:** Execute the Stage, Commit & Undo Commit Engine. Inspect `git status` & `git diff`, formulate a commit message adhering strictly to Conventional Commits & Git Best Practices (`<type>(<scope>): <summary>`, structured body with *what* & *why*), stage files (`git add -A`), execute `git commit`, render the sealed commit summary, and IMMEDIATELY launch an interactive follow-up modal (`ask_question`) offering **Undo commit (`git reset --soft HEAD~1`)** as Option 1.
+  * **Prompt Directive:** Execute the Stage, Commit & Undo Commit Engine. Inspect `git status` & `git diff`, formulate a commit message adhering strictly to Conventional Commits & Git Best Practices (`<type>(<scope>): <summary>`, structured body with *what* & *why*), generate dedicated commit memory file in `.agents/memory/commits/` and prepend record to `.agents/memory/COMMITS.md`, stage files (`git add -A`), execute `git commit`, render the sealed commit summary with clickable commit memory link, and IMMEDIATELY launch an interactive follow-up modal (`ask_question`) offering **Undo commit (`git reset --soft HEAD~1`)** as Option 1.
 - **`Rescan - if there's any leftover`:**
   * **Prompt Directive:** Re-execute automated diagnostic probes, linters, and scans across modified files and codebase to guarantee zero remaining issues, syntax errors, or leftover debug code.
 - **`Run Full Test Suite`:**
@@ -983,11 +1013,13 @@ Whenever the user selects an option from ANY context menu across Level 1, Level 
 - `Full Autopilot`: Deep-scan codebase manifests (`package.json`, `composer.json`, `pubspec.yaml`, `Cargo.toml`, `go.mod`, `requirements.txt`), inspect directory structure, UI framework, ORM models, API routes, and design system tokens. Generate concise `.agents/AGENTS.md` (6-layer progressive context loading navigation map + core agent directives) and targeted durable rules in `.agents/rules/` (`architecture.md`, `design-system.md`, `backend-api.md`, `domain-*.md`, `adr-*.md`, `project-state.md`) based strictly on evidence from the codebase. Execute self-audit to verify accuracy, efficiency, and zero duplicate docs. Immediately after generating `.agents/`, ask the user via `ask_question` whether to add the recommended rule enforcing mandatory PENG (`/peng`) usage for all repository tasks. If approved, append the directive section to `.agents/AGENTS.md`.
 - `Audit & Review First`: Render discovered tech stack, visual architecture, logic boundaries, and proposed `.agents/` rules in chat; wait for user confirmation before writing memory files. Include the recommended PENG directive rule option in the confirmation prompt.
 - `Recreate AGENTS.md & Rules (Rescan Project End-to-End)`: Overwrite existing `.agents/` configurations, wipe stale rules, rescan the entire project end to end, re-index project baseline, regenerate progressive loading rules in `.agents/AGENTS.md` and `.agents/rules/`, and prompt user via `ask_question` whether to add the recommended PENG directive rule to `.agents/AGENTS.md`.
+- `Harvest Git Commit History into Living Memory`: Read past git commits (last 30 days or specified range) via `git log`, extract work unit breakdowns, taxonomy tags, and lessons, generate individual markdown files in `.agents/memory/commits/`, and compile `.agents/memory/COMMITS.md`.
 
 #### Workflow [2] [CONTEXT-PRIMER] Fresh Chat Context Primer
 - `Standard Sync`: Fast-sync git branch, uncommitted diffs, last 3 commits, and load `.agents/AGENTS.md` into turn context.
 - `Branch-Switch Onboarding`: Execute `git diff main...HEAD` to summarize branch-specific delta and active tasks.
 - `Stale Context Flush`: Re-verify package versions, environment keys, and wipe outdated memory assumptions.
+- `Inspect Commit Memory Ledger`: Fast-read `.agents/memory/COMMITS.md` and display recent commit memory summaries to quickly catch up on architectural changes, bug fixes, and active branch progress without context bloat.
 
 #### Workflow [3] [FEATURE-BUILDER] Build New Feature
 - `End-to-End Vertical Slice`: Execute full stack implementation in layered order: Database migration -> Model -> Business Logic Service -> Controller/API endpoint -> Frontend UI Component.
@@ -1036,6 +1068,8 @@ Whenever the user selects an option from ANY context menu across Level 1, Level 
 - `Generate Specialized Skill`: Create dedicated `.agents/skills/<name>/SKILL.md` playbook for complex workflows.
 - `Create Repo Rule File`: Create targeted `.agents/rules/<domain>.md` file attached to specific file path patterns.
 - `Record Superseded Architecture`: Explicitly record superseded architectural patterns linked to prior ADRs (`[SUPERSEDES: ADR-XXX]`) to prevent regression loops. If MCP memory daemon is active, mirror capture via `memory_capture`.
+- `Harvest Git Commit History into Living Memory`: Read past git commits (last 30 days or specified range) via `git log`, extract work unit breakdowns, taxonomy tags, and lessons, generate individual markdown files in `.agents/memory/commits/`, and compile `.agents/memory/COMMITS.md`.
+- `Inspect / Search Commit Memory Ledger`: Search and browse saved commit memory records by keyword, date, or taxonomy tag, displaying relevant commit details on demand without context bloat.
 
 #### Workflow [11] [UI-AUDITOR] UI & Feature Completeness Auditor
 - `Full Project Completeness Audit`: Deep-scan all project pages, layouts, components, buttons, forms, and handlers. Trace all event handlers (`onClick`, `onSubmit`, `onChange`), state bindings, data-fetching calls, and router paths. Identify stubbed handlers (`console.log`, `TODO`, empty callbacks, `event.preventDefault()` only), unhandled click actions, disconnected forms lacking state/validation/submission endpoints, mocked dummy data where live data is required, or missing loading/error/empty states. Render an itemized audit table (Element, File Location, Issue Classification, Missing/Broken Logic Details, Severity) directly in chat. Do NOT modify code during the audit. After rendering the report, trigger the Level 3 Resolution Menu.

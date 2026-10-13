@@ -22,8 +22,8 @@ Type `/peng` in your agent chat. You will be greeted by a master menu, followed 
    - *Sub-options:* Full Suite & Hygiene | Test-Only Run | Linter & Style Cleanup | Pre-PR Security Sanity Check
 9. **[9] Gold Standard Harmonizer** - Enforces 100% architectural uniformity by mimicking existing reference files.
    - *Sub-options:* Auto-Detect Best Reference | User-Specified Reference File | Refactor Messy File to Match
-10. **[10] Living Memory / Learn** - Permanently extracts session tricks and bug fixes into project memory.
-    - *Sub-options:* Update .agents/AGENTS.md | Generate Dedicated Skill | Create Repo Domain Rule
+10. **[10] Living Memory / Learn** - Permanently extracts session tricks, bug fixes, and git commit history into project memory.
+    - *Sub-options:* Update .agents/AGENTS.md | Generate Dedicated Skill | Create Repo Domain Rule | Harvest Git History to Commit Memory | Inspect Commit Memory Ledger
 11. **[11] UI & Feature Completeness Auditor** - Deep-scan for disconnected, broken, or non-functional UI logic.
     - *Sub-options:* Full Project Completeness Audit | Forms & Data Mutation Wiring Audit | Ghost Features & Disconnected Routes Hunter
 12. **[12] Design System & Anti-Hardcode Architect** - Shadcn/UI standardization & reusable abstraction overhaul.
@@ -39,6 +39,7 @@ Type `/peng` in your agent chat. You will be greeted by a master menu, followed 
 
 PENG supports two seamless invocation modes in any supported agent chat (Antigravity IDE, Cursor, Windsurf, Claude Code), backed by automatic **Pre-Flight Session Checks** on every new conversation:
 
+- **Automated Commit Memory & Episodic Ledger (Pure Markdown, Zero DB):** Automatically records all commit details (metadata, what/why breakdown, file diff stats, verification receipts, living rules) as standalone files under `.agents/memory/commits/` and compiles a master chronological timeline in `.agents/memory/COMMITS.md` without requiring SQLite or external memory daemons. Fully synchronized with Undo Commit (`git reset --soft HEAD~1`) and includes a Git History Harvester.
 - **Push-Based Update Detection (`npx skills`):** No GitHub Releases or tags needed. PENG directly tracks commits pushed to `the-arizul/PENG` on GitHub via `git ls-remote`. When new commits are detected, it prompts the user to update the skill safely in one click (`npx skills update peng -y` or `npx skills update peng -g -y`).
 - **Git Remote Tracking (Source Repo):** In the PENG codebase itself, checks if remote updates are available and offers instant `git pull`.
 - **State Verification (`state.json`):** Checks if `state.json` exists to restore preferred language and usage preferences, or presents the first-time setup modal if unconfigured.

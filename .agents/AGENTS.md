@@ -43,6 +43,14 @@ Whenever the user asks to remove, delete, clean up, or purge ANY feature, compon
 4. **Contradiction & Superseded Tracking (`[SUPERSEDES]`):** When an architectural decision evolves, the new record MUST explicitly link to the superseded pattern (`[SUPERSEDES: ADR-XXX]`) so the agent never resurrects abandoned patterns.
 5. **Dual-Layer Sync Engine:** Git-synced `.agents/` files are the primary, portable single source of truth. When an MCP memory daemon (such as `iai-memory`) is detected in the environment, the agent automatically mirrors memory captures and recalls cross-session context via MCP stdio.
 
+## AUTOMATED COMMIT MEMORY & EPISODIC LEDGER DIRECTIVE (PURE MARKDOWN, ZERO-DB)
+**MANDATORY DIRECTIVE:** All git commits executed via PENG MUST be automatically recorded as structured episodic memory records without external databases:
+1. **Dedicated Commit Record Files (`.agents/memory/commits/`):** For every commit, create `.agents/memory/commits/YYYY-MM-DD_<short-hash>_<slug>.md` capturing full metadata (hash, author, date, workflow, taxonomy tag), executive summary, point-by-point what & why, affected files with diff statistics, deterministic verification receipts, and living rules (`[DECISION]`, `[FIX/TRICK]`, `[CONTRACT]`).
+2. **Master Chronological Ledger (`.agents/memory/COMMITS.md`):** Maintain a reverse-chronological markdown table (`Date | Commit | Tag | Workflow | Title | Memory Record`) linking to each individual commit memory record.
+3. **Atomic Work-Unit Bundling:** The memory files under `.agents/memory/` MUST be staged (`git add -A`) and bundled together with the commit so the repository's history is self-recording.
+4. **Surgical Undo Rollback:** When `Undo commit` (`git reset --soft HEAD~1`) is executed, the agent MUST automatically delete the created commit memory file and remove its row from `COMMITS.md` to ensure zero stale or desynced memory records.
+5. **Git History Harvester:** Workflows [1], [2], and [10] provide an automated scanner to backfill past commits into `.agents/memory/commits/` and build `COMMITS.md` without requiring Hippo Memory or SQLite.
+
 ## AUTONOMOUS VERSIONING & PRE-WRAP GIT COMMIT RULE (MANDATORY AGENT DIRECTIVE)
 
 **STRICT RULE:** The agent MUST NOT update or bump the version in `SKILL.md` in advance before asking the user! The version in `SKILL.md` must only be updated AFTER the user responds to the `ask_question` modal.
@@ -167,10 +175,29 @@ The agent MUST follow strict **Conventional Commits & Git Best Practices** when 
      * **400-Line Slicing Guard:** If a planned task or feature forecasts >400 authored lines, slice the work into reviewable, sequential work-unit commits before executing.
    - **Footer Section (Optional):** Breaking changes (`BREAKING CHANGE: <desc>`) or issue references (`Refs: #123`).
 
-### 2. Execution & Sealed Commit Summary Output:
-- Stage all modified and created files (`git add -A` or target specific files).
-- Execute `git commit` using a multi-line message format.
-- Display a clean, sealed release summary in the chat turn response showing Commit Hash, Header, Body bullets, and Files Changed summary.
+### 2. Execution, Automated Commit Memory Recording & Sealed Commit Summary Output:
+1. **Automated Commit Memory Generation (Pure Markdown, Zero DB):**
+   - Ensure the directory `.agents/memory/commits/` exists (create if missing).
+   - Generate a dedicated commit memory markdown file:
+     `.agents/memory/commits/YYYY-MM-DD_<short-hash-or-slug>.md` (e.g., `.agents/memory/commits/2026-10-13_7f8a1b_feat-auth.md`).
+   - The file MUST capture:
+     * **Header Metadata:** Full commit hash, short hash, date/time, author, active workflow (e.g., `[3] Feature Builder`), taxonomy tag (`[FEAT]`, `[FIX/TRICK]`, `[DECISION]`, `[CONTRACT]`, `[REFACTOR]`, `[PERF]`, `[DOCS]`).
+     * **Executive Summary:** Short concise summary of the work unit.
+     * **Point-by-Point Changes:** Structured bullets explaining *what* changed, *why*, and key architecture/file highlights.
+     * **Impacted Files & Diff Stats:** List of modified, created, and deleted files with diff statistics (+/- lines).
+     * **Deterministic Verification Receipt:** Syntax probes run (`php -l`, `node --check`, etc.), automated tests executed, zero-regression status.
+     * **Living Rules / Extracted Learnings:** Any architectural decisions (`[DECISION]`), non-obvious fixes (`[FIX/TRICK]`), or data contracts (`[CONTRACT]`) discovered during this change.
+2. **Master Chronological Ledger Update (`.agents/memory/COMMITS.md`):**
+   - If `.agents/memory/COMMITS.md` does not exist, initialize it with a markdown table:
+     `| Date | Commit | Tag | Workflow | Title | Memory Record |`
+   - Prepend the new commit record row to the top of the ledger table linking to the dedicated file:
+     `| YYYY-MM-DD | \`<hash>\` | \`[TAG]\` | \`[Workflow]\` | <title> | [View Record](commits/<filename>.md) |`
+3. **Atomic Work-Unit Staging & Commit:**
+   - Stage all code changes AND the generated `.agents/memory/` files together: `git add -A`.
+   - Execute `git commit` using the multi-line Conventional Commit message format.
+   - Update the exact Git commit hash in the memory file (via `git rev-parse --short HEAD`) so the recorded hash matches HEAD perfectly.
+4. **Display Sealed Release Summary:**
+   - Output the clean, sealed release summary in the chat response showing Commit Hash, Header, Body bullets, Files Changed summary, and the clickable file link: `**Commit Memory Recorded:** [.agents/memory/commits/<filename>.md](file:///<absolute-path-to-file>)`.
 
 ### 3. Mandatory Post-Commit Follow-Up Context Menu (`Undo commit`):
 - **IMMEDIATELY** after outputting the sealed commit summary, trigger an interactive context menu modal via `ask_question`:
@@ -185,9 +212,10 @@ The agent MUST follow strict **Conventional Commits & Git Best Practices** when 
 ### 4. Undo Commit Execution Handler:
 When the user selects **Undo commit (git reset --soft HEAD~1)**:
 1. Execute `git reset --soft HEAD~1`. This surgically undoes the commit while preserving all modified, created, and staged files intact in the staging index.
-2. If a version bump was auto-applied to `SKILL.md` during this commit, prompt/offer to revert the version bump or keep it.
-3. Display a clean confirmation banner: `↩️ Git commit [Hash] undone successfully! All changes have been un-committed and returned to your staging index / working tree.`
-4. Re-open the Level 4 Wrap-Up Context Menu via `ask_question`.
+2. **Automated Commit Memory Rollback:** Surgically delete the generated commit memory file in `.agents/memory/commits/` and remove its corresponding row from `.agents/memory/COMMITS.md`, guaranteeing that no orphan or desynced memory records remain.
+3. If a version bump was auto-applied to `SKILL.md` during this commit, prompt/offer to revert the version bump or keep it.
+4. Display a clean confirmation banner: `↩️ Git commit [Hash] undone successfully! All changes have been un-committed and returned to your staging index / working tree. Associated commit memory record cleaned up.`
+5. Re-open the Level 4 Wrap-Up Context Menu via `ask_question`.
 
 ---
 
