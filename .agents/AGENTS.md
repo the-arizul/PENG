@@ -45,11 +45,14 @@ Whenever the user asks to remove, delete, clean up, or purge ANY feature, compon
 
 ## AUTOMATED COMMIT MEMORY & EPISODIC LEDGER DIRECTIVE (PURE MARKDOWN, ZERO-DB)
 **MANDATORY DIRECTIVE:** All git commits executed via PENG MUST be automatically recorded as structured episodic memory records without external databases:
-1. **Dedicated Commit Record Files (`.agents/memory/commits/`):** For every commit, create `.agents/memory/commits/YYYY-MM-DD_<short-hash>_<slug>.md` capturing full metadata (hash, author, date, workflow, taxonomy tag), executive summary, point-by-point what & why, affected files with diff statistics, deterministic verification receipts, and living rules (`[DECISION]`, `[FIX/TRICK]`, `[CONTRACT]`).
+1. **Dedicated Commit Record Files (`.agents/memory/commits/`):** For every commit, create `.agents/memory/commits/YYYY-MM-DD_<slug>.md` capturing full metadata (date, author, workflow, taxonomy tag, commit slug), executive summary, point-by-point what & why, affected files with diff statistics, deterministic verification receipts, and living rules (`[DECISION]`, `[FIX/TRICK]`, `[CONTRACT]`).
 2. **Master Chronological Ledger (`.agents/memory/COMMITS.md`):** Maintain a reverse-chronological markdown table (`Date | Commit | Tag | Workflow | Title | Memory Record`) linking to each individual commit memory record.
-3. **Atomic Work-Unit Bundling:** The memory files under `.agents/memory/` MUST be staged (`git add -A`) and bundled together with the commit so the repository's history is self-recording.
-4. **Surgical Undo Rollback:** When `Undo commit` (`git reset --soft HEAD~1`) is executed, the agent MUST automatically delete the created commit memory file and remove its row from `COMMITS.md` to ensure zero stale or desynced memory records.
-5. **Git History Harvester:** Workflows [1], [2], and [10] provide an automated scanner to backfill past commits into `.agents/memory/commits/` and build `COMMITS.md` without requiring Hippo Memory or SQLite.
+3. **Single Atomic Primary Commit Bundling (Zero-Separate-Commit Rule):**
+   - The commit memory file and master ledger update (`.agents/memory/`) MUST be generated BEFORE running `git commit`, staged together with all code/project changes via `git add -A`, and sealed directly INSIDE the primary commit.
+   - **STRICT PROHIBITION:** The agent MUST NEVER perform a separate, secondary, or follow-up commit for commit memory or harvest memory (e.g., NEVER commit code first and then run `git commit -m "docs: record commit memory"` or `git commit -m "chore: harvest git history"`).
+   - The memory record is sealed in the primary commit from its inception. Do NOT attempt to modify the memory file on disk after `git commit` to insert the commit hash, as doing so dirties the working tree and triggers unwanted secondary commits. The commit hash is displayed in the sealed release summary in chat and can be viewed via `git log`.
+4. **Git History Harvester & Harvest Memory Bundling:** Workflows [1], [2], and [10] provide an automated scanner to backfill past commits into `.agents/memory/commits/` and build `COMMITS.md` without requiring Hippo Memory or SQLite. If harvested during an active session alongside other changes, the harvested memory files MUST be included directly inside the primary commit alongside all other work. If executed as a standalone task with no pending code edits, it is committed as a single primary commit (`docs(memory): harvest git commit history into living memory`), NEVER split across multiple commits.
+5. **Surgical Undo Rollback:** When `Undo commit` (`git reset --soft HEAD~1`) is executed, the agent MUST automatically delete the created commit memory file and remove its row from `COMMITS.md` to ensure zero stale or desynced memory records.
 
 ## AUTONOMOUS VERSIONING & PRE-WRAP GIT COMMIT RULE (MANDATORY AGENT DIRECTIVE)
 
@@ -69,15 +72,16 @@ The agent MUST IMMEDIATELY trigger an interactive context menu using `ask_questi
 ### Execution Handlers when User selects an option:
 1. **Auto-Bump Version (Only if Option 1 or 2 selected):** Update the Version: X.Y.Z in SKILL.md (and release date & changelog summary).
 2. **Sync Mirrors:** Sync the updated SKILL.md to workspace copies.
-3. **Git Commit with Best Practices:** Stage modified/created files (`git add -A`) and write a clean, professional commit message following **Conventional Commits & Git Best Practices** (Short Header: `<type>(<scope>): <short summary>`, blank line, structured Body with easy-to-understand point-by-point bullet points answering *what* changed and *why*, and breaking changes/release footer). Run `git commit`.
-4. **Post-Commit Follow-Up & Undo Commit Modal (MANDATORY):** Immediately after commit execution, render the commit summary (Hash, Header, Body snippet) and launch an interactive follow-up menu via `ask_question`:
+3. **Generate Commit Memory & Ledger (Pre-Commit):** Generate dedicated commit memory file `.agents/memory/commits/YYYY-MM-DD_<slug>.md` and prepend to `.agents/memory/COMMITS.md`.
+4. **Git Commit with Best Practices (Single Atomic Primary Commit):** Stage all modified/created files AND memory files together (`git add -A`) and write a clean, professional commit message following **Conventional Commits & Git Best Practices** (Short Header: `<type>(<scope>): <short summary>`, blank line, structured Body with easy-to-understand point-by-point bullet points answering *what* changed and *why*, and breaking changes/release footer). Run `git commit`. The commit memory is sealed directly inside this primary commit — ZERO separate memory commits.
+5. **Post-Commit Follow-Up & Undo Commit Modal (MANDATORY):** Immediately after commit execution, render the commit summary (Hash, Header, Body snippet) and launch an interactive follow-up menu via `ask_question`:
    - **Question:** 🚀 Git commit successful! [Commit: <hash>] How would you like to proceed?
    - **Options:**
      1. Undo commit (git reset --soft HEAD~1 - revert commit & keep changes staged)
      2. Push to remote repository (git push)
      3. Run the app/project
      4. Return to Primary Menu
-5. **Undo Commit Handler:** If `Undo commit` is selected, run `git reset --soft HEAD~1` (and revert version bump if applicable), display confirmation `↩️ Commit <hash> undone. All changes are preserved in your working tree / staging index.`, and re-open the pre-wrap menu.
+6. **Undo Commit Handler:** If `Undo commit` is selected, run `git reset --soft HEAD~1` (and revert version bump if applicable), display confirmation `↩️ Commit <hash> undone. All changes are preserved in your working tree / staging index.`, and re-open the pre-wrap menu.
 
 ---
 
@@ -176,12 +180,12 @@ The agent MUST follow strict **Conventional Commits & Git Best Practices** when 
    - **Footer Section (Optional):** Breaking changes (`BREAKING CHANGE: <desc>`) or issue references (`Refs: #123`).
 
 ### 2. Execution, Automated Commit Memory Recording & Sealed Commit Summary Output:
-1. **Automated Commit Memory Generation (Pure Markdown, Zero DB):**
+1. **Automated Commit Memory Generation (Pure Markdown, Zero DB) - BEFORE Commit:**
    - Ensure the directory `.agents/memory/commits/` exists (create if missing).
-   - Generate a dedicated commit memory markdown file:
-     `.agents/memory/commits/YYYY-MM-DD_<short-hash-or-slug>.md` (e.g., `.agents/memory/commits/2026-10-13_7f8a1b_feat-auth.md`).
+   - Generate a dedicated commit memory markdown file BEFORE running `git commit`:
+     `.agents/memory/commits/YYYY-MM-DD_<slug>.md` (e.g., `.agents/memory/commits/2026-10-13_feat-auth.md`).
    - The file MUST capture:
-     * **Header Metadata:** Full commit hash, short hash, date/time, author, active workflow (e.g., `[3] Feature Builder`), taxonomy tag (`[FEAT]`, `[FIX/TRICK]`, `[DECISION]`, `[CONTRACT]`, `[REFACTOR]`, `[PERF]`, `[DOCS]`).
+     * **Header Metadata:** Date/time, author, active workflow (e.g., `[3] Feature Builder`), taxonomy tag (`[FEAT]`, `[FIX/TRICK]`, `[DECISION]`, `[CONTRACT]`, `[REFACTOR]`, `[PERF]`, `[DOCS]`), commit status (`Bundled in primary commit`).
      * **Executive Summary:** Short concise summary of the work unit.
      * **Point-by-Point Changes:** Structured bullets explaining *what* changed, *why*, and key architecture/file highlights.
      * **Impacted Files & Diff Stats:** List of modified, created, and deleted files with diff statistics (+/- lines).
@@ -191,13 +195,13 @@ The agent MUST follow strict **Conventional Commits & Git Best Practices** when 
    - If `.agents/memory/COMMITS.md` does not exist, initialize it with a markdown table:
      `| Date | Commit | Tag | Workflow | Title | Memory Record |`
    - Prepend the new commit record row to the top of the ledger table linking to the dedicated file:
-     `| YYYY-MM-DD | \`<hash>\` | \`[TAG]\` | \`[Workflow]\` | <title> | [View Record](commits/<filename>.md) |`
-3. **Atomic Work-Unit Staging & Commit:**
-   - Stage all code changes AND the generated `.agents/memory/` files together: `git add -A`.
-   - Execute `git commit` using the multi-line Conventional Commit message format.
-   - Update the exact Git commit hash in the memory file (via `git rev-parse --short HEAD`) so the recorded hash matches HEAD perfectly.
+     `| YYYY-MM-DD | `HEAD` (bundled) | `[TAG]` | `[Workflow]` | <title> | [View Record](commits/<filename>.md) |`
+3. **Atomic Work-Unit Staging & Single Primary Commit (ZERO Separate Memory Commits):**
+   - Stage all code changes, version updates, AND the generated `.agents/memory/` files together in one single operation: `git add -A`.
+   - Execute `git commit` ONCE using the multi-line Conventional Commit message format.
+   - **STRICT PROHIBITION (Zero Separate Memory Commits):** Commit memory and harvest memory MUST ALWAYS be inside the primary commit. NEVER execute a separate or follow-up commit for memory. Do NOT modify the memory file on disk after committing (as modifying it creates dirty working tree changes that prompt secondary commits). The record is already sealed directly inside the primary commit itself.
 4. **Display Sealed Release Summary:**
-   - Output the clean, sealed release summary in the chat response showing Commit Hash, Header, Body bullets, Files Changed summary, and the clickable file link: `**Commit Memory Recorded:** [.agents/memory/commits/<filename>.md](file:///<absolute-path-to-file>)`.
+   - Output the clean, sealed release summary in the chat response showing Commit Hash (from `git rev-parse --short HEAD`), Header, Body bullets, Files Changed summary, and the clickable file link: `**Commit Memory Recorded (Bundled in Primary Commit):** [.agents/memory/commits/<filename>.md](file:///<absolute-path-to-file>)`.
 
 ### 3. Mandatory Post-Commit Follow-Up Context Menu (`Undo commit`):
 - **IMMEDIATELY** after outputting the sealed commit summary, trigger an interactive context menu modal via `ask_question`:
