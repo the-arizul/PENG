@@ -43,6 +43,23 @@ Whenever the user asks to remove, delete, clean up, or purge ANY feature, compon
 4. **Contradiction & Superseded Tracking (`[SUPERSEDES]`):** When an architectural decision evolves, the new record MUST explicitly link to the superseded pattern (`[SUPERSEDES: ADR-XXX]`) so the agent never resurrects abandoned patterns.
 5. **Dual-Layer Sync Engine:** Git-synced `.agents/` files are the primary, portable single source of truth. When an MCP memory daemon (such as `iai-memory`) is detected in the environment, the agent automatically mirrors memory captures and recalls cross-session context via MCP stdio.
 
+## AUTOMATED LIVING MEMORY & COGNITIVE SALIENCE DIRECTIVE (HIPPO-STYLE HEURISTICS)
+**MANDATORY DIRECTIVE:** The agent MUST continuously and passively observe all workflow operations, diagnostic runs, code modifications, and user instructions for salient architectural and episodic insights without requiring manual prompting:
+1. **Continuous Passive Observation (5 Sensory Triggers):**
+   - **Trigger 1: Error-to-Green Transition (`[FIX/TRICK]`):** When a compiler error, diagnostic probe, or test failure is subsequently resolved by a targeted code change, the agent automatically captures the symptom, root cause, and remedy as a Tier 1 episodic trick.
+   - **Trigger 2: Explicit Architectural Directives (`[CONTRACT]` / `[PREFERENCE]`):** When the user states hard architectural or behavioral constraints (e.g., *"always"*, *"never"*, *"from now on"*, *"convention is"*, *"must return"*, or commit/test formatting rules), the agent immediately abstracts them into Tier 2 living rules (`.agents/rules/`) or Tier 3 preferences (`state.json` / `preferences.md`).
+   - **Trigger 3: Architectural Choices & ADRs (`[DECISION]`):** When new packages, database schemas, migration files, route structures, or state paradigms are introduced, the agent automatically synthesizes an Architectural Decision Record skeleton.
+   - **Trigger 4: Superseded Conventions (`[SUPERSEDES: ADR-XXX]`):** When an established convention or rule is deliberately replaced by a new pattern, the agent explicitly marks the old standard as superseded to prevent regression loops.
+   - **Trigger 5: Anti-Pattern Lessons (`[LESSON]`):** When the user corrects a mistaken assumption or hallucinated API, the agent extracts a negative constraint preventing future repetitions.
+2. **Cognitive Salience Filter (Noise Gate):**
+   - Automatically discards trivial edits (syntax typo fixes, routine formatting, boilerplate getters/setters).
+   - Automatically cross-checks and deduplicates against existing `.agents/rules/` and `.agents/memory/` to avoid redundancy.
+3. **Auto-Populated Wrap-Up Presentation (Zero User Authoring):**
+   - Prior to opening any Level 4 Post-Resolution or Wrap-Up Context Menu, the agent renders a **`🧠 Auto-Detected Living Memory (Hippo Engine)`** summary block directly in the chat response text detailing any detected insights.
+   - Pre-formulates the memory entries so the user has zero typing overhead, and offers 1-click consolidation into `.agents/rules/` or dedicated `.agents/memory/commits/` records.
+4. **Single Atomic Primary Commit Bundling:**
+   - Any auto-detected memory files or rule updates are staged alongside all code changes (`git add -A`) and sealed directly INSIDE the primary commit. ZERO separate memory commits.
+
 ## AUTOMATED COMMIT MEMORY & EPISODIC LEDGER DIRECTIVE (PURE MARKDOWN, ZERO-DB)
 **MANDATORY DIRECTIVE:** All git commits executed via PENG MUST be automatically recorded as structured episodic memory records without external databases:
 1. **Dedicated Commit Record Files (`.agents/memory/commits/`):** For every commit, create `.agents/memory/commits/YYYY-MM-DD_<slug>.md` capturing full metadata (date, author, workflow, taxonomy tag, commit slug), executive summary, point-by-point what & why, affected files with diff statistics, deterministic verification receipts, and living rules (`[DECISION]`, `[FIX/TRICK]`, `[CONTRACT]`).
@@ -156,7 +173,7 @@ When you type `/peng` or `peng` by itself:
 | **[7]** | **Pre-Flight Architect** | Before building a major feature, refactoring, or schema changes. | Formulates file impact matrix, edge cases, and execution order before touching code. |
 | **[8]** | **Pre-Commit Verify** | After coding is complete, right before git commit / PR. | Runs test suites, fixes lint errors, cleans debug logs, and prepares clean commit. |
 | **[9]** | **Gold Standard Harmonizer** | Writing new controllers, services, models, or UI components. | Mimics existing cleanest reference file for 100% architectural uniformity. |
-| **[10]** | **Living Memory Extractor** | End of a successful session after solving tough bugs or tricks. | Saves breakthroughs permanently into .agents/AGENTS.md so future chats remember. |
+| **[10]** | **Living Memory & Hippo Engine** | Continuous cognitive detection or session wrap-up after breakthroughs. | Automatically detects and consolidates breakthroughs, rules, and fixes into .agents/rules/ and .agents/memory/. |
 | **[11]** | **UI & Feature Completeness Auditor** | Identifying disconnected UI elements, broken buttons, stubbed handlers, or half-implemented features. | Deep scan entire UI/UX layer, inspect forms/actions/states, report itemized audit table without altering code. |
 | **[12]** | **Design System & Anti-Hardcode Architect** | Inconsistent UI, hardcoded values, arbitrary Tailwind classes, or duplicated logic. | Standardize on shared shadcn/ui components, eliminate hardcoding ("hardcoding is a crime"), extract clean abstractions. |
 | **[13]** | **Add or Edit a Prompt** | Whenever you want to customize or expand this prompt toolkit. | Updates the master prompt catalog directly in SKILL.md. |

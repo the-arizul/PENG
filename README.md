@@ -22,16 +22,16 @@ Type `/peng` in your agent chat. You will be greeted by a master menu, followed 
    - *Sub-options:* Full Suite & Hygiene | Test-Only Run | Linter & Style Cleanup | Pre-PR Security Sanity Check
 9. **[9] Gold Standard Harmonizer** - Enforces 100% architectural uniformity by mimicking existing reference files.
    - *Sub-options:* Auto-Detect Best Reference | User-Specified Reference File | Refactor Messy File to Match
-10. **[10] Living Memory / Learn** - Permanently extracts session tricks, bug fixes, and git commit history into project memory.
-    - *Sub-options:* Update .agents/AGENTS.md | Generate Dedicated Skill | Create Repo Domain Rule | Harvest Git History to Commit Memory | Inspect Commit Memory Ledger
+10. **[10] Living Memory & Hippo Engine** - Continuously auto-detects breakthroughs, fixes, contracts, and commits into permanent living memory.
+    - *Sub-options:* Auto-Detect Session Breakthroughs (Hippo Scan) | Update .agents/AGENTS.md | Generate Dedicated Skill | Create Repo Domain Rule | Harvest Git History to Commit Memory | Inspect Commit Memory Ledger
 11. **[11] UI & Feature Completeness Auditor** - Deep-scan for disconnected, broken, or non-functional UI logic.
     - *Sub-options:* Full Project Completeness Audit | Forms & Data Mutation Wiring Audit | Ghost Features & Disconnected Routes Hunter
 12. **[12] Design System & Anti-Hardcode Architect** - Shadcn/UI standardization & reusable abstraction overhaul.
     - *Sub-options:* Full Project Standardization | Shadcn/UI Component Migration | Anti-Hardcoding & Magic Value Extraction | Duplicated Logic & Helper Abstraction
 13. **[13] Add or Edit a Prompt** - Extends or customizes this prompt catalog on the fly.
     - *Sub-options:* Add New Sub-Option | Create New Category | Edit Existing Workflow
-14. **[14] Settings, State Config & User Guide** - Manage PENG state.json configuration, toggle harvest memory commits, language preference, and user guides.
-    - *Sub-options:* Configure PENG State | Toggle Harvest Memory Commits | Change Language Preference | Reset State Config | Check for Updates | Interactive Topic Browser | Print Full Manual | Antigravity IDE Mastery Guide
+14. **[14] Settings, State Config & User Guide** - Manage PENG state.json configuration, toggle automated hippo memory, harvest memory commits, language preference, and user guides.
+    - *Sub-options:* Configure PENG State | Toggle Automated Hippo Memory | Toggle Harvest Memory Commits | Change Language Preference | Reset State Config | Check for Updates | Interactive Topic Browser | Print Full Manual | Antigravity IDE Mastery Guide
 
 ---
 

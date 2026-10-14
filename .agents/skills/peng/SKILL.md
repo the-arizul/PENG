@@ -49,13 +49,18 @@ A hyper-smart, multi-stage interactive vibe coding system for AI coding agents.
 > Organizes memory across 3 hyperdimensional tiers: Tier 1 Episodic (`[FIX/TRICK]` & session histories), Tier 2 Semantic (`[DECISION]`, `[CONTRACT]`, `[CONVENTION]` living rules in `.agents/rules/`), and Tier 3 Procedural (`[PREFERENCE]` behavioral style in `state.json` / `preferences.md`). Tracks superseded architectural choices (`[SUPERSEDES: ADR-XXX]`) to prevent hallucinations. Works natively via Git-synced `.agents/` files with optional automatic bridging to local MCP memory engines (`iai-memory`, etc.) when present.
 
 > [!TIP]
+> **AUTOMATED LIVING MEMORY & COGNITIVE SALIENCE DIRECTIVE (HIPPO-STYLE HEURISTICS):**
+> Continuously and passively monitors all operations across 5 sensory triggers: Error-to-Green transitions (`[FIX/TRICK]`), Explicit Directives (`[CONTRACT]` / `[PREFERENCE]`), Architectural Choices (`[DECISION]`), Superseded Conventions (`[SUPERSEDES]`), and Anti-Pattern Lessons (`[LESSON]`). Filters trivial noise, deduplicates against existing rules, and auto-populates wrap-up summaries with pre-formulated memory records for zero-typing 1-click consolidation into primary commits.
+
+> [!TIP]
 > **AUTOMATED COMMIT MEMORY & EPISODIC LEDGER DIRECTIVE (PURE MARKDOWN, ZERO-DB):**
 > Automatically records every git commit as an individual, structured episodic memory file in `.agents/memory/commits/YYYY-MM-DD_<slug>.md` and maintains a master chronological ledger in `.agents/memory/COMMITS.md`. Captures full commit metadata (date, author, workflow, taxonomy tag, point-by-point what/why, file diff stats, verification receipts, and living rules) natively in Git-tracked Markdown without requiring SQLite, background daemons, or local databases. **Zero-Separate-Commit Rule:** Commit memory and harvest memory MUST ALWAYS be bundled directly INSIDE the primary commit alongside code/project changes (`git add -A`) — NEVER committed separately. Fully synchronized with the Stage, Commit & Undo Commit Engine (`git reset --soft HEAD~1` surgically rolls back the commit memory file as well). Includes an automated Git History Harvester to backfill past commit lessons, and integrates commit history into Layer 4 of Progressive Context Loading.
 
 ## CURRENT RELEASE VERSION
-- Version: 1.5.3
+- Version: 1.5.4
 - Release Date: 2026-10-15
 - Changelog:
+  * Automated Living Memory & Hippo Engine: Integrated automated continuous cognitive detection heuristics into Workflow [10] Living Memory & Hippo Engine. Adds 5 passive sensory triggers (Error-to-Green [FIX/TRICK], Explicit Directives [CONTRACT]/[PREFERENCE], Architectural Choices [DECISION], Superseded Conventions [SUPERSEDES], Anti-Pattern Lessons [LESSON]) with a cognitive salience filter and auto-populated wrap-up presentations. Added Toggle Automated Hippo Memory to Workflow [14] and state.json.
   * PENG State Configuration & Settings Engine: Enhanced Workflow [14] into Settings, State Config & User Guide. Added dedicated Level 2 and Level 3 menus to inspect active state.json properties, toggle harvest memory commits into Git, change language preferences, and reset state to defaults.
   * First-Time Harvest Memory Confirmation & AGENTS.md Directive Gate: Added interactive confirmation modal for first-time users to approve committing harvest memory into Git; upon approval, the AGENTS.md Harvest memory instruction is activated for all future workflows and context initialization.
   * Primary Commit Memory & Zero-Separate-Commit Engine: Enforced that commit memory records (.agents/memory/commits/) and harvested git history are generated before committing and sealed directly inside the primary commit alongside code changes, strictly prohibiting separate secondary memory commits.
@@ -271,7 +276,8 @@ Whenever the user invokes PENG (via `/peng`, calling the `peng` skill, or mentio
    - **Repository Initialization / Living Memory Setup** → `[1] [INIT] Autonomous Context Generator`
    - **Branch / Session Catchup** → `[2] [CONTEXT-PRIMER] Fresh Chat Context Primer`
    - **Halting Stuck Edit Loops / Hallucinations** → `[6] [CIRCUIT-BREAKER] Emergency Halt & Diagnosis`
-   - **Extracting Permanent Session Learnings** → `[10] [LEARN] Session Living Memory Extractor`
+   - **Extracting Permanent Session Learnings / Hippo Memory** → `[10] [LEARN] Living Memory Extractor & Automated Hippo Engine`
+     - Auto-infer sub-option: Auto-Detect & Consolidate Session Breakthroughs (Hippo Scan), Update .agents/AGENTS.md, Generate Specialized Skill, Create Repo Rule File, Record Superseded Architecture, Harvest Git Commit History into Living Memory, or Inspect Commit Memory Ledger.
    - **Customizing Prompts / Catalog** → `[13] [CUSTOM] Add or Edit a Prompt`
    - **Settings / State Config / Preferences / Harvest Toggle / Language / Manual** → `[14] [SETTINGS & HELP] Settings, State Config & User Guide`
      - Auto-infer sub-option: Configure PENG State, Toggle Harvest Memory Commits, Change Language Preference, Reset State Config, or Check for Updates.
@@ -583,7 +589,7 @@ When the user selects **Undo commit (git reset --soft HEAD~1)**:
 7. [7] Pre-Flight Architect (Strict impact matrix and risk analysis before coding)
 8. [8] Pre-Commit Verify (Automated test suites, linter fixes, and clean git commit)
 9. [9] Gold Standard Harmonizer (Mirror existing cleanest reference conventions)
-10. [10] Living Memory / Learn (Save session breakthrough to permanent project memory)
+10. [10] Living Memory & Hippo Engine (Continuous cognitive detection & rule consolidation)
 11. [11] UI & Feature Completeness Auditor (Deep-scan for disconnected, broken, or non-functional UI logic)
 12. [12] Design System & Anti-Hardcode Architect (Shadcn/UI standardization & reusable abstraction overhaul)
 13. [13] Add or Edit a Prompt (Extend or customize this prompt catalog)
@@ -836,15 +842,25 @@ When the user selects **Undo commit (git reset --soft HEAD~1)**:
 
 ---
 
-### 10. [LEARN] Session Living Memory Extractor
+### 10. [LEARN] Living Memory Extractor & Automated Hippo Engine
 - Level 2 Context Menu:
+  - Auto-Detect & Consolidate Session Breakthroughs (Hippo Scan): Run instant cognitive salience scan across current chat session to detect and extract fixes, decisions, contracts, and preferences without typing.
   - Update .agents/AGENTS.md: Distill today's breakthrough into a high-density 1-2 line rule in `AGENTS.md`.
   - Generate Specialized Skill: Create a dedicated `.agents/skills/<workflow>/SKILL.md` playbook for this complex procedure.
   - Create Repo Rule File: Save a targeted `.agents/rules/<domain>.md` file that automatically attaches to relevant directory paths.
   - Record Superseded Architecture (`[SUPERSEDES]`): Mark an outdated or replaced architectural decision/ADR as superseded by a new standard.
   - Harvest Git Commit History into Living Memory: Backfill and convert past git commits into standalone `.agents/memory/commits/` markdown files and rebuild `COMMITS.md` (bundled directly inside the primary commit, never committed separately).
   - Inspect / Search Commit Memory Ledger: Search and browse saved commit memory records by keyword, date, or taxonomy tag.
-  - What is this for? (Explain Living Memory Extractor, its value, and when to use it)
+  - What is this for? (Explain Living Memory & Automated Hippo Engine, its value, and when to use it)
+- Automated Hippo Engine Directives & Cognitive Salience Heuristics (MANDATORY AGENT DIRECTIVE):
+  * The agent continuously and passively observes all workflow operations, diagnostic runs, code modifications, and user instructions across 5 sensory triggers:
+    1. **Trigger 1: Error-to-Green Transition (`[FIX/TRICK]`):** When a compiler error, diagnostic probe, or test failure is subsequently resolved by a targeted code change, the agent automatically captures the symptom, root cause, and remedy as a Tier 1 episodic trick.
+    2. **Trigger 2: Explicit Architectural Directives (`[CONTRACT]` / `[PREFERENCE]`):** When the user states hard architectural or behavioral constraints (e.g., *"always"*, *"never"*, *"from now on"*, *"convention is"*, *"must return"*, or commit/test formatting rules), the agent immediately abstracts them into Tier 2 living rules (`.agents/rules/`) or Tier 3 preferences (`state.json` / `preferences.md`).
+    3. **Trigger 3: Architectural Choices & ADRs (`[DECISION]`):** When new packages, database schemas, migration files, route structures, or state paradigms are introduced, the agent automatically synthesizes an Architectural Decision Record skeleton.
+    4. **Trigger 4: Superseded Conventions (`[SUPERSEDES: ADR-XXX]`):** When an established convention or rule is deliberately replaced by a new pattern, the agent explicitly marks the old standard as superseded to prevent regression loops.
+    5. **Trigger 5: Anti-Pattern Lessons (`[LESSON]`):** When the user corrects a mistaken assumption or hallucinated API, the agent extracts a negative constraint preventing future repetitions.
+  * **Cognitive Salience Filter (Noise Gate):** Automatically discards trivial edits (syntax typo fixes, routine formatting, boilerplate getters/setters). Only enduring architectural knowledge and non-obvious fixes are preserved. Automatically cross-checks and deduplicates against existing `.agents/rules/` and `.agents/memory/`.
+  * **Auto-Populated Wrap-Up Presentation:** When concluding features, bug fixes, or refactoring tasks, the agent automatically renders a `🧠 Auto-Detected Living Memory (Hippo Engine)` block in the chat response text before opening Level 4 menus.
 - 3-Tier Hyper-Memory Taxonomy & Dual-Layer Storage (MANDATORY AGENT DIRECTIVE):
   * When writing rules or decisions into `.agents/AGENTS.md` or `.agents/rules/`, format entries using standardized prefix tags:
     - `[DECISION]`: Architectural tradeoffs, technology choices, or state boundaries (Tier 2 Semantic).
@@ -957,6 +973,7 @@ When the user selects **Undo commit (git reset --soft HEAD~1)**:
 ### 14. [SETTINGS & HELP] Settings, State Config & User Guide
 - Level 2 Context Menu:
   - Configure PENG State (View active config & edit state.json settings): Inspect active state.json values, toggle harvest memory commits, and manage preferences.
+  - Toggle Automated Hippo Memory (Currently: Enabled / Disabled): Quickly switch between continuous cognitive detection of breakthroughs or manual extraction only.
   - Toggle Harvest Memory Commits (Currently: Enabled / Disabled): Quickly flip between bundling harvest memory into primary git commits or keeping it local/uncommitted.
   - Change Language Preference: Switch conversation & prompt language (English, Bengali, Spanish, Hindi, etc.) at any time.
   - Reset State Config (Re-run First-Time Setup): Wipe existing state.json files and re-trigger first-time welcome & onboarding setup.
@@ -966,16 +983,17 @@ When the user selects **Undo commit (git reset --soft HEAD~1)**:
   - Antigravity IDE Best Practices: Specific guide on leveraging Antigravity slash commands, artifacts, and multi-agent coordination.
   - What is this for? (Explain Settings, State Config & User Guide)
 - Level 3 State Configuration Sub-Menu (Triggered when selecting 'Configure PENG State'):
-  * **Mandatory Full Text Output First:** Render a comprehensive Markdown table detailing active configuration properties (Preferred Language, Commit Harvest Memory, Configured Status, Usage Count, First Used, Last Seen Commit, Last Seen Version) and config file locations (`$HOME/.peng/state.json`, `.agents/state.json`).
+  * **Mandatory Full Text Output First:** Render a comprehensive Markdown table detailing active configuration properties (Preferred Language, Automated Hippo Memory, Commit Harvest Memory, Configured Status, Usage Count, First Used, Last Seen Commit, Last Seen Version) and config file locations (`$HOME/.peng/state.json`, `.agents/state.json`).
   * Immediately after printing the summary table, invoke `ask_question`:
     - Question: "⚙️ PENG State Configuration — Select a setting to modify:"
     - Options:
-      1. Toggle Harvest Memory Commits (Currently: Enabled / Disabled)
-      2. Change Preferred Language (Select new language)
-      3. View Raw state.json Content (Print JSON code block)
-      4. Reset State Config to Defaults (Re-run First-Time Setup)
-      5. Return to Settings & Help Menu
-      6. What is this for? (Explain state settings and effects)
+      1. Toggle Automated Hippo Memory (Currently: Enabled / Disabled)
+      2. Toggle Harvest Memory Commits (Currently: Enabled / Disabled)
+      3. Change Preferred Language (Select new language)
+      4. View Raw state.json Content (Print JSON code block)
+      5. Reset State Config to Defaults (Re-run First-Time Setup)
+      6. Return to Settings & Help Menu
+      7. What is this for? (Explain state settings and effects)
 - Level 3 Topic Sub-Menu (Triggered when selecting 'Interactive Topic Browser'):
   * Invoke `ask_question`:
     - Question: "Select a Help topic to browse:"
@@ -988,12 +1006,13 @@ When the user selects **Undo commit (git reset --soft HEAD~1)**:
       6. What is this for? (Explain topic browser)
 - Execution Directives for Sub-Options:
   * **Option 1 (Configure PENG State):** Load `$HOME/.peng/state.json` and `.agents/state.json`, render active configuration status table, and launch Level 3 State Configuration Sub-Menu.
-  * **Option 2 (Toggle Harvest Memory Commits):** Invert `commit_harvest_memory` boolean in state files, render confirmation banner with explanation of git primary commit bundling behavior, and re-open settings menu.
-  * **Option 3 (Change Language Preference):** Present language selection modal, update `preferred_language` in `state.json`, and confirm in chosen language.
-  * **Option 4 (Reset State Config):** Confirm reset, delete state files, and launch first-time onboarding modal sequence.
-  * **Option 7 (Print Full Master Manual):** Output the complete comprehensive developer guide covering installation, invocation modes (`/peng <prompt>` vs `/peng`), versioning hooks, project runner engines, manual verification guides, and end-to-end revert engine.
-  * **Option 8 (Antigravity IDE Best Practices):** Output detailed guide on leveraging Antigravity slash commands (`/goal`, `/schedule`, `/grill-me`, `/learn`), markdown artifacts (`implementation_plan.md`, `walkthrough.md`), and subagent delegation.
-  * **Option 9 (What is this for? - Explain Settings, State Config & User Guide):** Output a full, comprehensive, multi-section guide explaining how PENG's Settings & Help system operates (state inspection, harvest memory toggles, language switching, topic browsing, master manual, and IDE integration) FIRST before re-opening the Level 2 menu.
+  * **Option 2 (Toggle Automated Hippo Memory):** Invert `auto_living_memory` boolean in state files, render confirmation banner with explanation of continuous cognitive detection heuristics, and re-open settings menu.
+  * **Option 3 (Toggle Harvest Memory Commits):** Invert `commit_harvest_memory` boolean in state files, render confirmation banner with explanation of git primary commit bundling behavior, and re-open settings menu.
+  * **Option 4 (Change Language Preference):** Present language selection modal, update `preferred_language` in `state.json`, and confirm in chosen language.
+  * **Option 5 (Reset State Config):** Confirm reset, delete state files, and launch first-time onboarding modal sequence.
+  * **Option 8 (Print Full Master Manual):** Output the complete comprehensive developer guide covering installation, invocation modes (`/peng <prompt>` vs `/peng`), versioning hooks, project runner engines, manual verification guides, and end-to-end revert engine.
+  * **Option 9 (Antigravity IDE Best Practices):** Output detailed guide on leveraging Antigravity slash commands (`/goal`, `/schedule`, `/grill-me`, `/learn`), markdown artifacts (`implementation_plan.md`, `walkthrough.md`), and subagent delegation.
+  * **Option 10 (What is this for? - Explain Settings, State Config & User Guide):** Output a full, comprehensive, multi-section guide explaining how PENG's Settings & Help system operates (state inspection, automated hippo memory toggles, harvest memory toggles, language switching, topic browsing, master manual, and IDE integration) FIRST before re-opening the Level 2 menu.
 
 ---
 
@@ -1096,7 +1115,8 @@ Whenever the user selects an option from ANY context menu across Level 1, Level 
 - `User-Specified Reference File`: Prompt user for reference file path and refactor target file to match its exact design patterns.
 - `Refactor Existing File to Match`: Rewrite target messy file to conform to Gold Standard conventions without altering public API contract.
 
-#### Workflow [10] [LEARN] Session Living Memory Extractor
+#### Workflow [10] [LEARN] Living Memory Extractor & Automated Hippo Engine
+- `Auto-Detect & Consolidate Session Breakthroughs (Hippo Scan)`: Run an immediate cognitive salience scan across the current chat session. Extract all non-obvious fixes (`[FIX/TRICK]`), architectural choices (`[DECISION]`), hard contracts (`[CONTRACT]`), and preferences (`[PREFERENCE]`). Render a structured preview table in chat and present 1-click consolidation into `.agents/rules/` and commit memory.
 - `Update .agents/AGENTS.md`: Distill session breakthrough into a high-density 1-2 line rule in `.agents/AGENTS.md` tagged with 3-tier taxonomy prefixes (`[DECISION]`, `[FIX/TRICK]`, `[CONTRACT]`, `[PREFERENCE]`).
 - `Generate Specialized Skill`: Create dedicated `.agents/skills/<name>/SKILL.md` playbook for complex workflows.
 - `Create Repo Rule File`: Create targeted `.agents/rules/<domain>.md` file attached to specific file path patterns.
@@ -1118,6 +1138,7 @@ Whenever the user selects an option from ANY context menu across Level 1, Level 
 ---
 
 ### 4. Level 3 State Configuration Prompt Directives ([14] Configure PENG State)
+- `Toggle Automated Hippo Memory`: Read `auto_living_memory` from `$HOME/.peng/state.json` and `.agents/state.json`. Invert value (`true` <-> `false`), write back to disk, and print confirmation banner stating whether continuous cognitive detection is active or manual extraction only.
 - `Toggle Harvest Memory Commits`: Read `commit_harvest_memory` from `$HOME/.peng/state.json` and `.agents/state.json`. Invert value (`true` <-> `false`), write back to disk, and print confirmation banner stating whether harvest memory will be bundled inside primary commits or kept local/uncommitted.
 - `Change Preferred Language`: Trigger language selection modal, update `preferred_language` in `state.json`, and confirm in selected language.
 - `View Raw state.json Content`: Print raw JSON content in fenced code block with clickable file paths (`$HOME/.peng/state.json` and `.agents/state.json`).
