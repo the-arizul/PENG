@@ -51,7 +51,9 @@ Whenever the user asks to remove, delete, clean up, or purge ANY feature, compon
    - The commit memory file and master ledger update (`.agents/memory/`) MUST be generated BEFORE running `git commit`, staged together with all code/project changes via `git add -A`, and sealed directly INSIDE the primary commit.
    - **STRICT PROHIBITION:** The agent MUST NEVER perform a separate, secondary, or follow-up commit for commit memory or harvest memory (e.g., NEVER commit code first and then run `git commit -m "docs: record commit memory"` or `git commit -m "chore: harvest git history"`).
    - The memory record is sealed in the primary commit from its inception. Do NOT attempt to modify the memory file on disk after `git commit` to insert the commit hash, as doing so dirties the working tree and triggers unwanted secondary commits. The commit hash is displayed in the sealed release summary in chat and can be viewed via `git log`.
-4. **Git History Harvester & Harvest Memory Bundling:** Workflows [1], [2], and [10] provide an automated scanner to backfill past commits into `.agents/memory/commits/` and build `COMMITS.md` without requiring Hippo Memory or SQLite. If harvested during an active session alongside other changes, the harvested memory files MUST be included directly inside the primary commit alongside all other work. If executed as a standalone task with no pending code edits, it is committed as a single primary commit (`docs(memory): harvest git commit history into living memory`), NEVER split across multiple commits.
+4. **Git History Harvester & Harvest Memory Bundling:** Workflows [1], [2], and [10] provide an automated scanner to backfill past commits into `.agents/memory/commits/` and build `COMMITS.md` without requiring Hippo Memory or SQLite.
+   - **First-Time Approval Gate:** First-time users see an interactive confirmation modal asking whether to commit harvest memory into Git. If approved (recorded as `commit_harvest_memory: true` in `state.json`), this instruction in `AGENTS.md` will be actively used in the future: whenever git history is harvested during an active session alongside other changes, the harvested memory files MUST be included directly inside the primary commit alongside all other work. If executed as a standalone task with no pending code edits, it is committed as a single primary commit (`docs(memory): harvest git commit history into living memory`), NEVER split across multiple commits.
+   - If declined, harvest memory remains local and uncommitted.
 5. **Surgical Undo Rollback:** When `Undo commit` (`git reset --soft HEAD~1`) is executed, the agent MUST automatically delete the created commit memory file and remove its row from `COMMITS.md` to ensure zero stale or desynced memory records.
 
 ## AUTONOMOUS VERSIONING & PRE-WRAP GIT COMMIT RULE (MANDATORY AGENT DIRECTIVE)
@@ -109,8 +111,16 @@ Whenever `/peng` or `peng` is invoked at the start of a conversation:
    - In the PENG source repo itself: If local is behind `origin/main`, prompts for instant `git pull`.
 2. **State Verification (`state.json`):**
    - Verifies if `state.json` exists (`$HOME/.peng/state.json` or `.agents/state.json`).
-   - If missing: Launches the First-Time Welcome & Language Setup modal via `ask_question`, then initializes `state.json` (recording preferred language and latest commit hash).
-   - If present: Loads user preferences (`preferred_language`) silently.
+   - If missing (First-Time User):
+     * Launches the First-Time Welcome & Language Setup modal via `ask_question`.
+     * Launches the **First-Time Harvest Memory Confirmation modal** via `ask_question`:
+       - *Question:* "Would you like PENG to automatically commit harvest memory (.agents/memory/ records and ledger) into Git?"
+       - *Options:*
+         1. `Yes, commit harvest memory into primary commits (Recommended)`
+         2. `No, keep harvest memory local and uncommitted`
+     * Initializes `state.json` recording `preferred_language`, `commit_harvest_memory` (true or false), and latest commit hash.
+     * **Mandatory Directive:** If approved, the instruction in `AGENTS.md` about the Harvest memory (`Git History Harvester & Harvest Memory Bundling`) will be actively used in the future for all commit workflows and repository context setups. If declined, harvest memory remains local and uncommitted.
+   - If present (Returning User): Loads user preferences (`preferred_language`, `commit_harvest_memory`) silently.
 
 ### 1. Action-Prompted Direct Execution (When a task or prompt is provided)
 When you invoke `/peng <action prompt>` or call `peng` with a prompt for action (e.g. `/peng build auth service`, `/peng fix checkout crash`, `/peng run security audit`, `/peng run pre-commit tests`):

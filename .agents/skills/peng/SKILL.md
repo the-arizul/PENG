@@ -53,9 +53,10 @@ A hyper-smart, multi-stage interactive vibe coding system for AI coding agents.
 > Automatically records every git commit as an individual, structured episodic memory file in `.agents/memory/commits/YYYY-MM-DD_<slug>.md` and maintains a master chronological ledger in `.agents/memory/COMMITS.md`. Captures full commit metadata (date, author, workflow, taxonomy tag, point-by-point what/why, file diff stats, verification receipts, and living rules) natively in Git-tracked Markdown without requiring SQLite, background daemons, or local databases. **Zero-Separate-Commit Rule:** Commit memory and harvest memory MUST ALWAYS be bundled directly INSIDE the primary commit alongside code/project changes (`git add -A`) — NEVER committed separately. Fully synchronized with the Stage, Commit & Undo Commit Engine (`git reset --soft HEAD~1` surgically rolls back the commit memory file as well). Includes an automated Git History Harvester to backfill past commit lessons, and integrates commit history into Layer 4 of Progressive Context Loading.
 
 ## CURRENT RELEASE VERSION
-- Version: 1.5.1
-- Release Date: 2026-10-13
+- Version: 1.5.2
+- Release Date: 2026-10-15
 - Changelog:
+  * First-Time Harvest Memory Confirmation & AGENTS.md Directive Gate: Added interactive confirmation modal for first-time users to approve committing harvest memory into Git; upon approval, the AGENTS.md Harvest memory instruction is activated for all future workflows and context initialization.
   * Primary Commit Memory & Zero-Separate-Commit Engine: Enforced that commit memory records (.agents/memory/commits/) and harvested git history are generated before committing and sealed directly inside the primary commit alongside code changes, strictly prohibiting separate secondary memory commits.
   * Automated Commit Memory & Episodic Ledger Engine (Pure Markdown, Zero DB): Integrated an automated, database-free commit memory system inspired by Hippo but built natively on Git-tracked Markdown. Automatically records all commit details (metadata, point-by-point what/why, file diff stats, verification receipts, and living rules) into dedicated separate files under .agents/memory/commits/ and maintains a master chronological ledger in .agents/memory/COMMITS.md. Automatically generates commit memory files upon Stage & Commit, surgically cleans them up on Undo Commit, provides an automated Git History Harvester to backfill past commit lessons, and registers commit history into Layer 4 of Progressive Context Loading.
   * Autonomous Context Init Level 2 Sub-Menu Update: Updated Option 3 in Workflow [1] Autonomous Context Init secondary menu to explicitly show 'Recreate AGENTS.md & Rules (Rescan Project End-to-End)', enabling users to rescan the entire project end to end and regenerate AGENTS.md and rules.
@@ -143,32 +144,41 @@ Whenever `/peng` or `peng` is invoked on any new conversation (both in Standalon
      echo "IS_PENG_REPO=$IS_PENG_REPO|BEHIND=$BEHIND|STATE=$HAS_STATE|REMOTE_COMMIT=$REMOTE_COMMIT|LOCAL_COMMIT=$LOCAL_COMMIT"
      ```
 
-2. **Step A: Check if `state.json` Exists:**
+2. **Step A: Check if `state.json` Exists (First-Time User Setup & Confirmation):**
    - **If `STATE=False` (state.json does NOT exist):**
      This is a **first-time user** or uninitialized setup.
-     Immediately present the **First-Time Welcome & Language Setup** using `ask_question`:
-     * Question: "Welcome to PENG! 🚀 Select your preferred language for all workflows and explanations:"
-     * Options:
-       1. English
-       2. Bengali (বাংলা)
-       3. Spanish (Español)
-       4. Hindi (हिंदी)
-       5. Chinese (中文)
-       6. Japanese (日本語)
-       7. French (Français)
-     After the user selects a language, initialize and save `state.json` (to `$HOME/.peng/state.json` and `.agents/state.json`):
-     ```json
-     {
-       "preferred_language": "<selected>",
-       "configured": true,
-       "usage_count": 1,
-       "first_used": "<ISO timestamp>",
-       "last_seen_commit": "<REMOTE_COMMIT>",
-       "last_seen_version": "1.3.0"
-     }
-     ```
+     1. Present the **First-Time Welcome & Language Setup** using `ask_question`:
+        * Question: "Welcome to PENG! 🚀 Select your preferred language for all workflows and explanations:"
+        * Options:
+          1. English
+          2. Bengali (বাংলা)
+          3. Spanish (Español)
+          4. Hindi (हिंदी)
+          5. Chinese (中文)
+          6. Japanese (日本語)
+          7. French (Français)
+     2. Immediately present the **First-Time Harvest Memory Confirmation** using `ask_question`:
+        * Question: "Would you like PENG to automatically commit harvest memory (.agents/memory/ records and ledger) into Git?"
+        * Options:
+          1. Yes, commit harvest memory into primary commits (Recommended)
+          2. No, keep harvest memory local and uncommitted
+     3. Save user choices into `state.json` (to `$HOME/.peng/state.json` and `.agents/state.json`):
+        ```json
+        {
+          "preferred_language": "<selected>",
+          "commit_harvest_memory": true,
+          "configured": true,
+          "usage_count": 1,
+          "first_used": "<ISO timestamp>",
+          "last_seen_commit": "<REMOTE_COMMIT>",
+          "last_seen_version": "1.5.1"
+        }
+        ```
+     4. **Conditional Harvest Memory Directive:**
+        - **If Approved (`commit_harvest_memory: true`):** The instruction in `AGENTS.md` about Harvest memory (`Git History Harvester & Harvest Memory Bundling`) will be actively used in the future for all commit workflows and repository context setups (bundling harvested memory directly inside the primary commit).
+        - **If Declined (`commit_harvest_memory: false`):** Harvest memory will remain local/uncommitted, and PENG will not commit harvest memory into Git.
    - **If `STATE=True` (state.json EXISTS):**
-     This is a **returning user**. Read the configured `preferred_language` and apply it to all subsequent interactions.
+     This is a **returning user**. Read the configured `preferred_language` and `commit_harvest_memory` preferences silently and apply them to all subsequent interactions.
 
 3. **Step B: Detect Pushed Updates & Prompt User to Update:**
    - **Scenario 1: In a project where PENG is installed as a skill (via `npx skills`):**
@@ -586,7 +596,7 @@ When the user selects **Undo commit (git reset --soft HEAD~1)**:
   - Full Autopilot: Deep scan codebase manifests, visual tokens, API contracts, and database models to generate a progressive `.agents/` AI Knowledge System (`AGENTS.md` entry point + targeted `.agents/rules/`).
   - Audit & Review First: Present discovered tech stack, visual architecture, logic boundaries, and proposed `.agents/` rules in chat for manual confirmation before writing any files.
   - Recreate AGENTS.md & Rules (Rescan Project End-to-End): Overwrite existing `.agents/` configurations, wipe stale rules, rescan the entire project end to end, re-index codebase baseline, and regenerate progressive loading rules in `AGENTS.md` and `.agents/rules/`.
-  - Harvest Git Commit History into Living Memory: Scan historical git commits (last 30 days of commits), generate individual commit memory files in `.agents/memory/commits/`, and compile `.agents/memory/COMMITS.md` (bundled directly inside the primary commit, never committed separately).
+  - Harvest Git Commit History into Living Memory: Scan historical git commits (last 30 days of commits), generate individual commit memory files in `.agents/memory/commits/`, and compile `.agents/memory/COMMITS.md`. When approved during first-time setup, bundled directly inside the primary commit, never committed separately.
   - What is this for? (Explain Autonomous Context Init, its value, and when to use it)
 - Persistent Project Knowledge & Progressive Loading Architecture (MANDATORY AGENT DIRECTIVE):
   * **Zero Parallel Directory Architecture**: Never create `AI/`, `.ai/`, `docs/ai/`, or external documentation roots. Use `.agents/` exclusively (`AGENTS.md`, `rules/`, `skills/`).
@@ -622,6 +632,8 @@ When the user selects **Undo commit (git reset --soft HEAD~1)**:
   * If Option 1 is selected, append the following directive section to `.agents/AGENTS.md`:
     `## MANDATORY PENG VIBE CODING DIRECTIVE`
     `AI agents working on this codebase MUST ALWAYS use **PENG** (/peng or peng) to proceed with any software engineering task, feature development, bug fix, code refactoring, pre-commit audit, or architecture design. All tasks should follow PENG engineering standards and workflows documented in SKILL.md.`
+  * **Harvest Memory Instruction in Generated AGENTS.md**:
+    When generating `.agents/AGENTS.md`, check `commit_harvest_memory` in `state.json` (or prompt if first-time user). If approved, include the Harvest memory instruction in `AGENTS.md` (`Git History Harvester & Harvest Memory Bundling`) so that future AI agents follow it. If declined, omit or mark harvest memory as uncommitted.
 - Level 4 Post-Resolution Context Menu (Triggered when context generation is complete):
   * Once `.agents/AGENTS.md` and Gold Standards are initialized or updated, invoke `ask_question`:
     - Question: "Autonomous context initialization complete! How would you like to proceed?"
@@ -1014,7 +1026,7 @@ Whenever the user selects an option from ANY context menu across Level 1, Level 
 - `Full Autopilot`: Deep-scan codebase manifests (`package.json`, `composer.json`, `pubspec.yaml`, `Cargo.toml`, `go.mod`, `requirements.txt`), inspect directory structure, UI framework, ORM models, API routes, and design system tokens. Generate concise `.agents/AGENTS.md` (6-layer progressive context loading navigation map + core agent directives) and targeted durable rules in `.agents/rules/` (`architecture.md`, `design-system.md`, `backend-api.md`, `domain-*.md`, `adr-*.md`, `project-state.md`) based strictly on evidence from the codebase. Execute self-audit to verify accuracy, efficiency, and zero duplicate docs. Immediately after generating `.agents/`, ask the user via `ask_question` whether to add the recommended rule enforcing mandatory PENG (`/peng`) usage for all repository tasks. If approved, append the directive section to `.agents/AGENTS.md`.
 - `Audit & Review First`: Render discovered tech stack, visual architecture, logic boundaries, and proposed `.agents/` rules in chat; wait for user confirmation before writing memory files. Include the recommended PENG directive rule option in the confirmation prompt.
 - `Recreate AGENTS.md & Rules (Rescan Project End-to-End)`: Overwrite existing `.agents/` configurations, wipe stale rules, rescan the entire project end to end, re-index project baseline, regenerate progressive loading rules in `.agents/AGENTS.md` and `.agents/rules/`, and prompt user via `ask_question` whether to add the recommended PENG directive rule to `.agents/AGENTS.md`.
-- `Harvest Git Commit History into Living Memory`: Read past git commits (last 30 days or specified range) via `git log`, extract work unit breakdowns, taxonomy tags, and lessons, generate individual markdown files in `.agents/memory/commits/`, and compile `.agents/memory/COMMITS.md`. If committing alongside other changes, bundle directly inside the primary commit — never in a separate commit.
+- `Harvest Git Commit History into Living Memory`: Read past git commits (last 30 days or specified range) via `git log`, extract work unit breakdowns, taxonomy tags, and lessons, generate individual markdown files in `.agents/memory/commits/`, and compile `.agents/memory/COMMITS.md`. When approved during first-time setup (`commit_harvest_memory: true`), the instruction in `AGENTS.md` about Harvest memory is used in future commits, bundling harvested records directly inside the primary commit (never in a separate commit). If declined, keep harvest memory local and uncommitted.
 
 #### Workflow [2] [CONTEXT-PRIMER] Fresh Chat Context Primer
 - `Standard Sync`: Fast-sync git branch, uncommitted diffs, last 3 commits, and load `.agents/AGENTS.md` into turn context.
@@ -1069,7 +1081,7 @@ Whenever the user selects an option from ANY context menu across Level 1, Level 
 - `Generate Specialized Skill`: Create dedicated `.agents/skills/<name>/SKILL.md` playbook for complex workflows.
 - `Create Repo Rule File`: Create targeted `.agents/rules/<domain>.md` file attached to specific file path patterns.
 - `Record Superseded Architecture`: Explicitly record superseded architectural patterns linked to prior ADRs (`[SUPERSEDES: ADR-XXX]`) to prevent regression loops. If MCP memory daemon is active, mirror capture via `memory_capture`.
-- `Harvest Git Commit History into Living Memory`: Read past git commits (last 30 days or specified range) via `git log`, extract work unit breakdowns, taxonomy tags, and lessons, generate individual markdown files in `.agents/memory/commits/`, and compile `.agents/memory/COMMITS.md`. If committing alongside other changes, bundle directly inside the primary commit — never in a separate commit.
+- `Harvest Git Commit History into Living Memory`: Read past git commits (last 30 days or specified range) via `git log`, extract work unit breakdowns, taxonomy tags, and lessons, generate individual markdown files in `.agents/memory/commits/`, and compile `.agents/memory/COMMITS.md`. When approved during first-time setup (`commit_harvest_memory: true`), the instruction in `AGENTS.md` about Harvest memory is used in future commits, bundling harvested records directly inside the primary commit (never in a separate commit). If declined, keep harvest memory local and uncommitted.
 - `Inspect / Search Commit Memory Ledger`: Search and browse saved commit memory records by keyword, date, or taxonomy tag, displaying relevant commit details on demand without context bloat.
 
 #### Workflow [11] [UI-AUDITOR] UI & Feature Completeness Auditor
