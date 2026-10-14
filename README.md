@@ -30,8 +30,8 @@ Type `/peng` in your agent chat. You will be greeted by a master menu, followed 
     - *Sub-options:* Full Project Standardization | Shadcn/UI Component Migration | Anti-Hardcoding & Magic Value Extraction | Duplicated Logic & Helper Abstraction
 13. **[13] Add or Edit a Prompt** - Extends or customizes this prompt catalog on the fly.
     - *Sub-options:* Add New Sub-Option | Create New Category | Edit Existing Workflow
-14. **[14] Help & Comprehensive User Guide** - Detailed usage guidelines, context lifecycle tips, and best practices.
-    - *Sub-options:* Change Language Preference | Interactive Topic Browser | Print Full Manual | Antigravity IDE Mastery Guide
+14. **[14] Settings, State Config & User Guide** - Manage PENG state.json configuration, toggle harvest memory commits, language preference, and user guides.
+    - *Sub-options:* Configure PENG State | Toggle Harvest Memory Commits | Change Language Preference | Reset State Config | Check for Updates | Interactive Topic Browser | Print Full Manual | Antigravity IDE Mastery Guide
 
 ---
 

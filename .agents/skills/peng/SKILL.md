@@ -53,9 +53,10 @@ A hyper-smart, multi-stage interactive vibe coding system for AI coding agents.
 > Automatically records every git commit as an individual, structured episodic memory file in `.agents/memory/commits/YYYY-MM-DD_<slug>.md` and maintains a master chronological ledger in `.agents/memory/COMMITS.md`. Captures full commit metadata (date, author, workflow, taxonomy tag, point-by-point what/why, file diff stats, verification receipts, and living rules) natively in Git-tracked Markdown without requiring SQLite, background daemons, or local databases. **Zero-Separate-Commit Rule:** Commit memory and harvest memory MUST ALWAYS be bundled directly INSIDE the primary commit alongside code/project changes (`git add -A`) — NEVER committed separately. Fully synchronized with the Stage, Commit & Undo Commit Engine (`git reset --soft HEAD~1` surgically rolls back the commit memory file as well). Includes an automated Git History Harvester to backfill past commit lessons, and integrates commit history into Layer 4 of Progressive Context Loading.
 
 ## CURRENT RELEASE VERSION
-- Version: 1.5.2
+- Version: 1.5.3
 - Release Date: 2026-10-15
 - Changelog:
+  * PENG State Configuration & Settings Engine: Enhanced Workflow [14] into Settings, State Config & User Guide. Added dedicated Level 2 and Level 3 menus to inspect active state.json properties, toggle harvest memory commits into Git, change language preferences, and reset state to defaults.
   * First-Time Harvest Memory Confirmation & AGENTS.md Directive Gate: Added interactive confirmation modal for first-time users to approve committing harvest memory into Git; upon approval, the AGENTS.md Harvest memory instruction is activated for all future workflows and context initialization.
   * Primary Commit Memory & Zero-Separate-Commit Engine: Enforced that commit memory records (.agents/memory/commits/) and harvested git history are generated before committing and sealed directly inside the primary commit alongside code changes, strictly prohibiting separate secondary memory commits.
   * Automated Commit Memory & Episodic Ledger Engine (Pure Markdown, Zero DB): Integrated an automated, database-free commit memory system inspired by Hippo but built natively on Git-tracked Markdown. Automatically records all commit details (metadata, point-by-point what/why, file diff stats, verification receipts, and living rules) into dedicated separate files under .agents/memory/commits/ and maintains a master chronological ledger in .agents/memory/COMMITS.md. Automatically generates commit memory files upon Stage & Commit, surgically cleans them up on Undo Commit, provides an automated Git History Harvester to backfill past commit lessons, and registers commit history into Layer 4 of Progressive Context Loading.
@@ -272,7 +273,8 @@ Whenever the user invokes PENG (via `/peng`, calling the `peng` skill, or mentio
    - **Halting Stuck Edit Loops / Hallucinations** → `[6] [CIRCUIT-BREAKER] Emergency Halt & Diagnosis`
    - **Extracting Permanent Session Learnings** → `[10] [LEARN] Session Living Memory Extractor`
    - **Customizing Prompts / Catalog** → `[13] [CUSTOM] Add or Edit a Prompt`
-   - **Help / Manual / Settings / Language** → `[14] [HELP] Help & Comprehensive User Guide`
+   - **Settings / State Config / Preferences / Harvest Toggle / Language / Manual** → `[14] [SETTINGS & HELP] Settings, State Config & User Guide`
+     - Auto-infer sub-option: Configure PENG State, Toggle Harvest Memory Commits, Change Language Preference, Reset State Config, or Check for Updates.
 3. **Elevate & Improve the Workflow (PENG Master Rigor):**
    - Display a clean execution banner at the start of the response:
      `⚡ [PENG Engine Activated: [Workflow Number] Name → Selected Sub-Option]`
@@ -585,7 +587,7 @@ When the user selects **Undo commit (git reset --soft HEAD~1)**:
 11. [11] UI & Feature Completeness Auditor (Deep-scan for disconnected, broken, or non-functional UI logic)
 12. [12] Design System & Anti-Hardcode Architect (Shadcn/UI standardization & reusable abstraction overhaul)
 13. [13] Add or Edit a Prompt (Extend or customize this prompt catalog)
-14. [14] Help & Comprehensive User Guide (Interactive master manual, language switcher, and steering tips)
+14. [14] Settings, State Config & User Guide (Configure state.json, harvest memory, language & master manual)
 
 ---
 
@@ -952,14 +954,28 @@ When the user selects **Undo commit (git reset --soft HEAD~1)**:
 
 ---
 
-### 14. [HELP] Help & Comprehensive User Guide
+### 14. [SETTINGS & HELP] Settings, State Config & User Guide
 - Level 2 Context Menu:
-  - Check for Updates & What's New: Probe GitHub (the-arizul/PENG) for new pushed commits and prompt instant update via `npx skills update peng`.
+  - Configure PENG State (View active config & edit state.json settings): Inspect active state.json values, toggle harvest memory commits, and manage preferences.
+  - Toggle Harvest Memory Commits (Currently: Enabled / Disabled): Quickly flip between bundling harvest memory into primary git commits or keeping it local/uncommitted.
   - Change Language Preference: Switch conversation & prompt language (English, Bengali, Spanish, Hindi, etc.) at any time.
+  - Reset State Config (Re-run First-Time Setup): Wipe existing state.json files and re-trigger first-time welcome & onboarding setup.
+  - Check for Updates & What's New: Probe GitHub (the-arizul/PENG) for new pushed commits and prompt instant update via `npx skills update peng`.
   - Interactive Topic Browser: Choose between Vibe Coding Philosophy, Context Hygiene, Workflow Matrix, or Troubleshooting.
   - Print Full Master Manual: Output the complete comprehensive developer guide directly to chat.
   - Antigravity IDE Best Practices: Specific guide on leveraging Antigravity slash commands, artifacts, and multi-agent coordination.
-  - What is this for? (Explain how this Help Guide works)
+  - What is this for? (Explain Settings, State Config & User Guide)
+- Level 3 State Configuration Sub-Menu (Triggered when selecting 'Configure PENG State'):
+  * **Mandatory Full Text Output First:** Render a comprehensive Markdown table detailing active configuration properties (Preferred Language, Commit Harvest Memory, Configured Status, Usage Count, First Used, Last Seen Commit, Last Seen Version) and config file locations (`$HOME/.peng/state.json`, `.agents/state.json`).
+  * Immediately after printing the summary table, invoke `ask_question`:
+    - Question: "⚙️ PENG State Configuration — Select a setting to modify:"
+    - Options:
+      1. Toggle Harvest Memory Commits (Currently: Enabled / Disabled)
+      2. Change Preferred Language (Select new language)
+      3. View Raw state.json Content (Print JSON code block)
+      4. Reset State Config to Defaults (Re-run First-Time Setup)
+      5. Return to Settings & Help Menu
+      6. What is this for? (Explain state settings and effects)
 - Level 3 Topic Sub-Menu (Triggered when selecting 'Interactive Topic Browser'):
   * Invoke `ask_question`:
     - Question: "Select a Help topic to browse:"
@@ -971,9 +987,13 @@ When the user selects **Undo commit (git reset --soft HEAD~1)**:
       5. Return to Help Menu
       6. What is this for? (Explain topic browser)
 - Execution Directives for Sub-Options:
-  * **Option 4 (Print Full Master Manual):** Output the complete comprehensive developer guide covering installation, invocation modes (`/peng <prompt>` vs `/peng`), versioning hooks, project runner engines, manual verification guides, and end-to-end revert engine.
-  * **Option 5 (Antigravity IDE Best Practices):** Output detailed guide on leveraging Antigravity slash commands (`/goal`, `/schedule`, `/grill-me`, `/learn`), markdown artifacts (`implementation_plan.md`, `walkthrough.md`), and subagent delegation.
-  * **Option 6 (What is this for? - Explain how this Help Guide works):** Output a full, comprehensive, multi-section guide explaining how PENG's Help system operates (update checks, language switching, topic browsing, master manual, and IDE integration) FIRST before re-opening the Level 2 Help menu.
+  * **Option 1 (Configure PENG State):** Load `$HOME/.peng/state.json` and `.agents/state.json`, render active configuration status table, and launch Level 3 State Configuration Sub-Menu.
+  * **Option 2 (Toggle Harvest Memory Commits):** Invert `commit_harvest_memory` boolean in state files, render confirmation banner with explanation of git primary commit bundling behavior, and re-open settings menu.
+  * **Option 3 (Change Language Preference):** Present language selection modal, update `preferred_language` in `state.json`, and confirm in chosen language.
+  * **Option 4 (Reset State Config):** Confirm reset, delete state files, and launch first-time onboarding modal sequence.
+  * **Option 7 (Print Full Master Manual):** Output the complete comprehensive developer guide covering installation, invocation modes (`/peng <prompt>` vs `/peng`), versioning hooks, project runner engines, manual verification guides, and end-to-end revert engine.
+  * **Option 8 (Antigravity IDE Best Practices):** Output detailed guide on leveraging Antigravity slash commands (`/goal`, `/schedule`, `/grill-me`, `/learn`), markdown artifacts (`implementation_plan.md`, `walkthrough.md`), and subagent delegation.
+  * **Option 9 (What is this for? - Explain Settings, State Config & User Guide):** Output a full, comprehensive, multi-section guide explaining how PENG's Settings & Help system operates (state inspection, harvest memory toggles, language switching, topic browsing, master manual, and IDE integration) FIRST before re-opening the Level 2 menu.
 
 ---
 
@@ -1097,7 +1117,15 @@ Whenever the user selects an option from ANY context menu across Level 1, Level 
 
 ---
 
-### 4. Level 3 Help Topic Browser Prompt Directives ([14] Topic Browser)
+### 4. Level 3 State Configuration Prompt Directives ([14] Configure PENG State)
+- `Toggle Harvest Memory Commits`: Read `commit_harvest_memory` from `$HOME/.peng/state.json` and `.agents/state.json`. Invert value (`true` <-> `false`), write back to disk, and print confirmation banner stating whether harvest memory will be bundled inside primary commits or kept local/uncommitted.
+- `Change Preferred Language`: Trigger language selection modal, update `preferred_language` in `state.json`, and confirm in selected language.
+- `View Raw state.json Content`: Print raw JSON content in fenced code block with clickable file paths (`$HOME/.peng/state.json` and `.agents/state.json`).
+- `Reset State Config to Defaults`: Confirm with user via modal, delete `$HOME/.peng/state.json` and `.agents/state.json`, and re-launch first-time welcome & harvest memory confirmation modals.
+
+---
+
+### 5. Level 3 Help Topic Browser Prompt Directives ([14] Topic Browser)
 - `Vibe Coding Philosophy`: Output detailed guide on autonomous pair programming, layered design, zero friction, and continuous iteration.
 - `Context Hygiene`: Output detailed guide on living memory management, `state.json`, git branch sync, and token optimization.
 - `Workflow Matrix`: Output complete quick reference matrix for when to use Workflows [1] through [14].

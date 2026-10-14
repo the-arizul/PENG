@@ -160,7 +160,7 @@ When you type `/peng` or `peng` by itself:
 | **[11]** | **UI & Feature Completeness Auditor** | Identifying disconnected UI elements, broken buttons, stubbed handlers, or half-implemented features. | Deep scan entire UI/UX layer, inspect forms/actions/states, report itemized audit table without altering code. |
 | **[12]** | **Design System & Anti-Hardcode Architect** | Inconsistent UI, hardcoded values, arbitrary Tailwind classes, or duplicated logic. | Standardize on shared shadcn/ui components, eliminate hardcoding ("hardcoding is a crime"), extract clean abstractions. |
 | **[13]** | **Add or Edit a Prompt** | Whenever you want to customize or expand this prompt toolkit. | Updates the master prompt catalog directly in SKILL.md. |
-| **[14]** | **Help & Comprehensive User Guide** | Learning vibe coding, switching languages, or updating. | Interactive master manual, language switcher, and release changelog. |
+| **[14]** | **Settings, State Config & User Guide** | Managing PENG state config, toggling harvest memory, switching languages, or reading manual. | Interactive state.json manager, harvest memory toggle, language switcher, and master manual. |
 
 ---
 
