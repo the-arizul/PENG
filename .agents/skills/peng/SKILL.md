@@ -57,9 +57,10 @@ A hyper-smart, multi-stage interactive vibe coding system for AI coding agents.
 > Automatically records every git commit as an individual, structured episodic memory file in `.agents/memory/commits/YYYY-MM-DD_<slug>.md` and maintains a master chronological ledger in `.agents/memory/COMMITS.md`. Captures full commit metadata (date, author, workflow, taxonomy tag, point-by-point what/why, file diff stats, verification receipts, and living rules) natively in Git-tracked Markdown without requiring SQLite, background daemons, or local databases. **Zero-Separate-Commit Rule:** Commit memory and harvest memory MUST ALWAYS be bundled directly INSIDE the primary commit alongside code/project changes (`git add -A`) — NEVER committed separately. Fully synchronized with the Stage, Commit & Undo Commit Engine (`git reset --soft HEAD~1` surgically rolls back the commit memory file as well). Includes an automated Git History Harvester to backfill past commit lessons, and integrates commit history into Layer 4 of Progressive Context Loading.
 
 ## CURRENT RELEASE VERSION
-- Version: 1.5.4
-- Release Date: 2026-10-15
+- Version: 1.5.5
+- Release Date: 2026-10-16
 - Changelog:
+  * Autonomous Project Finisher Workflow & Verification Gates: Added Workflow [15] [PROJECT-FINISHER] to take incomplete vibe coding projects across the finish line stage-by-stage. Incorporates an Anti-False-Claim directive with deterministic multi-method verification gates (syntax checks, route probes, null-safety/error boundary audits), bounded micro-slicing (prohibiting unmanageable monolithic rewrites), a Phase 2 Strategic Scope Gate (freeze scope & finish existing vs broaden with architectural suggestions), and interactive chat milestone checkpoints across all 4 production stages (System Design -> Coding/Wiring -> Bug Hunting -> Security).
   * Automated Living Memory & Hippo Engine: Integrated automated continuous cognitive detection heuristics into Workflow [10] Living Memory & Hippo Engine. Adds 5 passive sensory triggers (Error-to-Green [FIX/TRICK], Explicit Directives [CONTRACT]/[PREFERENCE], Architectural Choices [DECISION], Superseded Conventions [SUPERSEDES], Anti-Pattern Lessons [LESSON]) with a cognitive salience filter and auto-populated wrap-up presentations. Added Toggle Automated Hippo Memory to Workflow [14] and state.json.
   * PENG State Configuration & Settings Engine: Enhanced Workflow [14] into Settings, State Config & User Guide. Added dedicated Level 2 and Level 3 menus to inspect active state.json properties, toggle harvest memory commits into Git, change language preferences, and reset state to defaults.
   * First-Time Harvest Memory Confirmation & AGENTS.md Directive Gate: Added interactive confirmation modal for first-time users to approve committing harvest memory into Git; upon approval, the AGENTS.md Harvest memory instruction is activated for all future workflows and context initialization.
@@ -255,7 +256,7 @@ Whenever the user invokes PENG (via `/peng`, calling the `peng` skill, or mentio
 **Trigger Condition:** The user invokes `peng` or `/peng` accompanied by a prompt for action, task, bug report, feature request, or engineering command (e.g., `/peng build auth service with jwt`, `peng: fix the checkout null pointer error`, `/peng review security on api routes`, `/peng run pre-commit suite`, `@peng deprecate old billing tables`).
 
 **Strict Directives for Action-Prompted Mode:**
-1. **DO NOT OPEN THE LEVEL 1 CONTEXT MENU:** The agent MUST NOT call `ask_question` with the generic 14-item menu. Do not add cognitive friction or force the user to re-select what they already clearly requested.
+1. **DO NOT OPEN THE LEVEL 1 CONTEXT MENU:** The agent MUST NOT call `ask_question` with the generic 15-item menu. Do not add cognitive friction or force the user to re-select what they already clearly requested.
 2. **Autonomous Workflow Mapping & Zero Refusal:** Deeply analyze the user's action prompt and map it directly to the matching PENG workflow without boilerplate AI refusals:
    - **Feature / Creation / Implementation** → `[3] [FEATURE-BUILDER] Build New Feature`
      - Auto-infer sub-option based on request: Full Stack Vertical Slice, Backend API & Data Layer Only, Frontend / UI Component Only, or Interactive Requirement Interview (`/grill-me`).
@@ -281,6 +282,8 @@ Whenever the user invokes PENG (via `/peng`, calling the `peng` skill, or mentio
    - **Customizing Prompts / Catalog** → `[13] [CUSTOM] Add or Edit a Prompt`
    - **Settings / State Config / Preferences / Harvest Toggle / Language / Manual** → `[14] [SETTINGS & HELP] Settings, State Config & User Guide`
      - Auto-infer sub-option: Configure PENG State, Toggle Harvest Memory Commits, Change Language Preference, Reset State Config, or Check for Updates.
+   - **Incomplete Project / Finish Codebase / Production-Ready Overhaul / What to do next** → `[15] [PROJECT-FINISHER] Autonomous Project Finisher & Production-Ready Orchestrator`
+     - Auto-infer sub-option: Full-Stack Stage-by-Stage Overhaul (System Design → Coding → Bug Hunting → Security), Freeze Scope & Finish Existing Features, Broaden Scope with Architectural Suggestions, or Zero-Crash Route & Page Load Audit.
 3. **Elevate & Improve the Workflow (PENG Master Rigor):**
    - Display a clean execution banner at the start of the response:
      `⚡ [PENG Engine Activated: [Workflow Number] Name → Selected Sub-Option]`
@@ -315,7 +318,7 @@ Whenever the user invokes PENG (via `/peng`, calling the `peng` skill, or mentio
    - **State B (Unresolved Diagnostics / Pending Issues Context):** If diagnostic scans or tests recently identified issues that have not been resolved yet, IMMEDIATELY open the **Level 3 Adaptive Resolution Sub-Menu** (`Resolve All`, `Resolve One by One`, `Explain Root Causes`, `Implementation Plan Only`, `Return to Top-Level Primary Menu`).
    - **State C (Completed Action / Wrap-Up Context):** If an engineering task or resolution was recently completed in this conversation, IMMEDIATELY open the **Level 4 Post-Resolution Wrap-Up Sub-Menu** (`Run the app/project`, `How do I check or test the changes?`, `Stage & Commit Changes`, `Rescan - if there's any leftover`, `Run Full Test Suite`, `Save Breakthrough to Living Memory`, `Revert changes`, `Return to Top-Level Primary Menu`).
    - **State D (Fresh Conversation / Clean State):** Present the **Level 1 Primary Category Menu** IMMEDIATELY using `ask_question`.
-3. **Level 1 (Primary Category):** When State D applies or when the user selects `Return to Top-Level Primary Menu`, present the 14 primary workflows using `ask_question`.
+3. **Level 1 (Primary Category):** When State D applies or when the user selects `Return to Top-Level Primary Menu`, present the 15 primary workflows using `ask_question`.
 3. **Level 2 (Intelligent Sub-Menu Specialization):** Upon the user selecting an option, **DO NOT jump into blind execution**. Immediately present the contextual follow-up menu using `ask_question` (or clean numbered choices) to pinpoint user intent, scope, and technical nuances. Always append the explainer option (`What is this for?`).
 4. **Level 3 (Adaptive Resolution Sub-Menu):** Whenever an issue scan or diagnosis discovers one or more issues/bugs/failures (e.g. in Bug Hunter, Security Audit, Performance Profiler, or Pre-Commit Verify):
    **DO NOT blindly edit code or patch everything unprompted.**
@@ -594,6 +597,7 @@ When the user selects **Undo commit (git reset --soft HEAD~1)**:
 12. [12] Design System & Anti-Hardcode Architect (Shadcn/UI standardization & reusable abstraction overhaul)
 13. [13] Add or Edit a Prompt (Extend or customize this prompt catalog)
 14. [14] Settings, State Config & User Guide (Configure state.json, harvest memory, language & master manual)
+15. [15] Autonomous Project Finisher (Take incomplete project to production-ready stage-by-stage)
 
 ---
 
@@ -960,12 +964,12 @@ When the user selects **Undo commit (git reset --soft HEAD~1)**:
 ### 13. [CUSTOM] Add or Edit a Prompt
 - Level 2 Context Menu:
   - Add New Sub-Option: Add a new level-2 branch or prompt variant to an existing workflow.
-  - Create Completely New Category: Add Option 15 to this master catalog.
+  - Create Completely New Category: Add Option 16 to this master catalog.
   - Edit Existing Workflow Instructions: Tweak the step-by-step logic of an existing prompt.
   - What is this for? (Explain Custom Prompt Management, its value, and when to use it)
 - Execution Instructions & Prompt Handlers:
-  * **Option 1 (Add New Sub-Option):** Prompt user for target workflow [1-14], sub-option title, and execution logic. Edit `SKILL.md`, insert the sub-option, bump release version, sync workspace copies, and trigger the git commit hook.
-  * **Option 2 (Create Completely New Category):** Prompt user for Category Name, sub-options, and execution directives. Append Option [15] to `SKILL.md`, update version, sync mirrors, and trigger the git commit hook.
+  * **Option 1 (Add New Sub-Option):** Prompt user for target workflow [1-15], sub-option title, and execution logic. Edit `SKILL.md`, insert the sub-option, bump release version, sync workspace copies, and trigger the git commit hook.
+  * **Option 2 (Create Completely New Category):** Prompt user for Category Name, sub-options, and execution directives. Append Option [16] to `SKILL.md`, update version, sync mirrors, and trigger the git commit hook.
   * **Option 3 (Edit Existing Workflow Instructions):** Tweak prompt logic in `SKILL.md`, update changelog, bump release version, and trigger the git commit hook.
 
 ---
@@ -1000,7 +1004,7 @@ When the user selects **Undo commit (git reset --soft HEAD~1)**:
     - Options:
       1. Vibe Coding Philosophy (Autonomous pair programming, layered design, zero friction)
       2. Context Hygiene (Memory management, state.json, git branch sync)
-      3. Workflow Matrix (When to use Options 1 through 14)
+      3. Workflow Matrix (When to use Options 1 through 15)
       4. Troubleshooting & FAQ (Handling stuck loops, reverting edits, version updates)
       5. Return to Help Menu
       6. What is this for? (Explain topic browser)
@@ -1013,6 +1017,76 @@ When the user selects **Undo commit (git reset --soft HEAD~1)**:
   * **Option 8 (Print Full Master Manual):** Output the complete comprehensive developer guide covering installation, invocation modes (`/peng <prompt>` vs `/peng`), versioning hooks, project runner engines, manual verification guides, and end-to-end revert engine.
   * **Option 9 (Antigravity IDE Best Practices):** Output detailed guide on leveraging Antigravity slash commands (`/goal`, `/schedule`, `/grill-me`, `/learn`), markdown artifacts (`implementation_plan.md`, `walkthrough.md`), and subagent delegation.
   * **Option 10 (What is this for? - Explain Settings, State Config & User Guide):** Output a full, comprehensive, multi-section guide explaining how PENG's Settings & Help system operates (state inspection, automated hippo memory toggles, harvest memory toggles, language switching, topic browsing, master manual, and IDE integration) FIRST before re-opening the Level 2 menu.
+
+---
+
+### 15. [PROJECT-FINISHER] Autonomous Project Finisher & Production-Ready Orchestrator
+- Level 2 Context Menu:
+  - Full-Stack Stage-by-Stage Overhaul (System Design → Coding → Bug Hunting → Security): Execute the complete 4-stage pipeline with verification gates at every step to bring an incomplete project to 100% production readiness.
+  - Freeze Scope & Finish Existing Features (End-to-End Closure): Lock project scope; halt new ideas and tie all existing backend models, admin panels, and frontend features together end-to-end with zero gaps.
+  - Broaden Scope with Architectural Suggestions (Feature Expansion): Deep-scan codebase, identify architectural missing links, and pitch curated production features to expand the roadmap.
+  - Zero-Crash Route & Page Load Audit: Comprehensive probe of all backend routes, admin views, and frontend pages to guarantee zero 500s, no white-screens, and proper error/loading fallbacks.
+  - What is this for? (Explain Autonomous Project Finisher, its verification gates, and when to use it)
+
+- Master Execution Directives (Anti-False-Claim & Verification-Gated Orchestration):
+  * **Strict Anti-False-Claim Directive (Zero Unverified Completion Claims):**
+    AI agents are prone to optimism bias and claiming broad steps are "done" or "working" when functions remain stubbed, edge cases crash, or imports are missing. Under NO circumstances may the agent declare any stage or task complete without generating and rendering a deterministic **Verification Receipt** with actual static and probe proof.
+  * **Micro-Slicing & Bounded Scope Execution:**
+    NEVER attempt a monolithic, broad, unmanageable "one-shot rewrite" of the entire codebase. Break incomplete features into atomic, verifiable vertical slices (e.g., 1 domain or feature slice at a time: Schema/Model → Backend Controller/API → Frontend/Admin UI → Static Verification Probe).
+  * **Multi-Method Verification Engine (The Best Methods Available):**
+    Every stage MUST be verified using multiple deterministic methods:
+    1. *Static Syntax & Parse Probes:* Run language-specific probes (`php -l`, `node --check` / `tsc --noEmit` / linter, `python -m py_compile`, `cargo check`, `go vet`) on EVERY modified or created file.
+    2. *Contract & Signature Integrity Check:* Verify that routes map to existing controller methods, method parameters match route patterns, and API client request payloads match server validation rules.
+    3. *Frontend/Admin Build & Render Verification:* Probe imports, check for undefined variables/props, missing JSX tags, and ensure error boundaries wrap critical views to eliminate white-screen crashes.
+    4. *Null-Safety & Fallback Audit:* Verify that all asynchronous data operations have proper `try/catch` handling, loading skeletons/spinners, empty-state fallbacks, and optional chaining (`data?.items?.map`).
+  * **The Strategic Scope Gate (Phase 2 Modal):**
+    Before any code changes begin in an overhaul, the agent MUST present the Strategic Scope Gate modal via `ask_question`:
+    - Question: "Project scan complete: Found [N] incomplete features, [M] unwired endpoints, and [X] stubbed UI elements. How would you like to steer the project scope?"
+    - Options:
+      1. Freeze Scope & Finish Existing Features (Recommended for Production Readiness - lock scope, tie existing features end-to-end)
+      2. Broaden Scope with Architectural Suggestions (Feature Expansion - pitch missing capabilities like auth, notifications, audit logs)
+      3. Custom Hybrid Plan (Review itemized tasks and selectively choose what to build)
+  * **The 4 Production Stages (Step-by-Step with Chat Milestone Gates):**
+    - **Stage 1 — Proper System Design & Data Architecture:**
+      Audits and harmonizes database schemas, migrations, model relations, and API contract boundaries. Ensures data layer integrity before writing business logic.
+    - **Stage 2 — Core Coding & End-to-End Feature Wiring:**
+      Surgically replaces all `TODO` stubs, mock JSON responses, and empty callbacks. Implements real controllers, services, database queries, and wires admin panel / storefront forms and tables to live endpoints.
+    - **Stage 3 — Deep Bug Hunting & Zero-Crash Verification:**
+      Systematic probe of every route, page, and admin view. Tests edge cases, missing props, null references, and guarantees all pages load without crashes.
+    - **Stage 4 — Security, Auth & Production Hardening:**
+      Enforces authentication and authorization guards on all admin/user endpoints, verifies input sanitization and validation schemas (SQLi, XSS, CSRF), secures secrets/environment variables, and verifies database seeding/config readiness.
+  * **Interactive Milestone Gate (Conversational Stage Transitions):**
+    At the conclusion of each stage, the agent MUST NOT silently jump to the next stage. It MUST output the Stage Verification Receipt in markdown text FIRST, then trigger an interactive milestone checkpoint modal via `ask_question`:
+    - Question: "Stage [N] complete! All deterministic verification probes passed. How would you like to proceed?"
+    - Options:
+      1. Proceed to Stage [N+1] (Continue stage-by-stage pipeline)
+      2. Inspect & Re-probe Specific Component (Deep-dive into a specific file or area)
+      3. Pause & Review Stage Changes (Examine diff before continuing)
+      4. What is this for? (Explain stage verification and next steps)
+
+- Level 3 Resolution Context Menu (Triggered if issues or roadblocks are discovered during scans):
+  * Question: "Project Finisher identified [N] gaps or blockers. How would you like to execute?"
+  * Options:
+    1. Stage-by-Stage Interactive Walkthrough (Chat through each stage; review & approve milestone gates)
+    2. Autonomous Pipeline Execution (Run all 4 stages in sequence with mandatory verification receipts)
+    3. Backend & Data Layer First (Finish all backend APIs, migrations, and services before touching UI)
+    4. Frontend & Admin Panel First (Wire existing UI pages and mock data before backend overhaul)
+    5. Implementation Plan Only (Draft comprehensive production-readiness roadmap before touching code)
+    6. What is this for? (Explain project finisher execution modes)
+
+- Level 4 Post-Resolution Context Menu (Triggered when all 4 stages are completed and verified):
+  * Once the project is production-ready, invoke `ask_question`:
+    - Question: "🚀 All 4 production stages completed & verified! How would you like to proceed?"
+    - Options:
+      1. Run the app/project (Launch dev server or create test package)
+      2. How do I check or test the changes? (Step-by-step verification guide with URLs, test credentials, and user journeys)
+      3. Stage & Commit Changes (Review diff and seal production release with clean git commit)
+      4. Rescan - if there's any leftover (Run final zero-crash, syntax, and completeness audit)
+      5. Run Full Test Suite (Execute automated test suites to ensure zero regressions)
+      6. Save Architecture Pattern to Living Memory (Record system design patterns into .agents/AGENTS.md)
+      7. Revert changes (Undo all edits, created files, and commands executed in this action)
+      8. Return to Primary Menu (Select another workflow)
+      9. What is this for? (Explain production completion and wrap-up options)
 
 ---
 
@@ -1137,6 +1211,14 @@ Whenever the user selects an option from ANY context menu across Level 1, Level 
 
 ---
 
+#### Workflow [15] [PROJECT-FINISHER] Autonomous Project Finisher & Production-Ready Orchestrator
+- `Full-Stack Stage-by-Stage Overhaul (System Design → Coding → Bug Hunting → Security)`: Deep-scan entire codebase across backend (models, migrations, controllers, services, routes) and frontend/admin (pages, layouts, forms, state). Present the Strategic Scope Gate modal first. Once scope is selected, execute the 4 production stages sequentially with deterministic verification receipts and interactive milestone checkpoints at each stage. Guarantee zero false claims by running static syntax checks and route probes on every touched file.
+- `Freeze Scope & Finish Existing Features (End-to-End Closure)`: Immediately lock scope. Scan for all half-implemented features, missing API methods, stubbed event handlers, and placeholder cards. Connect backend to frontend end-to-end without introducing any new features. Verify all pages render without crashing.
+- `Broaden Scope with Architectural Suggestions (Feature Expansion)`: Scan codebase to understand domain and architecture. Formulate a structured table of recommended production capabilities (auth guards, audit logs, background jobs, email notifications, data export, caching). Ask user which items to include, then integrate into implementation plan.
+- `Zero-Crash Route & Page Load Audit`: Probe every backend route, admin dashboard page, and storefront screen. Inspect imports, router configurations, and error boundaries. Verify that every page renders cleanly with zero 500 errors, white screens, or uncaught exceptions, and generate a route readiness matrix.
+
+---
+
 ### 4. Level 3 State Configuration Prompt Directives ([14] Configure PENG State)
 - `Toggle Automated Hippo Memory`: Read `auto_living_memory` from `$HOME/.peng/state.json` and `.agents/state.json`. Invert value (`true` <-> `false`), write back to disk, and print confirmation banner stating whether continuous cognitive detection is active or manual extraction only.
 - `Toggle Harvest Memory Commits`: Read `commit_harvest_memory` from `$HOME/.peng/state.json` and `.agents/state.json`. Invert value (`true` <-> `false`), write back to disk, and print confirmation banner stating whether harvest memory will be bundled inside primary commits or kept local/uncommitted.
@@ -1149,5 +1231,5 @@ Whenever the user selects an option from ANY context menu across Level 1, Level 
 ### 5. Level 3 Help Topic Browser Prompt Directives ([14] Topic Browser)
 - `Vibe Coding Philosophy`: Output detailed guide on autonomous pair programming, layered design, zero friction, and continuous iteration.
 - `Context Hygiene`: Output detailed guide on living memory management, `state.json`, git branch sync, and token optimization.
-- `Workflow Matrix`: Output complete quick reference matrix for when to use Workflows [1] through [14].
+- `Workflow Matrix`: Output complete quick reference matrix for when to use Workflows [1] through [15].
 - `Troubleshooting & FAQ`: Output detailed guide on recovering from stuck edit loops, reverting hallucinated code, handling git merge conflicts, and updating skills.

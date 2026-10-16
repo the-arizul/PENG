@@ -32,6 +32,8 @@ Type `/peng` in your agent chat. You will be greeted by a master menu, followed 
     - *Sub-options:* Add New Sub-Option | Create New Category | Edit Existing Workflow
 14. **[14] Settings, State Config & User Guide** - Manage PENG state.json configuration, toggle automated hippo memory, harvest memory commits, language preference, and user guides.
     - *Sub-options:* Configure PENG State | Toggle Automated Hippo Memory | Toggle Harvest Memory Commits | Change Language Preference | Reset State Config | Check for Updates | Interactive Topic Browser | Print Full Manual | Antigravity IDE Mastery Guide
+15. **[15] Autonomous Project Finisher** - Take an incomplete vibe coding project across the finish line stage-by-stage with multi-method verification gates.
+    - *Sub-options:* Full-Stack Stage-by-Stage Overhaul | Freeze Scope & Finish Existing Features | Broaden Scope with Architectural Suggestions | Zero-Crash Route & Page Load Audit
 
 ---
 
@@ -61,6 +63,7 @@ Provide your goal or task directly when invoking PENG. The agent will autonomous
 /peng purge legacy stripe v1 endpoints and unused tables
 /peng audit ui completeness across all pages, forms, and buttons
 /peng standardize ui on shadcn components and eliminate hardcoding
+/peng finish my incomplete project and make it production-ready stage-by-stage
 ```
 
 ### Mode 2: Interactive Context-Aware Menu Mode
